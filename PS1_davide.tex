@@ -223,6 +223,7 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
   The value for each $t$ and $s^t$ is:
 
   \begin{align*}
+    & \mu_0 = 1 
     & \mu_1(\pi)  = \beta \pi \\
     & \mu_1(1 - \pi)  = \beta (1 - \pi) \\
     & \mu_2(\pi, \pi)  = (\beta \pi)^2 \\
@@ -240,7 +241,7 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
   that is
 
     $$
-    t^1(\alpha) = 2\beta \{\pi(\alpha - 1) + (1 - \pi)\alpha + \beta \pi^2 (\alpha - 1) + \beta \pi (1 - \pi) (2 \alpha - 1) + \beta (1 - \pi)^2 \alpha \}
+    t^1(\alpha) = (2\alpha - 1) + 2\beta\pi(\alpha - 1) + 2\beta(1 - \pi)\alpha + 2(\beta \pi)^2 (\alpha - 1) + 2\beta^2 \pi (1 - \pi) (2 \alpha - 1) + 2\beta^2 (1 - \pi)^2 \alpha
     $$
 
   setting  $t^1(\alpha)=0$
@@ -254,7 +255,7 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
 
   \item Since in a competitive equilibrium agents can consume only what they can afford, the planner's $\alpha$ that sustain such an equilibrium must represent the differences in the discounted expected stream of incomes between the two player. If $\pi = 0.5$ then the agents have the same expected income for each period. Therefore their expected income stream is the same, no matter the discount factor.
 
-  \item If $\pi \geq 0.5$, then agent 1 is endowed, in expectation, with a larger income compared with player 2. Therefore he will be able to consume more than the other agent $\Leftrightarrow$ a pareto equilibrium with weight $\alpha \geq 0.5$.
+  \item If $\pi > 0.5$, then agent 1 is endowed, in expectation, with a larger income compared with player 2. Therefore he will be able to consume more than the other agent $\Leftrightarrow$ a pareto equilibrium with weight $\alpha > 0.5$.
 
   \item Using the result
 
@@ -266,7 +267,7 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
 
   \begin{align*}
     & q_1(s^1) = \mu_1(s^1) \\
-    & q_1(s^1,s^2) = \frac{\mu_1(s^2)}{\mu_1(s^1)}
+    & q_1(s^1,s^2) = \frac{\mu_2(s^2)}{\mu_1(s^1)}
   \end{align*}
 
   therefore:

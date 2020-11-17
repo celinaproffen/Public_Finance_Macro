@@ -36,6 +36,26 @@
 
 \begin{document}
 
+\begin{center}
+       \vspace*{1cm}
+       \huge\textbf{Problemset 1} \\
+       \vspace{0.4cm}
+       \large \textbf{Public Finance in Macroeconomics} \\
+       \vspace{0.5cm}
+        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\ 
+        \vspace{0.3cm}
+        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{geek.png}\\Davide Difino \& Celina Proffen \\
+       \vspace{1.5cm}
+       \vfill
+       
+       % I also thought of adding some cool superheroe image her, but I didn't find one - feel free to delete the gecko if you don't like it/ find it appropriate! ;)
+       
+        Problem set in the context of Prof. Ludwig's course: \\
+        \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
+        at the Graduate School of Economics Finance and Management
+       \vspace{0.8cm}
+   \end{center}
+
 \section*{Problem 1}
 
 \begin{itemize}
@@ -221,8 +241,8 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
   $QED$
 
   The value for each $t$ and $s^t$ is:
-
   \begin{align*}
+    & \mu_0(\pi)  = 1 \\
     & \mu_1(\pi)  = \beta \pi \\
     & \mu_1(1 - \pi)  = \beta (1 - \pi) \\
     & \mu_2(\pi, \pi)  = (\beta \pi)^2 \\
@@ -260,15 +280,15 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
 
   \begin{align*}
     2(1-\alpha) & = 2 - 2\alpha = 2 -\frac{1 + 2\pi(\beta + \beta^2)}{1 + \beta + \beta^2} \\
-    & = \frac{2 + 2\beta + 2 \beta^2 - 1 - 2\pi(\beta - \beta^2)}{1 + \beta + \beta^2} \\
-    & = \frac{1 + 2(1 -\pi)(\beta - \beta^2)}{1 + \beta + \beta^2}
+    & = \frac{2 + 2\beta + 2 \beta^2 - 1 - 2\pi(\beta + \beta^2)}{1 + \beta + \beta^2} \\
+    & = \frac{1 + 2(1 -\pi)(\beta + \beta^2)}{1 + \beta + \beta^2}
   \end{align*}
 
   $QED$.
 
   \item Since in a competitive equilibrium agents can consume only what they can afford, the planner's $\alpha$ that sustain such an equilibrium must represent the differences in the discounted expected stream of incomes between the two player. If $\pi = 0.5$ then the agents have the same expected income for each period. Therefore their expected income stream is the same, no matter the discount factor.
 
-  \item If $\pi \geq 0.5$, then agent 1 is endowed, in expectation, with a larger income compared with player 2. Therefore he will be able to consume more than the other agent $\Leftrightarrow$ a pareto equilibrium with weight $\alpha \geq 0.5$.
+  \item If $\pi > 0.5$, then agent 1 is endowed, in expectation, with a larger income compared with player 2. Therefore he will be able to consume more than the other agent $\Leftrightarrow$ a pareto equilibrium with weight $\alpha > 0.5$.
 
   \item Using the result
 
@@ -296,9 +316,9 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
 
 \end{itemize}
 
-\item The intuition for these prices is that they ensure the no arbitrage condition if both the Arrow-Debreu Market and Sequential Market exist. For example, in period 0 you can buy one unit of consumption delivered in $t+1$ at price $p_{t+1}$. Then sell this unit in period $t$ to earn $q_{t}$ units of consumption delivered in period $t$. Hence, in period 0, you can sell $q_t$ units of consumption delivered in t at price $p_t$, earn $p_{t}q_{t}$ in period 0. By no arbitrage:
+\item The intuition for these prices is that they ensure the no arbitrage condition. For example, in period 0 you can buy one unit of consumption delivered in $t+1$ at price $p_{t+1}$. Then sell this unit in period $t$ to earn $q_{t}$ units of consumption delivered in period $t$. Hence, in period 0, you can sell $q_t$ units of consumption delivered in t at price $p_t$, earn $p_{t}q_{t}$ in period 0. By no arbitrage (and noting that the income process has no memory):
 \begin{equation*}
-    -p_{t+1}+p_tq_t=0 \hspace{5mm}(q.e.d)
+    -p_{t+1}+p_tq_t=0 \hspace{5mm}(Q.E.D)
 \end{equation*}
 
 \end{document}

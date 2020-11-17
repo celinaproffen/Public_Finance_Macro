@@ -53,7 +53,7 @@
 
     The coefficient in the CRRA utility measures the risk aversion of the individual.
 
-  \item Adding a constant value is a monotonic trasformation therefore the ordinal property of the utility index does not change and the utility function still represent the same underlying preferences.
+  \item Adding a constant value is a monotonic trasformation therefore the ordinal property of the utility index does \textbf{not} change and the utility function still represent the same underlying preferences.
 
   \item The limit is:
 
@@ -74,6 +74,8 @@
   Collecting yields
 
   $$  u(\bar{c}) = \frac{(1 + g)^{1-\sigma} \cdot c_0^{1-\sigma}}{1-\sigma} + \beta \frac{(1 + g)^{1-\sigma} \cdot c_1^{1-\sigma}}{1-\sigma} = (1 + g)^{1-\sigma} \left[  \frac{c_0^{1 - \sigma}}{1 - \sigma} + \beta \frac{c_1^{1 - \sigma}}{1 - \sigma} \right] = (1 + g)^{1-\sigma} u(c).$$
+  
+  This type of preferences are called additively separable. 
 
   \item  Assume $u(\bar{c}) = (1 + g)^{1-\sigma} u(c)$
     \begin{align*}
@@ -100,13 +102,13 @@ That is, $ 2 = 2 \cdot (1 + g)^{1 - \sigma} \quad \Rightarrow \quad (1 + g)^{1 -
       & c^1_t + c^2_t = 2 \quad \forall t.
     \end{align*}
 
-    \textbf{Step 1}: The lagrangian (with scaled multiplier $\frac{\mu_t}{2}$) is
+    \textbf{Step 1}: The Lagrangian (with scaled multiplier $\frac{\mu_t}{2}$) is
 
     $$
       \mathbb{L} = \sum^\infty_{t=0} \beta^t [\alpha \ln c_t^1 + (1-\alpha) \ln c_t^2] + \frac{\mu_t}{2} [2 - c_t^1 - c_t^2],
     $$
 
-    whose FOCs are
+    whose FOCs are:
 
     \begin{align*}
       & \frac{\alpha \beta^t}{c_t^1} - \frac{\mu_t}{2} = 0 & \Rightarrow & \qquad \frac{\mu_t}{2} = \frac{\alpha \beta^t  }{c_t^1} \\

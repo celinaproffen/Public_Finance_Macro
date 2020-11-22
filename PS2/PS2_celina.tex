@@ -1,0 +1,109 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor} % Colors
+
+\usepackage{standalone}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+\usepackage{csquotes}
+
+% Bibliography
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=MidnightBlue,
+		linkcolor=MidnightBlue,
+    pdfpagemode=FullScreen,
+    }
+
+\usepackage{natbib}
+\usepackage[noabbrev]{cleveref}
+\setcitestyle{authoryear,open={(},close={)}}
+\bibliographystyle{plainnat}
+
+\usepackage{subfiles}
+
+\setlength\parindent{0pt}
+\spacing{1.2}
+
+\begin{document}
+
+\begin{center}
+       \vspace*{1cm}
+       \huge\textbf{Problemset 2} \\
+       \vspace{0.4cm}
+       \large \textbf{Public Finance in Macroeconomics} \\
+       \vspace{0.5cm}
+        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\ 
+        \vspace{0.3cm}
+        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{geek.png}\\Davide Difino \& Celina Proffen \\
+       \vspace{1.5cm}
+       \vfill
+       
+       % I also thought of adding some cool superheroe image her, but I didn't find one - feel free to delete the gecko if you don't like it/ find it appropriate! ;)
+       
+        Problem set in the context of Prof. Ludwig's course: \\
+        \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
+        at the Graduate School of Economics Finance and Management
+       \vspace{0.8cm}
+   \end{center}
+
+\newpage
+\section*{Problem 1}
+
+Here I first insert all 4 regression tables for quarterly summary statistics.
+\input{PS2/summary_data_Q1}\\
+\input{PS2/summary_data_Q2}\\
+\input{PS2/summary_data_Q3}\\
+\input{PS2/summary_data_Q4}\\
+
+Or, for easily comparing the means in quarterly consumption measures, please see table \ref{compareQs}.
+
+\input{PS2/compare_Q_means}
+
+\section*{Problem 2}
+
+There are basically two specifications that we want to test. 
+
+\subsection*{Individual Consumption depends only on Aggregate Spending}
+
+This also means, that individual consumption changes co-move one-to-one with the economy's average expenditure changes (and not with individual income changes). We can test this by running the following regression:
+
+
+Thereby, we can proxy for changes in aggregate spending by \\
+a) changes in aggregate income, or
+b) changes in aggregate consumption.
+
+In specification b), I will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.)
+
+Here, I will first only include the regression tables for total consumption (but I have them for all)
+
+a) \ref{totcons\_deltacons} \input{PS2/reg_totcons_deltacons}
+
+b) \ref{totcons\_deltainc}
+\input{PS2/reg_totcons_deltainc}
+
+\subsection*{Individual Consumption Growth depends only on Aggregate Consumption Growth}
+
+I regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
+
+\input{PS2/reg_food_logcons}
+
+\input{PS2/reg_ndcons1_logcons}
+
+\input{PS2/reg_ndcons2_logcons}
+
+\input{PS2/reg_ndconsserv_logcons}
+
+\input{PS2/reg_totcons_logcons}
+
+\end{document}
+

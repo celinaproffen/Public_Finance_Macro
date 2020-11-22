@@ -1,0 +1,36 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{\label{totcons\_deltacons} Explaining change in totcons}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+\hline
+agg\_totcon~k&     0.00363\sym{***}&     0.00364\sym{***}\\
+            &  (0.000255)         &  (0.000255)         \\
+diff\_grinc  &      0.0255\sym{***}&                     \\
+            &   (0.00137)         &                     \\
+age         &       3.182\sym{**} &       3.054\sym{*}  \\
+            &     (1.192)         &     (1.194)         \\
+hhsize      &       47.41\sym{***}&       48.35\sym{***}\\
+            &     (13.32)         &     (13.33)         \\
+1.quarter   &           0         &           0         \\
+            &         (.)         &         (.)         \\
+2.quarter   &      -17.37         &      -13.41         \\
+            &     (59.56)         &     (59.63)         \\
+3.quarter   &      -4.930         &      -5.168         \\
+            &     (56.00)         &     (56.07)         \\
+4.quarter   &       0.660         &      -1.022         \\
+            &     (55.08)         &     (55.14)         \\
+year        &       0.710         &       0.740         \\
+            &     (0.730)         &     (0.731)         \\
+diff\_netinc &                     &      0.0215\sym{***}\\
+            &                     &   (0.00137)         \\
+constant    &      -345.9\sym{**} &      -343.0\sym{**} \\
+            &     (112.0)         &     (112.2)         \\
+\hline
+\(N\)       &       44772         &       44772         \\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

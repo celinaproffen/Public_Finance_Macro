@@ -57,7 +57,13 @@
    \end{center}
 
 \newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Problem 1}
+
+\textcolor{red}{Question: Have you noted that interviews take place in a quarter (quarter indicates the quarter in which interview takes place) BUT consumption always refers to consumption in the 3 previous months!} \\
 
 Here I first insert all 4 regression tables for quarterly summary statistics.
 \input{PS2/summary_data_Q1}\\
@@ -65,9 +71,23 @@ Here I first insert all 4 regression tables for quarterly summary statistics.
 \input{PS2/summary_data_Q3}\\
 \input{PS2/summary_data_Q4}\\
 
-Or, for easily comparing the means in quarterly consumption measures, please see table \ref{compareQs}.
+Or, for easily comparing the means in quarterly consumption measures, please see table \ref{compareQs}. \\
 
 \input{PS2/compare_Q_means}
+
+What we can see from here is that indeed some macro aspects carry over to this data on HH income/ consumption. Firstly, we observe that income (both net and gross) are particularly large for quarters 2 and 3, which is when loads of agricultural jobs take place. As we can probably see from \textcolor{red}{Davide's} tables/ graphs, that is also true in other datasets. \\
+
+Regarding consumption note:
+\begin{itemize}
+    \item \textbf{food:} Most consumption in Q3 and Q4 (Q4 makes sense --> Christmas, but Q3??)
+    \item \textbf{ndcons1} (strictly nondurables expenditures plus expenditures for apparel, health, education and reading): Specially large in the first quarter of the year: Seems like one has extra large expenditures on health/ education /apparel/ reading (maybe some fees are due?)
+    \item \textbf{ndcons2} (expenditures for food, alcoholic beverages, tobacco, utilities, personal care, household operations, public transportation, gasoline and motor oil, and miscellaneous expenditures): This is not very volatile. This implies that it is apparel/ health/ education/ reading that drives the patterns in ndcons1
+    \item \textbf{ndconsserv} (Non-durables and imported service flows from consumer durables): A bit low in Q2, but relatively stable.. Compareable to ndcons2 in terms of stability. 
+    \item \textbf{totcons:} Especially large in Q4 (Christmas), and especially low in Q3 (July, August, September.. - it is warm, people spend more time outside, less on heating and food). 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Problem 2}
 
@@ -82,28 +102,38 @@ Thereby, we can proxy for changes in aggregate spending by \\
 a) changes in aggregate income, or
 b) changes in aggregate consumption.
 
-In specification b), I will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.)
+In specification b), I will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.) \\
 
-Here, I will first only include the regression tables for total consumption (but I have them for all)
+Here, I will first only include the regression tables for total consumption (but I have them for all) \\
 
-a) \ref{totcons\_deltacons} \input{PS2/reg_totcons_deltacons}
+a) Table \ref{tab:totcons-deltacons} \input{PS2/reg_totcons_deltacons} \\
+% \input{PS2/reg_food_deltacons}
+% \input{PS2/reg_ndcons1_deltacons}
+% \input{PS2/reg_ndcons2_deltacons}
+% \input{PS2/reg_ndconsserv_deltacons}
 
-b) \ref{totcons\_deltainc}
+
+b) Table \ref{tab:totcons-deltainc}
 \input{PS2/reg_totcons_deltainc}
+% \input{PS2/reg_food_deltainc}
+% \input{PS2/reg_ndcons1_deltainc}
+% \input{PS2/reg_ndcons2_deltainc}
+% \input{PS2/reg_ndconsserv_deltainc}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Individual Consumption Growth depends only on Aggregate Consumption Growth}
 
 I regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
 
-\input{PS2/reg_food_logcons}
+Here, I will first only include the regression tables for total consumption (but I have them for all). \\
 
-\input{PS2/reg_ndcons1_logcons}
-
-\input{PS2/reg_ndcons2_logcons}
-
-\input{PS2/reg_ndconsserv_logcons}
-
+See table  \ref{tab:logtotcons-deltacons} for the regression results for total changes in log consumption. We would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.grossinc.change to be 0. \\
 \input{PS2/reg_totcons_logcons}
+
+% \input{PS2/reg_food_logcons} 
+% \input{PS2/reg_ndcons1_logcons}
+% \input{PS2/reg_ndcons2_logcons}
+% \input{PS2/reg_ndconsserv_logcons}
 
 \end{document}
 

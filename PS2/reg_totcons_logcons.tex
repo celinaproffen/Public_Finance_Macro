@@ -1,0 +1,36 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{\label{tab:logtotcons-deltacons} Explaining change in totcons consumption growth}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+\hline
+log.averagetotcons.change&       0.390\sym{***}&       0.394\sym{***}\\
+            &    (0.0461)         &    (0.0462)         \\
+lg.grossinc.change&      0.0875\sym{***}&                     \\
+            &   (0.00355)         &                     \\
+age         &    0.000873\sym{***}&    0.000864\sym{***}\\
+            &  (0.000140)         &  (0.000140)         \\
+hhsize      &     0.00430\sym{**} &     0.00411\sym{**} \\
+            &   (0.00156)         &   (0.00156)         \\
+1.quarter   &           0         &           0         \\
+            &         (.)         &         (.)         \\
+2.quarter   &     -0.0304\sym{***}&     -0.0303\sym{***}\\
+            &   (0.00705)         &   (0.00706)         \\
+3.quarter   &     -0.0224\sym{***}&     -0.0230\sym{***}\\
+            &   (0.00655)         &   (0.00656)         \\
+4.quarter   &     -0.0356\sym{***}&     -0.0353\sym{***}\\
+            &   (0.00642)         &   (0.00643)         \\
+year        &   0.0000783         &   0.0000753         \\
+            & (0.0000858)         & (0.0000858)         \\
+lg.netinc.change&                     &      0.0857\sym{***}\\
+            &                     &   (0.00361)         \\
+constant    &    -0.00365         &    -0.00251         \\
+            &    (0.0128)         &    (0.0128)         \\
+\hline
+\(N\)       &       44646         &       44448         \\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

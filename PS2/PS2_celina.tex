@@ -1,0 +1,139 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor} % Colors
+
+\usepackage{standalone}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+\usepackage{csquotes}
+
+% Bibliography
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=MidnightBlue,
+		linkcolor=MidnightBlue,
+    pdfpagemode=FullScreen,
+    }
+
+\usepackage{natbib}
+\usepackage[noabbrev]{cleveref}
+\setcitestyle{authoryear,open={(},close={)}}
+\bibliographystyle{plainnat}
+
+\usepackage{subfiles}
+
+\setlength\parindent{0pt}
+\spacing{1.2}
+
+\begin{document}
+
+\begin{center}
+       \vspace*{1cm}
+       \huge\textbf{Problemset 2} \\
+       \vspace{0.4cm}
+       \large \textbf{Public Finance in Macroeconomics} \\
+       \vspace{0.5cm}
+        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\ 
+        \vspace{0.3cm}
+        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{geek.png}\\Davide Difino \& Celina Proffen \\
+       \vspace{1.5cm}
+       \vfill
+       
+       % I also thought of adding some cool superheroe image her, but I didn't find one - feel free to delete the gecko if you don't like it/ find it appropriate! ;)
+       
+        Problem set in the context of Prof. Ludwig's course: \\
+        \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
+        at the Graduate School of Economics Finance and Management
+       \vspace{0.8cm}
+   \end{center}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Problem 1}
+
+\textcolor{red}{Question: Have you noted that interviews take place in a quarter (quarter indicates the quarter in which interview takes place) BUT consumption always refers to consumption in the 3 previous months!} \\
+
+Here I first insert all 4 regression tables for quarterly summary statistics.
+\input{PS2/summary_data_Q1}\\
+\input{PS2/summary_data_Q2}\\
+\input{PS2/summary_data_Q3}\\
+\input{PS2/summary_data_Q4}\\
+
+Or, for easily comparing the means in quarterly consumption measures, please see table \ref{compareQs}. \\
+
+\input{PS2/compare_Q_means}
+
+What we can see from here is that indeed some macro aspects carry over to this data on HH income/ consumption. Firstly, we observe that income (both net and gross) are particularly large for quarters 2 and 3, which is when loads of agricultural jobs take place. As we can probably see from \textcolor{red}{Davide's} tables/ graphs, that is also true in other datasets. \\
+
+Regarding consumption note:
+\begin{itemize}
+    \item \textbf{food:} Most consumption in Q3 and Q4 (Q4 makes sense --> Christmas, but Q3??)
+    \item \textbf{ndcons1} (strictly nondurables expenditures plus expenditures for apparel, health, education and reading): Specially large in the first quarter of the year: Seems like one has extra large expenditures on health/ education /apparel/ reading (maybe some fees are due?)
+    \item \textbf{ndcons2} (expenditures for food, alcoholic beverages, tobacco, utilities, personal care, household operations, public transportation, gasoline and motor oil, and miscellaneous expenditures): This is not very volatile. This implies that it is apparel/ health/ education/ reading that drives the patterns in ndcons1
+    \item \textbf{ndconsserv} (Non-durables and imported service flows from consumer durables): A bit low in Q2, but relatively stable.. Compareable to ndcons2 in terms of stability. 
+    \item \textbf{totcons:} Especially large in Q4 (Christmas), and especially low in Q3 (July, August, September.. - it is warm, people spend more time outside, less on heating and food). 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Problem 2}
+
+There are basically two specifications that we want to test. 
+
+\subsection*{Individual Consumption depends only on Aggregate Spending}
+
+This also means, that individual consumption changes co-move one-to-one with the economy's average expenditure changes (and not with individual income changes). We can test this by running the following regression:
+
+
+Thereby, we can proxy for changes in aggregate spending by \\
+a) changes in aggregate income, or
+b) changes in aggregate consumption.
+
+In specification b), I will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.) \\
+
+Here, I will first only include the regression tables for total consumption (but I have them for all) \\
+
+a) Table \ref{tab:totcons-deltacons} \input{PS2/reg_totcons_deltacons} \\
+% \input{PS2/reg_food_deltacons}
+% \input{PS2/reg_ndcons1_deltacons}
+% \input{PS2/reg_ndcons2_deltacons}
+% \input{PS2/reg_ndconsserv_deltacons}
+
+
+b) Table \ref{tab:totcons-deltainc}
+\input{PS2/reg_totcons_deltainc}
+% \input{PS2/reg_food_deltainc}
+% \input{PS2/reg_ndcons1_deltainc}
+% \input{PS2/reg_ndcons2_deltainc}
+% \input{PS2/reg_ndconsserv_deltainc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Individual Consumption Growth depends only on Aggregate Consumption Growth}
+
+I regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
+
+Here, I will first only include the regression tables for total consumption (but I have them for all). \\
+
+See table  \ref{tab:logtotcons-deltacons} for the regression results for total changes in log consumption. We would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.grossinc.change to be 0. \\
+\input{PS2/reg_totcons_logcons}
+
+% \input{PS2/reg_food_logcons} 
+% \input{PS2/reg_ndcons1_logcons}
+% \input{PS2/reg_ndcons2_logcons}
+% \input{PS2/reg_ndconsserv_logcons}
+
+\end{document}
+

@@ -1,0 +1,36 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{\label{tab:logndconsserv-deltacons} Explaining change in ndconsserv consumption growth}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+\hline
+log.averagendconsserv.change&       0.413\sym{***}&       0.412\sym{***}\\
+            &    (0.0390)         &    (0.0390)         \\
+lg.grossinc.change&      0.0317\sym{***}&                     \\
+            &   (0.00236)         &                     \\
+age         &   0.0000595         &   0.0000537         \\
+            & (0.0000931)         & (0.0000932)         \\
+hhsize      &    -0.00841\sym{***}&    -0.00854\sym{***}\\
+            &   (0.00104)         &   (0.00104)         \\
+1.quarter   &           0         &           0         \\
+            &         (.)         &         (.)         \\
+2.quarter   &     -0.0220\sym{***}&     -0.0221\sym{***}\\
+            &   (0.00475)         &   (0.00476)         \\
+3.quarter   &     -0.0171\sym{***}&     -0.0175\sym{***}\\
+            &   (0.00445)         &   (0.00446)         \\
+4.quarter   &     -0.0316\sym{***}&     -0.0318\sym{***}\\
+            &   (0.00459)         &   (0.00460)         \\
+year        &  -0.0000447         &  -0.0000462         \\
+            & (0.0000569)         & (0.0000570)         \\
+lg.netinc.change&                     &      0.0299\sym{***}\\
+            &                     &   (0.00240)         \\
+constant    &      0.0397\sym{***}&      0.0407\sym{***}\\
+            &   (0.00850)         &   (0.00851)         \\
+\hline
+\(N\)       &       44646         &       44448         \\
+\hline\hline
+\multicolumn{3}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{3}{l}{\footnotesize \sym{*} \(p<0.05\), \sym{**} \(p<0.01\), \sym{***} \(p<0.001\)}\\
+\end{tabular}
+\end{table}

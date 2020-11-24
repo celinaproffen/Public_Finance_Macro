@@ -82,49 +82,55 @@ Regarding consumption note:
 \textcolor{red}{Interviews take place in a quarter BUT consumption always refers to consumption in the 3 previous months, while income refers to the income in the last 12 months!} \\
 
 \textbf{Specifications in Mace's paper (??) and our extensions}
-There are basically two specifications that we want to test (both by Mace). Each of this will receive a subsection, in which we first reestimate (as well as possible, as we don't observe employment status) 
+There are basically two specifications that we want to test (both by Mace). Each of this will receive a subsection, in which we first re-estimate her results (as well as we possibly can, as we don't observe employment status). Then we usually expand on this specification by adding additional controls or extending the model otherwise. 
 
-\subsection*{Individual Consumption depends only on Aggregate Spending}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Hypothesis 1: Individual Consumption depends only on Aggregate Spending}
+What does the hypothesis expect? 
 
-This also means, that individual consumption changes co-move one-to-one with the economy's average expenditure changes (and not with individual income changes). We can test this by running the following regression:
+\textbf{2.1.A. Mace's specification}
+In all coming specification we will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.) on the individual and aggregate levels.
 
+Table \ref{tab:2.1A-deltacons} 
+\input{PS2/reg_2.1A_cons}
 
-Thereby, we can proxy for changes in aggregate spending by \\
-a) changes in aggregate income, or
-b) changes in aggregate consumption.
+\textbf{2.1.B. Our additional controls}
 
-In specification b), I will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.) \\
+Table \ref{tab:2.1B-deltacons-net}
+\input{PS2/regnet_2.1B_cons}
 
-Here, I will first only include the regression tables for total consumption (but I have them for all) \\
+\textbf{2.1.C. Our additional controls (plus controlling for gross income changes instead of net income changes)}
 
-a) Table \ref{tab:totcons-deltacons} \input{PS2/reg_totcons_deltacons} \\
-% \input{PS2/reg_food_deltacons}
-% \input{PS2/reg_ndcons1_deltacons}
-% \input{PS2/reg_ndcons2_deltacons}
-% \input{PS2/reg_ndconsserv_deltacons}
+Table \ref{tab:2.1B-deltacons-gross}
+\input{PS2/reggr_2.1B_cons}
 
+\textbf{2.1.D. We control for aggregate changes income (instead of aggregate changes in consumption)}
 
-b) Table \ref{tab:totcons-deltainc}
-\input{PS2/reg_totcons_deltainc}
-% \input{PS2/reg_food_deltainc}
-% \input{PS2/reg_ndcons1_deltainc}
-% \input{PS2/reg_ndcons2_deltainc}
-% \input{PS2/reg_ndconsserv_deltainc}
+Idea here: Hypothesis 1 argues that individual consumption changes co-move one-to-one with the economy's average expenditure changes (and not with individual income changes). Besides proxying for changes in aggregate spending by changes in aggregate consumption (as we did before), we can proxy for it using changes in aggregate income. We do that below, controlling for changes in net/ gross individual income.
+
+Table \ref{tab:2.1C-deltacons-net}
+\input{PS2/reg_2.1C_cons}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Individual Consumption Growth depends only on Aggregate Consumption Growth}
+What does the hypothesis expect? We would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.grossinc.change to be 0.
 
-I regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
+\textbf{2.2.A. Mace's specification}
 
-Here, I will first only include the regression tables for total consumption (but I have them for all). \\
+Table \ref{tab:2.2A-logdeltacons}
+\input{PS2/reg_2.2A_logcons}
 
-See table  \ref{tab:logtotcons-deltacons} for the regression results for total changes in log consumption. We would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.grossinc.change to be 0. \\
-\input{PS2/reg_totcons_logcons}
+\textbf{2.2.B. Our additional controls}
 
-% \input{PS2/reg_food_logcons} 
-% \input{PS2/reg_ndcons1_logcons}
-% \input{PS2/reg_ndcons2_logcons}
-% \input{PS2/reg_ndconsserv_logcons}
+Table \ref{tab:log2.2B-deltacons-net}
+\input{PS2/regnet_2.2B_logcons}
+
+\textbf{2.2.C. Our additional controls (plus controlling for gross income changes instead of net income changes)}
+
+Here, we regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
+
+Table \ref{tab:log2.2B-deltacons-gross}
+\input{PS2/reggr_2.2B_logcons}
 
 \end{document}
 

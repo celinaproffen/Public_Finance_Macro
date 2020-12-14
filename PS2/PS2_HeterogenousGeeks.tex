@@ -1,10 +1,11 @@
 \documentclass[12pt,a4paper]{article}
 
 \usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
-\usepackage[dvipsnames]{xcolor} % Colors
-
+\usepackage[dvipsnames]{xcolor} % colors
+\usepackage{amsthm}
+\usepackage{xcolor}
 \usepackage{standalone}
-
+\usepackage{physics}
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{amsfonts}
@@ -28,140 +29,176 @@
 \usepackage[noabbrev]{cleveref}
 \setcitestyle{authoryear,open={(},close={)}}
 \bibliographystyle{plainnat}
-
 \usepackage{subfiles}
-
 \setlength\parindent{0pt}
 \spacing{1.2}
 
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
 \begin{document}
+a) The concept of inter-temporal substitution $\psi(c)=-\frac{\partial\frac{c2}{c1}}{\frac{c2}{c1}}\bigg(\frac{\partial\frac{1}{1+r}}{\frac{1}{1+r}}\bigg)^{-1}$, measures by how much percent the relative demand changes between periods as a reaction to a percentage change in prices. Since we have to solve an inter-temporal portfolio choice model, the setting is no longer static and becomes dynamic, the need to measure inter-temporal shifts and describes consumer's willingness to substitute consumption over time arises as not only risk aversion, but also inter-temporal substitution elasticity determine consumption decisions. With CRRA utility function, the two measures are just reciprocal of each other, $\theta=\frac{1}{\psi}$ and can therefore not be controlled separately. However, it is reasonable to choose a recursive utility function such as Epstein-Zin-Weil preferences as it helps us in overcoming this property by breaking the link between the parameters $\theta$ and $\psi$.    \\
 
-\begin{center}
-       \vspace*{1cm}
-       \huge\textbf{Problemset 2} \\
-       \vspace{0.4cm}
-       \large \textbf{Public Finance in Macroeconomics} \\
-       \vspace{0.5cm}
-        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\ 
-        \vspace{0.3cm}
-        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{geek.png}\\Davide Difino \& Celina Proffen \\
-       \vspace{1.5cm}
-       \vfill
-       
-       % I also thought of adding some cool superheroe image her, but I didn't find one - feel free to delete the gecko if you don't like it/ find it appropriate! ;)
-       
-        Problem set in the context of Prof. Ludwig's course: \\
-        \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
-        at the Graduate School of Economics Finance and Management
-       \vspace{0.8cm}
-   \end{center}
+b) 
 
-\newpage
+\textbf{Proof by backward induction}:
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Investor's wealth evolves:
+\begin{equation*}
+    w_{t+1}=(w_t-c_t)R^{p}_{t+1}(\hat{\alpha_t})
+\end{equation*}
+Portfolio return is given by:
+\begin{equation*}
+  R^{p}_{t+1}(\hat{\alpha_t})=R^f+ \hat{\alpha_t}(R_{t+1}-R^f)
+\end{equation*}
+The optimization problem with Epstein-Zin-Weil utility function is given by:
+\begin{equation*}
+    U_t=\max\limits_{c_{t},\hat{\alpha}_{t},w_{t+1}}\bigg[ c_t^{1-\frac{1}{\psi}}+ \beta\bigg(\mathbb{E}_t\bigg[U^{1-\theta}_{t+1}\bigg]\bigg)^{\frac{1-\frac{1}{\psi}}{1-\theta}}\bigg]^{\frac{1}{1-\frac{1}{\psi}}}
+\end{equation*}
+Our guess is that the indirect utility function is given by $U_t=\gamma_t w_t$
+, $\gamma_t$ captures dependence on time and state variables.
+The indirect utility function is thus 
+\begin{equation*}
+   U_t(w_t) = \bigg[ c_t^{1-\frac{1}{\psi}}+\beta\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}w_{t+1}\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
+\end{equation*}
+Using the resource constraint, we get: 
+\begin{align*}
+     U_t(w_t)&=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}(w_t-c_t)R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
+     &=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta(w_t-c_t)^{1-\frac{1}{\psi}}\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
+     &=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta(w_t-c_t)^{1-\frac{1}{\psi}}g\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\frac{1}{\psi}}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
+     &=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta(w_t-c_t)^{1-\frac{1}{\psi}}\Lambda_{t+1}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
+\end{align*}
 
-\section*{Problem 1}
+where g(.) is the certainty equivalent. From this we can rewrite the FOC for consumption as:
+\begin{equation*}
+    c_t^{-\frac{1}{\psi}}=\beta(w_t-c_t)^{-\frac{1}{\psi}}\Lambda_{t+1}
+\end{equation*}
+and thus: 
+\begin{equation*}
+    c_t=(w_t-c_t)(\beta\Lambda_{t+1})^{-\psi}
+\end{equation*}
+and therefore: 
+\begin{equation*}
+    c_t=m_t w_t
+\end{equation*}
+where:
+\begin{equation*}
+    m_t=\frac{1}{1+b_{t+1}},\hspace{2mm} \text{$for$} \hspace{2mm} b_{t+1}=(\beta\Lambda_{t+1})^\psi
+\end{equation*}
 
-Regarding consumption note:
-\begin{itemize}
-    \item \textbf{food:} 
-    \item \textbf{ndcons1:} 
-    \item \textbf{ndcons2:} 
-    \item \textbf{ndconsserv:} 
-    \item \textbf{totcons:} 
-\end{itemize}
+Use this back in the objective to get: 
+\begin{align*}
+     U_t(w_t) &= \bigg[ (m_tw_t)^{1-\frac{1}{\psi}}+\beta\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}(1-m_t)w_tR^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
+     &= \bigg[ (m_t)^{1-\frac{1}{\psi}}+\beta(1-m_t)^{1-\frac{1}{\psi}}\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}w_tR^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
+     &=\bigg[ (m_t)^{1-\frac{1}{\psi}}+\beta(1-m_t)^{1-\frac{1}{\psi}}\Lambda_{t+1}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
+     &=\bigg[ \bigg(\frac{1}{1+b_t}\bigg)^{1-\frac{1}{\psi}}+b_{t+1}^{\frac{1}{\psi}}\bigg(\frac{b_{t+1}}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
+     &=\bigg[ \bigg(\frac{1}{1+b_t}\bigg)^{1-\frac{1}{\psi}}+b_{t+1}\bigg(\frac{1}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
+     &=\bigg[ \bigg(\frac{1}{1+b_t}\bigg)^{1-\frac{1}{\psi}}(1+b_{t+1})\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
+     &=\bigg(m_t^{-\frac{1}{\psi}}\bigg)^{\frac{1}{1-\frac{1}{\psi}}}w_t\\
+     &= m_t^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}w_t.
+\end{align*}
+Hence the guess is verified, where $\gamma_t=m_t^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}$ and $m_t=\frac{c_t}{w_t}$
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Next, notice that: 
+\begin{equation*}
+    g(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t))=g(m_t^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}R^{p}_{t+1}(\hat{\alpha}_t))
+\end{equation*}
 
-\section*{Problem 2}
+which since $m_{t+1}=\frac{1}{1+b_{t+2}}$ we can rewrite by stochastic independence assumption as:
+\begin{equation*}
+     g\big((\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t))\big)=g(\gamma_{t+1})g\big(R^{p}_{t+1}(\hat{\alpha_t})\big)
+\end{equation*} 
 
-\textbf{General explanation on how we deal with the data}:
+Consequently, the FOC w.r.t $\hat{\alpha}_t$ by the chain rule of differentiation can be rewritten to the partial derivative
 
-Since from the Mace paper only the second and the fifth interview contain useful income information and we always work with differences, we will focus on those individuals whose income is observed twice (in second and fifth interview). \\
-
-Interviews take place 9 months apart from one another (we confirmed that for all individuals). However, consumption always refers to consumption in the 3 previous months, while income refers to the income in the last 12 months. In order to handle this frequency imbalance for consumption and income data, we are regressing changes in 3-month-long consumption on changes in annual income (in both cases, the reported changes are calculated with information that is collected 9 months apart). Since 3 month-changes is 1/4 of yearly changes, in order to interpret the magnitude of the effect of income changes, we have to divide the coefficient on income by 4.\\
-
-
-Our solution to this problem consists of 2 subsections:
-\begin{itemize}
-    \item In the first subsection, we test for the perfect risk sharing hypothesis, namely, individual consumption depends only on aggregate spending/ consumption. In order to test this hypothesis, we employed the specification from \citealp{mace1991} which is given as follows:
 \begin{equation}\label{one}
-      \Delta C_t^J =\beta_1 \Delta C_t^a + \beta_2 \Delta y_t^J + u_t^J
+    \pdv{\mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big]}{\hat{\alpha_t}}=0
 \end{equation}
-where $\Delta C_t^J$ is the change in individual j's consumption, $\Delta C_t^a$ is the change of aggregate income, $\Delta y_t^J$ is the change in individual j's income. This specification applies to households with exponential utility.
+ 
+Let $\hat{\alpha_t}^{*}$ be the solution to equation \eqref{one}. In order to solve for  $\hat{\alpha_t}^{*}$, we use the approximation of $\mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big]$ given in  \textit{PFChoiceAPNotes}, which under log-normality of return can be approximated as: 
+\begin{equation*}
+  \mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big] \approx  exp\bigg((1-\theta)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg) \bigg)
+\end{equation*}
+Furthermore, 
+ $\mathbb{E}_t[ln(1+r^p_{t+1})]$ can be approximated as:
+\begin{equation*}
+    \mathbb{E}_t[ln(1+r^p_{t+1})]\approx \hat{\alpha_t}\mu_t +(1-\hat{\alpha_t})ln(1+r^f_{t+1})+\frac{1}{2}\hat{\alpha_t}(1-\hat{\alpha_t})\sigma_t^2.
+\end{equation*}
+Plugging this into the previous equation gives: 
+\begin{equation*}
+ \mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big]\approx exp\bigg((1-\theta)\bigg(\hat{\alpha_t}\mu_t +(1-\hat{\alpha_t})ln(1+r^f_{t+1})+\frac{1}{2}\hat{\alpha_t}(1-\hat{\alpha_t})\sigma_t^2+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg) \bigg)
+\end{equation*}
+where $\mu_t=\mathbb{E}_t[ln(1+r_{t+1})]$ is the conditional mean risky return. By this approximation, we can also approximate $(\sigma_t^p)^2$ as :
+\begin{equation*}
+    (\sigma_t^p)^2\approx\hat{\alpha}_t^2\sigma_t^2
+\end{equation*}
 
-\item In the second subsection, we test whether individual log consumption growth depends only on aggregate log consumption growth. In order to test this hypothesis, we employed the specification from \citealp{mace1991} which is given as follows:
+Equation $\eqref{one}$ becomes: 
+\begin{equation*}
+ \mu_t-ln(1+r^f_{t+1})+\frac{1}{2}(1-2\hat{\alpha}_t)\sigma^2+(1-\theta)\hat{\alpha}_t\sigma_t^2=0
+\end{equation*}
+Therefore, the approximation to household's investment decision, which is independent of time $t$, can be given as: 
+\begin{equation*}
+    \hat{\alpha_t}^{*}=\frac{\mu_t-ln(1+r^f_{t+1})+\frac{1}{2}\sigma_t^2}{\theta\sigma_t^2} 
+\end{equation*}
 
-\begin{equation}\label{two}
-      \Delta log  C_t^J =\beta_1 \Delta log C_t^a + \beta_2 \Delta log y_t^J + v_t^J
-\end{equation}
-where   $\Delta log  C_t^J$ is the log growth of individual j's consumption,   $  \Delta log  C_t^a$ is the log growth of aggregate consumption,  $ \Delta log y_t^J$ is the log growth of  individual j's income. This specification applies to households with power utility. \\
 
-Following this, we will re-estimate her results (as well as we possibly can, as we don’t observe employment status) using CEX dataset for both specifications. In both cases, we introduce some additional controls to extend the model and review alternative economic interpretations.
-\end{itemize}
 
-\textcolor{red}{I think it would be nice to add how we computed the individual variables, see stata file or Mace (just take average of all observed individual cons growths}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Hypothesis 1: Individual Consumption depends only on Aggregate Spending}
-From equation \eqref{one}, the predictions of risk sharing model are $\beta_1=1$ \& $\beta_2=0$, we would expect the coefficient on diff\_netinc to be 0 and coefficients on different types of consumption(avg-food-change, avg-ndcons1-change,  avg-ndcons2-change,avg-ndconsserv-change) to be 1. \\
 
-Please note: In all coming specification we will always look at the same type of consumption (i.e. food, non-durables including education, non-durables excluding education, etc.) on the individual and aggregate levels (the exact definitions of the consumption variables are given in  Problem 1). 
+Remember that: 
+\begin{equation*}
+    b_t=(\beta\Lambda_{t+1})^\psi
+\end{equation*}
+For implementation on computer, $b_{t+1}$ can be rewritten as:
+\begin{align*}
+    b_{t+1} &= (\beta\Lambda_{t+1})^\psi\\
+        &= \Bigg\{\beta \bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t^*)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\Bigg\}^\psi\\
+        &= \bigg[\beta g(\gamma_{t+1})^{1-\frac{1}{\psi}}g(R_{t+1}^p(\hat{\alpha}_t^*))^{1-\frac{1}{\psi}}\bigg]^\psi
+\end{align*}
+where: 
+\begin{equation*}
+  g(\gamma_{t+1})^{1-\frac{1}{\psi}}= \Bigg\{ \Bigg(\mathbb{E}_t\bigg[ \big(m_{t+1}^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}\big)^{1-\theta}\bigg]\Bigg)^{\frac{1}{1-\theta}}\Bigg\}^{1-\frac{1}{\psi}}=m_{t+1}^{-\frac{1}{\psi}}
+\end{equation*}
 
-\subsection*{Mace's specification}
+\begin{align*}
+  g(R_{t+1}^p(\hat{\alpha}_t^*))^{1-\frac{1}{\psi}}&= \Bigg\{ \Bigg(\mathbb{E}_t\bigg[ \big(  R_{t+1}^p(\hat{\alpha}_t^*)          \big)^{1-\theta}\bigg]\Bigg)^{\frac{1}{1-\theta}}\Bigg\}^{1-\frac{1}{\psi}}\\
+  &= \Bigg\{ \Bigg(  exp\bigg((1-\theta)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)      \Bigg)^{\frac{1}{1-\theta}}\Bigg\}^{1-\frac{1}{\psi}}\\
+  &= exp\bigg(\bigg(1-\frac{1}{\psi}\bigg)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)  
+\end{align*}
 
-\input{PS2/reg_2.1A_cons}
+Putting all together yields: 
+\begin{equation*}
+    b_{t+1}=m_{t+1}^{-1}\bigg[\beta  exp\bigg(\bigg(1-\textcolor{red}{\frac{1}{\psi}}\bigg)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\bigg]^{\textcolor{red}{\psi}}
+\end{equation*}
+The term colored in red is the difference from standard term when solving with CRRA utility. 
 
-In table \ref{tab:2.1A-deltacons}, we can see that the coefficient of diff\_netinc is close to 0, on the other hand, coefficients on the 4 different types of consumption change as well as on total consumption change are close to 1. All of these coefficients are statistically significant at $1\%$ level. This suggests that our result using Mace's exponential utility specification is in line with what is predicted by the risk sharing hypothesis. Across the variables that our dataset has in common with Mace's (total consumption, non-durables, food), we find the coefficients on those variables from our regression and hers are roughly the same. \textcolor{red}{However, using F test, Mace only found the coefficients significant when she regressed individual's Non-durables consumption change on average Non-durables consumption change. This may be due to the fact that she tested the hypothesis on coefficients using joint F tests, whereas we tested using t-tests and also that our dataset was different from hers.} In the next section we introduce additional controls to verify if not some other explanatory variable was driving the observed results.
+At terminal date, we have: 
+\begin{align*}
+    c_T&=w_T\\
+    U_T&=c_T=w_T
+\end{align*}
+Given this, marginal propensity to consume at terminal date  \big($m_T=\frac{c_T}{w_T}$\big)  is 1. Having found optimal portfolio choice $ \hat{\alpha_t^*}$, we can simulate portfolio return for every period, and therefore can recursively solve for optimal $c_t$ and $w_t$ in every period $t$ using the expressions given previously: 
+\begin{align*}
+    b_{t+1}&=m_{t+1}^{-1}\bigg[\beta  exp\bigg(\bigg(1-\frac{1}{\psi}\bigg)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\bigg]^{\psi}\\
+    m_{t}&=\frac{1}{1+b_{t+1}}\\
+    w_t^*&=\frac{w_{t+1}^*}{(1-m_t)R_{t+1}^p(\hat{\alpha}_t^*)}\\
+    c_t^*&=m_tw_t^*\\
+    \hat{\alpha_t}^{*}&=\frac{\mu_t-ln(1+r^f_{t+1})+\frac{1}{2}\sigma_t^2}{\theta\sigma_t^2} 
+\end{align*}
+c) Results are given in matlab file.\\
 
-\subsection*{Our additional controls} 
+d) when $\theta=\frac{1}{\psi}$, the red term in b) becomes the standard term when solving the model with CRRA utility function, therefore with the same terminal condition and other variables are the same, we get the same findings as yours.\\
 
-In table \ref{tab:2.1B-deltacons-net} , some additional variables are introduced into the model: dummy variables for 4 quarters, age and household size (hhzsize). The reason why we include dummy variables for 4 quarters is to control for the seasonality of consumption, i.e. aggregate consumption as well as individual level's consumption vary significantly across quarters. We have seem this takes place in the data in Problem 1. Adding quarterly dummy variables should eliminate any omitted variable bias that may occur in the previous model. Secondly, age is particularly relevant because, theoretically speaking, older household should have more chances to self-insure by accumulating wealth, since we don't have any wealth data in our dataset, age is a good proxy. (One could also think of adding squared age). Last but not least, different demographic groups have different consumption elasticity as well as different access to insurance. A larger household size means there is a higher likelihood of people of 2 or more demographic groups living in the same house, for example, a couple with two children are far less likely to reduce consumption due to income shock than household of couples with no children or singles  
-\input{PS2/regnet_2.1B_cons}. \\
-
-From table \ref{tab:2.1B-deltacons-net}, we can see that the coefficients of interest are still roughly the same and significant. By adding additional controls to the model, which serves as robustness check, our result still support the perfect risk sharing hypothesis.  
-
-\subsection*{Our additional controls plus controlling for gross income changes instead of net income changes} 
-Since net income changes may be correlated with household size (due to tax law, households with more children are taxed less and and result in a higher net income), which leads to the problem of multicollinearity, we used gross income as another proxy for income, which is free of correlation with household size, to deal with this problem. From table \ref{tab:2.1B-deltacons-gross}, we can see that coefficients of interest are still valid for perfect risk sharing hypothesis and statistically significant. 
-\input{PS2/reggr_2.1B_cons}
-
-\subsection*{Controlling for aggregate changes income (instead of aggregate changes in consumption)} 
-
-Idea here: Hypothesis 1 argues that individual consumption changes co-move one-to-one with the economy's average expenditure changes (and not with individual income changes). Besides proxying for changes in aggregate spending by changes in aggregate consumption (as we did before), we can proxy for it using changes in aggregate income. We do that below, controlling for changes in net/ gross individual income in table \ref{tab:2.1C-deltacons-net}
-
-\input{PS2/reg_2.1C_cons}
-
-\textcolor{red}{Analyze findings. Maybe add some conclusive paragraph on why we couldn't show that the perfect risk sharing hypothesis is wrong (we should have been able to do so, according to Prof. Ludwig..!)}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Hypothesis 2: Individual Consumption Growth depends only on Aggregate Consumption Growth}
-The difference between the second and first hypothesis is the choice of preference functions(exponential vs power utility) underlying the implication we are testing. From \citealp{mace1991}, following the specification of power utility and her derivation, there is a positive and linear relationship between the growth rates of individual consumption and the growth rate of aggregate consumption. From equation \eqref{two}, our prediction is that $\beta_1=1$ \& $\beta_2=0$, which means we would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.netinc.change to be 0. 
-
-\subsection*{Mace's specification}
-
-In table \ref{tab:2.2A-logdeltacons}, we can clearly see that aggregate consumption's growth rate co-moves one to one with individual consumption's growth rate (the same holds for different types of consumption: Food, Non-durables including education, Non-durables excluding education, etc.). However,  growth rate of income correlates with individual consumption's growth rate to a higher extent. To give an example, taking the case of total consumption, increases in the household's yearly net income of 100\% increase 3-monthly consumption by 8.5\% This effect may be relatively small, but it is economically and statistically significant.  \\
-
-Overall, the perfect risk sharing hypothesis still holds to a certain extent. In comparison to Mace's result, our result is in line with what she did and what the perfect risk sharing hypothesis predicted. More importantly this time, it doesn't matter if F-test or t-test was conducted, we and Mace both reached the same level of significance for coefficients on the aforementioned variables that our dataset and Mace's have in common. This suggests that perfect risk sharing hypothesis also holds for individuals with power utility. 
-\input{PS2/reg_2.2A_logcons}
-
-\subsection*{Our additional controls}
-
-Following the same idea for including controls when regressing using exponential preference specification,  Table \ref{tab:log2.2B-deltacons-net} still support the risk sharing hypothesis for a different class of preference 
-\input{PS2/regnet_2.2B_logcons}
-
-\subsection*{Our additional controls (plus controlling for gross income changes instead of net income changes)}
-
-Same idea from section 1.3 is employed in this section. Here, we regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
-
-Table \ref{tab:log2.2B-deltacons-gross}
-\input{PS2/reggr_2.2B_logcons}
-
-\clearpage
-\addcontentsline{toc}{section}{References}
-\bibliographystyle{agsm}
-\bibliography{references}
+e) when we set $\theta$ to the values from previous exercise for CRRA utility but let $\psi=0.5$, we can see that instead of $\psi=\frac{1}{\theta}=\frac{1}{150}$, which is very small in the case of CRRA preferences, now we have $\psi=0.5$ with EZW Preferences. When we look at the solution to the problem with CRRA and EZW preferences, we have that:
+\begin{align*}
+    b_{t+1}^{CRRA}&=m_{t+1}^{-1}\beta^{\frac{1}{\theta}}  exp\bigg(\bigg  (1-\theta\bigg)\frac{1}{\theta}\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\\
+     b_{t+1}^{EZW}&=m_{t+1}^{-1}\beta^\psi exp\bigg(\bigg(1-\frac{1}{\psi}\bigg)\psi\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\\
+\end{align*}
+For $\psi>\frac{1}{\theta}$(which is the case), the exponential term of $b_{t+1}^{EZW}$ will be larger than that of $b_{t+1}^{CRRA}$, also $\beta^\psi$ is larger than $\beta^\frac{1}{\theta}$. For the same $m_T$ in the last day of agent's life, we expect $b_t^{EZW}>b_t^{CRRA}$, which means $m_t^{EZW}<m_t^{CRRA}$ for all $t$. Further more the gap between $m_t^{EZW}$ and $m_t^{CRRA}$ becomes even larger when we come to initial periods of agent's life as $m_t$ depends on $m_{t+1},...,m_T$
+.This means that for a given realization of portfolio return path, with Epstein Zin preferences, an agent will consume less than in the case of CRRA preference in each period and shift his consumption towards later periods in his life. (\textcolor{red}{U guys can help me add some intuition for why this is the case}) \\
 
 \end{document}
+
 

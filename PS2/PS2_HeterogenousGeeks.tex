@@ -18,11 +18,10 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \hypersetup{
-    colorlinks=true,
-    citecolor=MidnightBlue,
-		linkcolor=MidnightBlue,
-    pdfpagemode=FullScreen,
-    }
+colorlinks=true,
+citecolor=MidnightBlue,
+linkcolor=MidnightBlue,
+pdfpagemode=FullScreen}
 
 \usepackage{natbib}
 \usepackage[noabbrev]{cleveref}
@@ -38,21 +37,21 @@
 
 \begin{center}
        \vspace*{1cm}
-       \huge\textbf{Problemset 2} \\
+       \huge\textbf{Project 2} \\
        \vspace{0.4cm}
        \large \textbf{Public Finance in Macroeconomics} \\
        \vspace{0.5cm}
-        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\ 
+        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\
         \vspace{0.3cm}
-        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{geek.png}\\Davide Difino \& Celina Proffen \\
+        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{graphs/geek.png}\\Davide Difino \& Celina Proffen \\
        \vspace{1.5cm}
        \vfill
-       
-       % I also thought of adding some cool superheroe image her, but I didn't find one - feel free to delete the gecko if you don't like it/ find it appropriate! ;)
-       
-        Problem set in the context of Prof. Ludwig's course: \\
+
+
+
+        Project in the context of Prof. Ludwig's course: \\
         \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
-        at the Graduate School of Economics Finance and Management
+        at the Graduate School of Economics, Finance and Management
        \vspace{0.8cm}
    \end{center}
 
@@ -61,21 +60,128 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Problem 1}
+\section*{Problem 1: Summary statistics}
 
-Regarding consumption note:
-\begin{itemize}
-    \item \textbf{food:} 
-    \item \textbf{ndcons1:} 
-    \item \textbf{ndcons2:} 
-    \item \textbf{ndconsserv:} 
-    \item \textbf{totcons:} 
-\end{itemize}
+\subsection*{Overall summary statistics per quarter}
+
+In the following we display summary statistics for several income and consumption measures per quarter. It can be seen that there are no large differences between the quarters.
+
+\begin{center}
+\input{tables/summary_data_Q1}
+\input{tables/summary_data_Q2}
+\input{tables/summary_data_Q3}
+\input{tables/summary_data_Q4}
+\end{center}
+
+\subsection*{Means and Std. Dev. of Income and Consumption for every year}
+
+These tables can be compared to Mace's Table 1, where she also displayed means and standard deviations of income and consumption per quarter. There are some fluctuations between the years, but we can not depict (strong) trends.
+
+\begin{center}
+\input{tables/compare_Q_means_sd_y1986}\\
+\input{tables/compare_Q_means_sd_y1987}\\
+\input{tables/compare_Q_means_sd_y1988}\\
+\input{tables/compare_Q_means_sd_y1989}\\
+\input{tables/compare_Q_means_sd_y1990}\\
+\input{tables/compare_Q_means_sd_y1991}\\
+\input{tables/compare_Q_means_sd_y1992}\\
+\input{tables/compare_Q_means_sd_y1993}\\
+\input{tables/compare_Q_means_sd_y1994}\\
+\input{tables/compare_Q_means_sd_y1995}\\
+\input{tables/compare_Q_means_sd_y1996}\\
+\input{tables/compare_Q_means_sd_y1997}\\
+\input{tables/compare_Q_means_sd_y1998}\\
+\input{tables/compare_Q_means_sd_y1999}\\
+\input{tables/compare_Q_means_sd_y2000}\\
+\end{center}
+
+\subsection*{Histograms and bar plots}
+
+We visualised variables of consumption and income by histograms. The histograms on the left display the absolute value and the absolute value of the aggregate measure once for the whole sample. The histograms on the right display the change and the aggregate change of the measure. The bar plots on the left display the mean of the measure per quarter per year. The bar plots on the right display the mean of the change of the measure per quarter per year. All in all, the plots underline what we've already seen in the summary statistics provided above: There are some fluctuations within and between years, but otherwise consumption is remarkably stable. It can be seen that there is a small positive trend in gross as well as net average income.
+
+\subsubsection*{Total consumption}
+\begin{center}
+\includegraphics[width=8cm]{graphs/totcons.png}
+\includegraphics[width=8cm]{graphs/totcons_change.png}\\
+\includegraphics[width=8cm]{graphs/totcons_agg.png}
+\includegraphics[width=8cm]{graphs/totcons_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/totcons_quarterly.png}
+\includegraphics[width=8cm]{graphs/totcons_change_quarterly.png}\\
+\end{center}
+
+\subsubsection*{Food}
+\begin{center}
+\includegraphics[width=8cm]{graphs/food.png}
+\includegraphics[width=8cm]{graphs/food_change.png}\\
+\includegraphics[width=8cm]{graphs/food_agg.png}
+\includegraphics[width=8cm]{graphs/food_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/food_quarterly.png}
+\includegraphics[width=8cm]{graphs/food_change_quarterly.png}\\
+\end{center}
+
+\subsubsection*{Nondurable consumption expenditures}
+\begin{center}
+\includegraphics[width=8cm]{graphs/ndcons1.png}
+\includegraphics[width=8cm]{graphs/ndcons1_change.png}\\
+\includegraphics[width=8cm]{graphs/ndcons1_agg.png}
+\includegraphics[width=8cm]{graphs/ndcons1_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/ndcons1_quarterly.png}
+\includegraphics[width=8cm]{graphs/ndcons1_change_quarterly.png}\\
+\end{center}
+
+
+\subsubsection*{Strictly nondurable consumption expenditures}
+\begin{center}
+\includegraphics[width=8cm]{graphs/ndcons2.png}
+\includegraphics[width=8cm]{graphs/ndcons2_change.png}\\
+\includegraphics[width=8cm]{graphs/ndcons2_agg.png}
+\includegraphics[width=8cm]{graphs/ndcons2_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/ndcons2_quarterly.png}
+\includegraphics[width=8cm]{graphs/ndcons2_change_quarterly.png}\\
+\end{center}
+
+\subsubsection*{Nondurables plus imputed service flows from consumer durables}
+\begin{center}
+\includegraphics[width=8cm]{graphs/ndconsserv.png}
+\includegraphics[width=8cm]{graphs/ndconsserv_change.png}\\
+\includegraphics[width=8cm]{graphs/ndconsserv_agg.png}
+\includegraphics[width=8cm]{graphs/ndconsserv_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/ndconsserv_quarterly.png}
+\includegraphics[width=8cm]{graphs/ndconsserv_change_quarterly.png}\\
+
+\end{center}
+\subsubsection*{Household income before taxes}
+\begin{center}
+\includegraphics[width=8cm]{graphs/grinc.png}
+\includegraphics[width=8cm]{graphs/grinc_change.png}\\
+\includegraphics[width=8cm]{graphs/grinc_agg.png}
+\includegraphics[width=8cm]{graphs/grinc_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/grinc_quarterly.png}
+\includegraphics[width=8cm]{graphs/grinc_change_quarterly.png}\\
+\end{center}
+
+\subsubsection*{Household income after taxes}
+\begin{center}
+\includegraphics[width=8cm]{graphs/netinc.png}
+\includegraphics[width=8cm]{graphs/netinc_change.png}\\
+\includegraphics[width=8cm]{graphs/netinc_agg.png}
+\includegraphics[width=8cm]{graphs/netinc_agg_change.png}\\
+\includegraphics[width=8cm]{graphs/netinc_quarterly.png}
+\includegraphics[width=8cm]{graphs/netinc_change_quarterly.png}\\
+\end{center}
+
+\subsubsection*{GDP, recessions, income and consumption}
+To detect business cycle effects we plotted (i) total income changes in comparison with GDP changes and NBER recessions in the given time span as well as (ii) consumption changes in comparison with GDP changes and NBER recessions in the given time span. We can see fluctuations during recessions, yet, they are not considerably different in magnitute from other occuring fluctuations.
+
+\begin{center}
+\includegraphics[width=14cm]{graphs/inc_gdp.png}\\
+\includegraphics[width=14cm]{graphs/inc_cons.png}\\
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Problem 2}
+\section*{Problem 2: }
 
 \textbf{General explanation on how we deal with the data}:
 
@@ -99,10 +205,17 @@ where $\Delta C_t^J$ is the change in individual j's consumption, $\Delta C_t^a$
 \end{equation}
 where   $\Delta log  C_t^J$ is the log growth of individual j's consumption,   $  \Delta log  C_t^a$ is the log growth of aggregate consumption,  $ \Delta log y_t^J$ is the log growth of  individual j's income. This specification applies to households with power utility. \\
 
-Following this, we will re-estimate her results (as well as we possibly can, as we don’t observe employment status) using CEX dataset for both specifications. In both cases, we introduce some additional controls to extend the model and review alternative economic interpretations.
+$\Delta log  C_t^a$ are computed as in \citealp{mace1991}:
+
+\begin{equation}\label{two}
+      \Delta log  C_t^a = \frac{1}{J} \sum_{J}^{J=1} \Delta log  C_t^J
+\end{equation}.
+
+That is, the average across households of log-differences of consumption. \\
+
+Following this, we will re-estimate her results (as well as we possibly can, as we don’t observe employment status) using CEX dataset for both specifications. In both cases, we introduce some additional controls to extend the model and review alternative economic interpretations. We present the regression tables and comment on the F-tests testing the joint hypothesis on the coefficients on aggregate consumption changes (growth) and individual income changes (growth).
 \end{itemize}
 
-\textcolor{red}{I think it would be nice to add how we computed the individual variables, see stata file or Mace (just take average of all observed individual cons growths}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Hypothesis 1: Individual Consumption depends only on Aggregate Spending}
@@ -112,51 +225,64 @@ Please note: In all coming specification we will always look at the same type of
 
 \subsection*{Mace's specification}
 
-\input{PS2/reg_2.1A_cons}
+\input{tables/reg_2.1A_cons}
 
-In table \ref{tab:2.1A-deltacons}, we can see that the coefficient of diff\_netinc is close to 0, on the other hand, coefficients on the 4 different types of consumption change as well as on total consumption change are close to 1. All of these coefficients are statistically significant at $1\%$ level. This suggests that our result using Mace's exponential utility specification is in line with what is predicted by the risk sharing hypothesis. Across the variables that our dataset has in common with Mace's (total consumption, non-durables, food), we find the coefficients on those variables from our regression and hers are roughly the same. \textcolor{red}{However, using F test, Mace only found the coefficients significant when she regressed individual's non-durables consumption change on average Non-durables consumption change. This may be due to the fact that she tested the hypothesis on coefficients using joint F tests, whereas we tested using t-tests and also that our dataset was different from hers.} In the next section we introduce additional controls to verify if not some other explanatory variable was driving the observed results.
+In table \ref{tab:2.1A-deltacons}, we can see that the coefficient of diff\_netinc is close to 0, on the other hand, coefficients on the 4 different types of consumption change as well as on total consumption change are close to 1. All of these coefficients are statistically significant at $1\%$ level. Across the variables that our dataset has in common with Mace's (total consumption, non-durables, food), we find the coefficients on those variables from our regression and hers are roughly the same. 
 
-\subsection*{Our additional controls} 
+In contrast, using F test, Mace found the coefficients significant when she regressed individual's Non-durables consumption change on average Non-durables consumption change. Our specification of the F-tests all indicate p-values of under 0.001, rejecting that (using this exponential utility specification), the results are in line with what is predicted by the risk sharing hypothesis This difference may be due to the fact that she tested the hypothesis using a different dataset and including the control for changes in employment status. In the next section we introduce additional controls to verify if not some other explanatory variable was driving the observed results.
 
-In table \ref{tab:2.1B-deltacons-net} , some additional variables are introduced into the model: dummy variables for 4 quarters, age and household size (hhzsize). The reason why we include dummy variables for 4 quarters is to control for the seasonality of consumption, i.e. aggregate consumption as well as individual level's consumption vary significantly across quarters. We have seem this takes place in the data in Problem 1. Adding quarterly dummy variables should eliminate any omitted variable bias that may occur in the previous model. Secondly, age is particularly relevant because, theoretically speaking, older household should have more chances to self-insure by accumulating wealth, since we don't have any wealth data in our dataset, age is a good proxy. (One could also think of adding squared age). Last but not least, different demographic groups have different consumption elasticity as well as different access to insurance. A larger household size means there is a higher likelihood of people of 2 or more demographic groups living in the same house, for example, a couple with two children are far less likely to reduce consumption due to income shock than household of couples with no children or singles  
-\input{PS2/regnet_2.1B_cons}. \\
+\subsection*{Our additional controls}
 
-From table \ref{tab:2.1B-deltacons-net}, we can see that the coefficients of interest are still roughly the same and significant. By adding additional controls to the model, which serves as robustness check, our result still support the perfect risk sharing hypothesis.  
+In table \ref{tab:2.1B-deltacons-net} , some additional variables are introduced into the model: dummy variables for 4 quarters, age and household size (hhzsize). The reason why we include dummy variables for 4 quarters is to control for the seasonality of consumption, i.e. aggregate consumption as well as individual level's consumption vary significantly across quarters. We have seem this takes place in the data in Problem 1. Adding quarterly dummy variables should eliminate any omitted variable bias that may occur in the previous model. Secondly, age is particularly relevant because, theoretically speaking, older household should have more chances to self-insure by accumulating wealth, since we don't have any wealth data in our dataset, age is a good proxy. (One could also think of adding squared age). Last but not least, different demographic groups have different consumption elasticity as well as different access to insurance. A larger household size means there is a higher likelihood of people of 2 or more demographic groups living in the same house, for example, a couple with two children are far less likely to reduce consumption due to income shock than household of couples with no children or singles.
 
-\subsection*{Our additional controls plus controlling for gross income changes instead of net income changes} 
-Since net income changes may be correlated with household size (due to tax law, households with more children are taxed less and and result in a higher net income), which leads to the problem of multicollinearity, we used gross income as another proxy for income, which is free of correlation with household size, to deal with this problem. From table \ref{tab:2.1B-deltacons-gross}, we can see that coefficients of interest are still valid for perfect risk sharing hypothesis and statistically significant. 
-\input{PS2/reggr_2.1B_cons}
+The F-tests indicate p-values well below the 1\% level, which we again interpret as a clear rejection of Mace's hypothesis. 
 
-\subsection*{Controlling for aggregate changes income (instead of aggregate changes in consumption)} 
+\input{tables/regnet_2.1B_cons}. \\
+
+From table \ref{tab:2.1B-deltacons-net}, we can see that the coefficients of interest are still roughly the same and significant. By adding additional controls to the model, which serves as robustness check, the coefficients don't change much in either significance or size. 
+
+Also in this specification The F-tests on indv. income changes and aggregate consumption changes indicate p-values well below the 1\% level, which we interpret as a clear rejection of Mace's hypothesis. 
+
+\subsection*{Our additional controls plus controlling for gross income changes instead of net income changes}
+Since net income changes may be correlated with household size (due to tax law, households with more children are taxed less and and result in a higher net income), which leads to the problem of multicollinearity, we used gross income as another proxy for income, which is free of correlation with household size, to deal with this problem. From table \ref{tab:2.1B-deltacons-gross}, we can see that coefficients of interest are still in the magnitude expected by the perfect risk sharing hypothesis and statistically significant. However, the F-tests again indicate a clear rejection of the perfect risk sharing hypothesis (p-values below 1\% for all measures of consumption).
+
+\input{tables/reggr_2.1B_cons}
+
+\subsection*{Controlling for aggregate changes income (instead of aggregate changes in consumption)}
 
 Idea here: Hypothesis 1 argues that individual consumption changes co-move one-to-one with the economy's average expenditure changes (and not with individual income changes). Besides proxying for changes in aggregate spending by changes in aggregate consumption (as we did before), we can proxy for it using changes in aggregate income. We do that below, controlling for changes in net/ gross individual income in table \ref{tab:2.1C-deltacons-net}
 
-\input{PS2/reg_2.1C_cons}
+\input{tables/reg_2.1C_cons}
 
-\textcolor{red}{Analyze findings. Maybe add some conclusive paragraph on why we couldn't show that the perfect risk sharing hypothesis is wrong (we should have been able to do so, according to Prof. Ludwig..!)}
+The F-tests help us to reject the perfect risk sharing hypothesis, with all p-values being well below the 1\% significance level for all measures of consumption. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Hypothesis 2: Individual Consumption Growth depends only on Aggregate Consumption Growth}
-The difference between the second and first hypothesis is the choice of preference functions(exponential vs power utility) underlying the implication we are testing. From \citealp{mace1991}, following the specification of power utility and her derivation, there is a positive and linear relationship between the growth rates of individual consumption and the growth rate of aggregate consumption. From equation \eqref{two}, our prediction is that $\beta_1=1$ \& $\beta_2=0$, which means we would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.netinc.change to be 0. 
+The difference between the second and first hypothesis is the choice of preference functions(exponential vs power utility) underlying the implication we are testing. From \citealp{mace1991}, following the specification of power utility and her derivation, there is a positive and linear relationship between the growth rates of individual consumption and the growth rate of aggregate consumption. From equation \eqref{two}, our prediction is that $\beta_1=1$ \& $\beta_2=0$, which means we would expect the coefficient on log.averagetotcons.change to be 1, and the coefficient on log.netinc.change to be 0. We can test this joint parameter assumption using F-tests.
 
 \subsection*{Mace's specification}
 
 In table \ref{tab:2.2A-logdeltacons}, we can clearly see that aggregate consumption's growth rate co-moves one to one with individual consumption's growth rate (the same holds for different types of consumption: Food, Non-durables including education, Non-durables excluding education, etc.). However,  growth rate of income correlates with individual consumption's growth rate to a higher extent. To give an example, taking the case of total consumption, increases in the household's yearly net income of 100\% increase 3-monthly consumption by 8.5\% This effect may be relatively small, but it is economically and statistically significant.  \\
 
-Overall, the perfect risk sharing hypothesis still holds to a certain extent. In comparison to Mace's result, our result is in line with what she did and what the perfect risk sharing hypothesis predicted. More importantly this time, it doesn't matter if F-test or t-test was conducted, we and Mace both reached the same level of significance for coefficients on the aforementioned variables that our dataset and Mace's have in common. This suggests that perfect risk sharing hypothesis also holds for individuals with power utility. 
-\input{PS2/reg_2.2A_logcons}
+The F-tests now indicate even smaller p-values as before (e.g. as in exercise 1.a). This leads us to also reject the perfect risk sharing hypothesis in this specification. Overall, the perfect risk sharing hypothesis still holds to a certain extent in Mace's paper, which is not the case in our data. 
+
+It is, however, to be noted that both we and Mace both reached the same level of significance for coefficients on the aforementioned variables (in separate t-tests). This is potentially interesting given the different time periods covered by ours vs. Mace's dataset.
+\input{tables/reg_2.2A_logcons}
 
 \subsection*{Our additional controls}
 
-Following the same idea for including controls when regressing using exponential preference specification,  Table \ref{tab:log2.2B-deltacons-net} still support the risk sharing hypothesis for a different class of preference 
-\input{PS2/regnet_2.2B_logcons}
+Following the same idea for including controls when regressing using exponential preference specification, Table \ref{tab:log2.2B-deltacons-net} still support the risk sharing hypothesis for a different class of preferences in terms of the single coefficients. The F-tests again indicate a clear rejection of the perfect risk sharing hypothesis.
+\input{tables/regnet_2.2B_logcons}
+
+
 
 \subsection*{Our additional controls (plus controlling for gross income changes instead of net income changes)}
 
-Same idea from section 1.3 is employed in this section. Here, we regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. 
+Same idea from section 1.3 is employed in this section. Here, we regress individual HH's consumption growth rates (in its different specifications) in the past 9 months (time between the surveys) on the growth rate of aggregate consumption of that type, the growth rate of the HH's income and HH characteristics such as (age, HH size) and seasonal variation. The F-tests again indicate a clear rejection of the perfect risk sharing hypothesis.
 
+\nocite{*}
 Table \ref{tab:log2.2B-deltacons-gross}
-\input{PS2/reggr_2.2B_logcons}
+\input{tables/reggr_2.2B_logcons}
 
 \clearpage
 \addcontentsline{toc}{section}{References}
@@ -164,4 +290,3 @@ Table \ref{tab:log2.2B-deltacons-gross}
 \bibliography{references}
 
 \end{document}
-

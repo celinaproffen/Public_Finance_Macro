@@ -266,7 +266,7 @@ consumption growth = consumption(2:end) divided elementwise consumption (1:(end-
 end function: fwdsolve
 \end{lstlisting}
 
-\section*{Exercise 2}
+\section*{Problem 1.2}
 
 \textbf{Q: Why do I ask you to choose such a high degree of risk aversion?}
 
@@ -384,7 +384,7 @@ A: Note, that alpha varies with $\theta$ the same way as $\alpha_hat$ varies wit
 
 A: Agents accumulate assets (and cash-at-hand) before retiring and consume them fully before dying - note that in this context death is exogenous and non-stochastic. This implies that the marginal consumption of cash at hand increases over time. Consumption is highly volatile across the entire lifespan of the agent. It might be argued that consumption gets more volatile for older agents: young agents can dissave - knowing that, on expectation, they can save more later - and thus partially smooth consumption. On the other hand, older agents (that rely on a limited income and are dissaving their asset) cannot smooth consumption that easily.
 
-\section*{Problem 3}
+\section*{Problem 1.3}
 
 \textbf{Q: Relate the portfolio allocation for the case $\theta = 150$ and $\rho = 0.04$ to the "rule of thumb" advice of a fund manager who suggests to hold $\alpha_j = 1- \frac{j}{100}$ in stocks where $j$ is age.}
 
@@ -411,7 +411,7 @@ This indicates, that the optimal shares predicted by the model will smooth out w
 
 The proposed allocation is linear, which stands in contrast to the model findings. Also, according to the rule of thumb behavior, younger agents should invest in way less risky portfolios than they do in the model. On the other hand, old agents should invest in more risky assets than proposed by the model.
 
-\section*{Problem 3}
+\section*{Problem 1.4}
 
 a) The concept of inter-temporal substitution $\psi(c)=-\frac{\partial\frac{c2}{c1}}{\frac{c2}{c1}}\bigg(\frac{\partial\frac{1}{1+r}}{\frac{1}{1+r}}\bigg)^{-1}$, measures by how much percent the relative demand changes between periods as a reaction to a percentage change in prices. Since we have to solve an inter-temporal portfolio choice model, the setting is no longer static and becomes dynamic, the need to measure inter-temporal shifts and describes consumer's willingness to substitute consumption over time arises as not only risk aversion, but also inter-temporal substitution elasticity determine consumption decisions. With CRRA utility function, the two measures are just reciprocal of each other, $\theta=\frac{1}{\psi}$ and can therefore not be controlled separately. However, it is reasonable to choose a recursive utility function such as Epstein-Zin-Weil preferences as it helps us in overcoming this property by breaking the link between the parameters $\theta$ and $\psi$.    \\
 
@@ -644,10 +644,11 @@ Our simulation shows that, as expected, the agent behaviour does not change with
     \label{fig:10}
 \end{figure}
 
+\pagebreak
 
-\clearpage
-\addcontentsline{toc}{section}{References}
-\bibliographystyle{agsm}
-\bibliography{references}
+\section*{Problem 2}
+
+Cocco et al (2005) investigate a finite horizon life cycle model of consumption and portfolio choice with non-tradable labour income which can be seen as a substitute for risk-free asset holdings and market incompleteness, in particular borrowing constraints, using realistic restrictions. Therefore, they estimate the labour income stream for different educational groups using the PSID, and find that its shape induces the agent to decrease his (proportional) asset holdings over time. Further, agents who face higher income risk hold smaller portfolio shares in equities such that income risk crowds out risk from holding assets. The crowding out effect becomes larger when the model allows for disastrous labour income draws. Additionally, the authors investigate the effect of endogenous borrowing constraints in their incomplete market setting. They find that the lower bound for the income distribution is key in determining borrowing capacity and portfolio allocation. Agents whose income process is bounded are faced with a positive endogenous borrowing constraint that induces the young to hold negative wealth and do not invest in equities. Lastly, the authors compute the utility cost associated with portfolio decisions that are not optimal and find that there is a substantial utility loss occurring from investing a constant share - which would be optimal under complete markets - and ignoring the labour income stream.
+
 
 \end{document}

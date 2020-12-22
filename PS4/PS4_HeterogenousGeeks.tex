@@ -1,0 +1,122 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor} % Colors
+
+\usepackage{standalone}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+\usepackage{csquotes}
+\usepackage{natbib}
+% Bibliography
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+citecolor=MidnightBlue,
+linkcolor=MidnightBlue,
+pdfpagemode=FullScreen}
+
+\usepackage{natbib}
+\usepackage[noabbrev]{cleveref}
+\setcitestyle{authoryear,open={(},close={)}}
+\bibliographystyle{plainnat}
+
+\usepackage{subfiles}
+
+\setlength\parindent{0pt}
+\spacing{1.2}
+
+\begin{document}
+
+\begin{center}
+       \vspace*{1cm}
+       \huge\textbf{Project 4} \\
+       \vspace{0.4cm}
+       \large \textbf{Public Finance in Macroeconomics} \\
+       \vspace{0.5cm}
+        \large Handed in by the \textcolor{purple}{\textbf{Heterogeneous Geeks}} \\
+        \vspace{0.3cm}
+        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{graphs/geek.png}\\Davide Difino \& Celina Proffen \\
+       \vspace{1.5cm}
+       \vfill
+
+
+
+        Project in the context of Prof. Ludwig's course: \\
+        \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
+        at the Graduate School of Economics, Finance and Management
+       \vspace{0.8cm}
+   \end{center}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Problem 1: }
+
+\includegraphics[width=0.5\textwidth]{PS4/graphs/smoothed_yy5b_hat.png}\\ \\
+\includegraphics[width=0.5\textwidth]{PS4/graphs/smoothed_yy6b_hat.png}
+
+\section*{Problem 2}
+Please see code and remarks in code. We refer to the measures of income $yhh5$ and $yhh6$ for pre and post-government income respectively. As required, we deflate these measures and then apply logarithms before computing predicted values and residuals. 
+
+\\
+
+\section*{Problem 3: Interpretations}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Variable} & \textbf{Pre government income} & \textbf{Post government income}  \\ \hline
+$\rho$                        &   .9652454 (.0546179)  &  .8501573  (.038411)         \\ \hline
+$\sigma^2_z$                  &   2.385936 (17.57936)  &  -1729.153 (3620.489)        \\ \hline
+$\sigma^2_\nu$                &   .0550472 (.1076207)  &   .2028518 (.0676536)        \\ \hline
+$\sigma^2_\epsilon$           &   .3610598  (.084534)  &   .1343607 (.0364851)        \\ \hline
+$\sigma^2_{\Tilde{y}}$        &   1.167006             &   .8660633                   \\ \hline
+\end{tabular}
+\caption{\label{tab:estimates}The estimates for all variables but $\sigma^2_{\Tilde{y}}$ stem from estimations in the stata do.file handed in together with this project instructions. The estimate of $\sigma^2_{\Tilde{y}}$ is computed using the formula given in the project instructions and also derived below.}
+\end{table}
+
+Remember from the project instructions the following two equations
+\begin{equation}\tag{1a}
+    \Tilde{y}_{ijt} = z_{ijt} - \epsilon_{ijt}
+\end{equation}
+\begin{equation}\tag{1b}
+    z_{ijt} = \rho z_{ij-1t-1} - \nu_{ijt}
+\end{equation}
+
+Let's start by deriving a new representation for residual income from (1) in the project instructions. First note that (1a) implies
+\begin{align}
+    z_{ij-1t-1} = \Tilde{y}_{ij-1t-1} - \epsilon_{ij-1t-1}
+\end{align}
+As $\epsilon$ is equally distributed over ages and individuals this can be rewritten as:
+\begin{align}
+    z_{ij-1t-1} = \Tilde{y}_{ij-1t-1} - \epsilon_{t-1}
+\end{align}
+Inserting the equation above in (1b) and noticing that $\ni$ is also distributed identically over ages and individuals:
+\begin{align}
+    z_{ijt} & = \rho(\Tilde{y}_{ij-1t-1} - \epsilon_{t-1}) + \nu_{ijt} \\
+            & = \rho(\Tilde{y}_{ij-1t-1} - \epsilon_{t-1}) + \nu_{t}
+\end{align}
+Plugging in this transformation in (1a) yields:
+\begin{align}
+    \Tilde{y}_{ijt} = \rho\Tilde{y}_{ij-1t-1}  + \nu_{t} + \epsilon_t - \rho \epsilon_{t-1}
+\end{align}
+
+Now, for deriving the variance of $\Tilde{y}$, i.e. $\sigma^2_{\Tilde{y}}$, \textbf{a key assumption will be that all shocks are orthogonal to each other}, meaning that their co-variance is equal to zero. Also, it is important to assume that the process is weakly stationary (i.e. (co)variances do not change over time). 
+
+Taking the variance of the equation above yields:
+\begin{align}
+    \sigma^2_{\Tilde{y}} & = \rho^2 \sigma^2_{\Tilde{y}} + \sigma^2_\nu + (1-\rho^2)\sigma^2_\epsilon \\
+                         & = \frac{\sigma^2_\nu}{(1-\rho^2)} + \sigma^2_\epsilon
+\end{align}
+This proves the statement. The formula was used to estimate the variance of the residual income $\sigma^2_{\Tilde{y}}$.
+\end{document}

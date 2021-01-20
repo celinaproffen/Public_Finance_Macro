@@ -15,6 +15,8 @@
 \usepackage{csquotes}
 \usepackage{natbib}
 \usepackage{accents}
+\usepackage{pdfpages}
+
 % Bibliography
 \usepackage{xcolor}
 \usepackage{hyperref}
@@ -36,7 +38,7 @@ pdfpagemode=FullScreen}
   numberstyle=\tiny\color{gray},
   keywordstyle=\color{Red},
   commentstyle=\color{MidnightBlue},
-  stringstyle=\color{mauve},
+  stringstyle=\color{Red},
   breaklines=true,
   breakatwhitespace=true,
   tabsize=3
@@ -82,9 +84,9 @@ pdfpagemode=FullScreen}
 
 %-----------------------------------------------------
 
-\section*{Problem 1: Solution}
+\section{Solution}
 
-\subsection*{Explain all sections of the code}
+\subsection{Explain all sections of the code}
 
 The main function presented in {\fontfamily{ccr}\selectfont towards\_olg} are:
 
@@ -155,9 +157,9 @@ function grd = makegrid(x1,x2,n,c)
 % ------------------------------------------------------------------------------- %
 \end{lstlisting}
 
-For a more detailed description, please refer to {\fontfamily{ccr}\selectfont toward\_olg\_annotated}.
+For a more detailed description, please refer to {\fontfamily{ccr}\selectfont toward\_olg\_commented}.
 
-\subsection*{Compare the solution procedure in {\fontfamily{ccr}\selectfont func\_hh} to a standard implementation of the exogenous grid method}
+\subsection{}
 
 The solution procedure in {\fontfamily{ccr}\selectfont func\_hh} uses the "endogenous gridpoints approach" for solving dynamic stochastic optimization problems, as introduced by \citeauthor{carroll2002lecture} (\citeyear{carroll2002lecture}, \citeyear{carroll2006method}). Instead of creating using an "exogenous" - in that it is given by the coder - grid for the state variable cash-on-hand ($x$), the "endogenous" approach exploit the definion
 
@@ -169,18 +171,138 @@ The exogenous grid approach, on the other hand, does both the derivation of the 
 
 The advantages of the exogenous grid method are twofold: first of all, it does not require a nonlinear rootfinding since the Euler equation is solved for $c$ given $s$, instead of $x$, thus removing consumption from the RHS. Second, updating the value function over the endogenous grid for $x$ is more efficient in that the value function ($V'$) is interpolated only for values of $x'$ that have been used to compute $c'$ in the first istance, while the exogenous approch loops over \textit{all} possible $x'$.
 
+\subsection{}
+
+Please refer to {\fontfamily{ccr}\selectfont toward\_olg\_exogenous}
+
+\subsection{}
+
+Please refer to {\fontfamily{ccr}\selectfont toward\_olg\_second\_order}
+
+\subsection{}
+
+\textbf{What is the role of the objects TT and Phi?}
+
+Firstly, for this exercise, we need to understand even more clearly how pi, pini and gridy look like. They are explained in the mchain function.
+
+\begin{lstlisting}[frame=single]
+[pini,pi,gridy]=mchain(rhoeta,epsil);
+
+% pi are Transition Probabilities. You always have 1- rhoeta probability of remaining in you current state.. although i find it weird that the off-diagonal elements are also one
+pi=rhoeta*ones(2,2);
+pi(1,2)=1.0-rhoeta;
+pi(2,1)=1.0-rhoeta;
+
+% gridy are rescaled income shocks such that mean is one
+gridy=zeros(2,1);
+gridy(1)=exp(1.0-epsil);
+gridy(2)=exp(1.0+epsil);
+gridy=2.0*gridy/(sum(gridy));
+
+% pini is Initial Distribution
+pini=0.5*ones(2,1);
+\end{lstlisting}
+
+Okay, so now that this is clear, let's try to explain the role of TT and Phi! Both these objects are defined and used in lines 402-434 in the code, which is why  inserted the corresponding section below:
+
+\begin{lstlisting}[frame=single]
+    function [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass)
+
+    global r nj nx ny pi gridy netw pens sr epsi pini frac totpop
+
+    disp('aggregation and cross-sectional measure');
+
+    % Compute Cross sectional distributions and aggregate variables
+    Phi = zeros(nj,ny,nx);          % distribution of assets conditional by age and shock
+    PhiAss = zeros(nx,1);             % distribution of assets
+
+    % Distribution of newborns over cash at hand
+    for yc=1:ny
+
+        % income (wages and pensions) in current period/age:
+        inc=epsi(1)*netw*gridy(yc)+(1-epsi(1))*pens;
+
+        % initial cash-on-hand:
+        cahini=inc;
+
+        [vals,inds]=basefun(gridx(1,yc,:),cahini,nx);
+        Phi(1,yc,inds(1))=vals(1)*pini(yc)*frac(1);
+        Phi(1,yc,inds(2))=vals(2)*pini(yc)*frac(1);
+    end;
+
+    for jc=2:nj
+        TT = zeros(ny,nx,ny,nx);    % transfer function
+
+        for xc=1:nx
+            for yc=1:ny
+                for ycc=1:ny
+
+                    % income (wages and pensions) in current period/age:
+                    inc=epsi(jc)*netw*gridy(ycc)+(1-epsi(jc))*pens;
+
+                    % cash on hand: x=a*(1+r)+y = s(-1)*(1+r)+y;
+                    cah=inc+(1.0+r)*gridsav(xc);
+
+                    [vals,inds]=basefun(gridx(jc,ycc,:),cah,nx);
+
+                    TT(ycc,inds(1),yc,xc)=vals(1)*pi(yc,ycc);
+                    TT(ycc,inds(2),yc,xc)=vals(2)*pi(yc,ycc);
+                end;
+            end;
+        end;
+
+        for xc=1:nx
+            for yc=1:ny
+                for xcc=1:nx
+                    for ycc=1:ny
+                        % transfer distribution:
+                        Phi(jc,ycc,xcc)=Phi(jc,ycc,xcc)+Phi(jc-1,yc,xc)*TT(ycc,xcc,yc,xc)*sr(jc-1);
+                    end;
+                end;
+            end;
+        end;
+
+    end;    % end for jc
 
 
-\subsection*{Implement the standard method of exogenous grid points by working with an exogenous grid for cash-on-hand x}
+\end{lstlisting}
 
-\subsection*{Implement a standard value function iteration}
+First notice that Phi has three dimensions: It accounts for age, the current state of income shocks and the level of cah that individuals hold. In the first period of life we know how assets are distributed, as we assume that initial assets are generated with the same process ass income. Basically, everyone starts off with some assets that amount to the income realization people had in the past period, i.e. $t=0-1$. The initial distribution at age 1 is again state dependent; i.e. we could start of with any of these two states; which explains that there could be differences in the aggregate asset distribution over the entire life cycle due to the (randomly selected) state you start off in. \\
 
-\subsection*{Look at funcaggr}
+Then, next TT is the transfer function that is defined for most periods in time, or - more precisely - for the nj-1 times that the people transition into the next age group. TT is build up in 4 layers. To explain them,  will denote them as follows $TT(ny,nx,ny,nx)=TT(ycc, xc\_new,yc,xc\_old))$.\\
 
-\subsection*{Comparison of Models}
+We need to define TT for all age groups, which is done by simply creating a new TT for all current ages. Given each age, one might be holding different levels of cah, which is what we do though the xc\_old index. In the last period, each person's income was dependent on a shock yc, which needs to be accounted for as the past shock will determine the probability of one's next shock (remember that these estimates are stored in pi(yc,ycc) which gives the transition probability from state yc to ycc). Given a past shock, we can compute the income for any of the new shocks ycc that might hit us.  That income times the interest rate plus the savings associated with the given level of cah xc\_old will determine the cah in the next period. In the transition matrix we will now store the expected probability of transitioning into state xc\_new in the coming period. \\
+
+Note: The last part is done by relying on the basefun and lookup functions. What they basically do here, is to estimate the cah level you will get in next period. As this will usually not be a precise gridpoint of gridx, we assign a positive probability to the gridpoint just above and just below the new cah estimate. :) \\
+
+In a final step for each age you fill out the new Phi distribution for all past states of shock realizations and cah holdings. The proability of dying early is also accounted for.\\
+
+\textbf{Compare this with the corresponding definitions in the lecture notes:} \\
+This is actually really hard to do, because our transition matrix in the Markov process is very simple. We can basically apply the same transition process at all ages, in the sense that multiplying it with the current shock distribution, will give us a matrix with the new distribution of income shock realizations. \\
+
+In terms of Phi, we do not really have an assumption about the initial state of assets in the lecture notes. Rather, it is suggested that we may run simulations and average over them.
+
+\textbf{Code modification}
+The project instructions ask us to implement a more efficient way for looping over all the different states. we did so, as you can see in the attached matlab file named "Solution\_1.5"
+
+The time elapsed now was:
+
+\begin{lstlisting}
+    time elapsed: 9.3518
+\end{lstlisting}
+
+vs. the time before:
+
+\begin{lstlisting}
+    time elapsed: 11.5845
+\end{lstlisting}
+
+(It is to note however, that the milliseconds vary across different times. The above times are more or less a medium measure of how long each script takes. )
+
+\subsection{}
 \textbf{Comparison of Models}
 
-In the attached PDF (Comparison model outcomes) I plotted all required scenarios in a way that (hopefully) allows an easier comparison\footnote{The asset distribution at different ages was cut down to just display it at age 80 out of space constraints.}. I have classified the models as follows, whereby the red coloured part identifies the deviations from the standard model:
+In the attached PDF (Comparison model outcomes) we plotted all required scenarios in a way that (hopefully) allows an easier comparison\footnote{The asset distribution at different ages was cut down to just display it at age 80 out of space constraints.}. We have classified the models as follows, whereby the red coloured part identifies the deviations from the standard model:
 
 \begin{itemize}
     \item Standard: opt\_det = false, opt\_nosr = true, tetta=2, r=0.04, rho=0.04
@@ -189,30 +311,24 @@ In the attached PDF (Comparison model outcomes) I plotted all required scenarios
     \item Variation 3: opt\_det = false, \textcolor{red}{opt\_nosr = false}, tetta=2, r=0.04, rho=0.04
     \item Variation 4: opt\_det = false, opt\_nosr = true, \textcolor{red}{tetta=1}, r=0.04, rho=0.04
     \item Variation 5: opt\_det = false, opt\_nosr = true, \textcolor{red}{tetta=5}, r=0.04, rho=0.04
-    \item Variation 6: opt\_det = false, opt\_nosr = true, tetta=2, r=0.04, \textcolor{red}{rho=0.4} 
-    \item Variation 7: opt\_det = false, opt\_nosr = true, tetta=2, \textcolor{red}{r=0.4}, rho=0.04 
+    \item Variation 6: opt\_det = false, opt\_nosr = true, tetta=2, r=0.04, \textcolor{red}{rho=0.4}
+    \item Variation 7: opt\_det = false, opt\_nosr = true, tetta=2, \textcolor{red}{r=0.4}, rho=0.04
 \end{itemize}
 
 \textbf{The standard model} interest rates and impatience parameter balance each other out, s.t. the left and RHS of the standard Euler equation (w.o. accounting for possible borrowing constraints) simplify to the marginal utility of consumption today having to equal the expected marginal utility of consumption tomorrow. However, there is a precautionary motive turned on given the positive third derivative (presence of prudence) and variability in the income process (it is NOT deterministic but rather modelled by a Markov process). People know for certain when they will die which explains the shape of assets that monotonically approaches zero from above (last part of the asset function over the life cycle is concave). the intuition is, that people do not want to die with left-over assets as they still derive utility from them. \\
 
 \textbf{Variation 1} makes income deterministic, which will turn of the precautionary savings behavior. The distribution of assets is suddenly more dense, i.e. people do not behave so differently in their savings behavior, as they do not experience different income states. They also build up the assets more slowly than they did under the standard specifications. Fianlly, it is to note that there is a massive change in the consumption profile of agents. Looking at the scale that corresponds to the consumption level graph, the changes in absolute consumption are smaller than those in the standard model. The consume their income almost fully until they are about to retire. In the last years of the working life the agents start saving a larger portion (as they become concerned with their retirement time) and during the retirement their consumption remains constant (as it did in the standard model). \\
 
-\textbf{Variation 3} (I will come to Variation 2 next), uses the standard model but now changes besides having stochastic income allows for survival risk (i.e. people never know when they will exactly die). A 100 is however the moment, when one dies with absolute certainty. This survival risk is another source of risk, which can change the consumption pattern. As in the standard model, the asset distribution is rather wide, although a bit lower than in the standard case (people apparently don't want to save as much as before, as they never know whether this means having wasted consumption during the precious time alive ;) Accordingly savings are also a bit lower, and consumption a bit higher than in the standard case. In line with the logic described above, the shape of the consumption function over the life cycle decreases over age (and does not stay constant and high as in the standard model w/o survival risk). \\
+\textbf{Variation 3} (we will come to Variation 2 next), uses the standard model but now changes besides having stochastic income allows for survival risk (i.e. people never know when they will exactly die). A 100 is however the moment, when one dies with absolute certainty. This survival risk is another source of risk, which can change the consumption pattern. As in the standard model, the asset distribution is rather wide, although a bit lower than in the standard case (people apparently don't want to save as much as before, as they never know whether this means having wasted consumption during the precious time alive ;) Accordingly savings are also a bit lower, and consumption a bit higher than in the standard case. In line with the logic described above, the shape of the consumption function over the life cycle decreases over age (and does not stay constant and high as in the standard model w/o survival risk). \\
 
 \textbf{Variation 2} combines survival risk and a deterministic income process: i.e. we have more risk of dying unpredictably, but save earnings. Again, like in variation 1, the distribution of assets is much more narrow, but this time focuses even more at an early age (when it is still pretty unlikely that one will die).  In comparison to Variation 1, which has no survival risk, we see that the consumption profile is hump-shaped, in line with the idea that one knows that it is ever more unlikely that one will survive and doe snot want to leave too many assets behind without consuming them. In contrast to Variation 3, where income is not deterministic, people only start saving more out of current income as they approach the retirement age. This is in line with the idea, that the labor income during working age (conditional on surviving) will come in in its full/ constant amount for sure.
 
 \textbf{Variation 4 and 5}. Looking at Variations 4 and 5, we can make some observations on how tetta, the coefficient of relative risk aversion, changes consumption/ savings behavior in a model of stochastic income but with no survival risk. A higher tetta implies that the RHS of the Euler equation will increase with uncertainty, and that we will want to save more. This is hard to see in the graphs, but there is indeed some differences over the assets accumulated over the life cycle, when one pays close attention to the savings and the assets graph. Also, and perhaps more clearly, the graph on the consumption function over the life cycle reveals that during the retirement age, people with a higher tetta are able to consume more (given their savings).\\
-Also note, that 1/tetta= IES, the intertemporal elasticity of substitution. The latter makes people more willing to adapt their consumption intertemporally when they see an important gain (e.g. in interest rates) from doing so. Here, the interest rate and the intertemporal discount factor equal each other out, but we can still see that people with low IES (high tetta) have a somewhat wider asset distribution over the life cycle, while the ones with low tetta (high IES) take advantage of the compounded interest effects, i.e. they focus the distribution of assets more on the younger ages to take more advantage of it later. 
+Also note, that 1/tetta= IES, the intertemporal elasticity of substitution. The latter makes people more willing to adapt their consumption intertemporally when they see an important gain (e.g. in interest rates) from doing so. Here, the interest rate and the intertemporal discount factor equal each other out, but we can still see that people with low IES (high tetta) have a somewhat wider asset distribution over the life cycle, while the ones with low tetta (high IES) take advantage of the compounded interest effects, i.e. they focus the distribution of assets more on the younger ages to take more advantage of it later.
 
-\textbf{Variation 6 and 7} show how the patterns change when (given a constant tetta) the relationship between interest rates and discount factor change. Call $A = \frac{1+r}{1+\rho}$; a high $A$ should lead to more savings today (i.e. lower consumption, higher marginal utility from consumption today). Variation 6 entails a very low $A$ and indeed has relatively low savings when comparing it to the Standard case. This is exactly opposite in the Variation 7, where savings reach over 20 times the level of variation 6. Instead of the humped shaped consumption that follows for Variation 6, in 7 we observe a steady and almost exponential increase in consumption of the life cycle. From a highly negative value function in the early years, this rises to significantly higher levels than those observed in variation 6 at approx. the age of 30. 
+\textbf{Variation 6 and 7} show how the patterns change when (given a constant tetta) the relationship between interest rates and discount factor change. Call $A = \frac{1+r}{1+\rho}$; a high $A$ should lead to more savings today (i.e. lower consumption, higher marginal utility from consumption today). Variation 6 entails a very low $A$ and indeed has relatively low savings when comparing it to the Standard case. This is exactly opposite in the Variation 7, where savings reach over 20 times the level of variation 6. Instead of the humped shaped consumption that follows for Variation 6, in 7 we observe a steady and almost exponential increase in consumption of the life cycle. From a highly negative value function in the early years, this rises to significantly higher levels than those observed in variation 6 at approx. the age of 30.
 
-\textcolor{red}{@someone: Please note that the labor income in Variation 7 looks really odd- maybe I chose parameters that are not consistent at some point. I still think we can use these graphs here, but I would recommend explaining/ understanding why this happened. }
-
-
-
-
-
-
+\textcolor{red}{@someone: Please note that the labor income in Variation 7 looks really odd- maybe we chose parameters that are not consistent at some point. I still think we can use these graphs here, but I would recommend explaining/ understanding why this happened. }
 
 \section*{Problem 2: Calibration}
 
@@ -226,5 +342,9 @@ De Nardi finds that saving for precautionary purposes and saving for retirement 
 \pagebreak
 
 \bibliography{Literature/bibliography.bib}
+
+\pagebreak
+
+\includepdf[pages=-]{Other documents/Comparison model outcomes.pdf}
 
 \end{document}

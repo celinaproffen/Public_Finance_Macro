@@ -1,0 +1,164 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor} % Colors
+
+\usepackage{standalone}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+\usepackage{csquotes}
+\usepackage{natbib}
+% Bibliography
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+citecolor=MidnightBlue,
+linkcolor=MidnightBlue,
+pdfpagemode=FullScreen}
+\usepackage{listings}
+
+\usepackage{natbib}
+\usepackage[noabbrev]{cleveref}
+\setcitestyle{authoryear,open={(},close={)}}
+\bibliographystyle{plainnat}
+
+\usepackage{subfiles}
+
+\usepackage{url}
+\urlstyle{same} % omit this command if you want monospaced-font look
+\newcommand\purl[1]{\protect\url{#1}} % "protected url"
+
+\setlength\parindent{0pt}
+\spacing{1.2}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Problem 1.5: func\_aggr}\\
+\textbf{What is the role of the objects TT and Phi?}
+
+Firstly, for this exercise, we need to understand even more clearly how pi, pini and gridy look like. They are explained in the mchain function. 
+\begin{lstlisting}
+[pini,pi,gridy]=mchain(rhoeta,epsil);
+
+% pi are Transition Probabilities. You always have 1- rhoeta probability of remaining in you current state.. although i find it weird that the off-diagonal elements are also one
+pi=rhoeta*ones(2,2);
+pi(1,2)=1.0-rhoeta;
+pi(2,1)=1.0-rhoeta;
+
+% gridy are rescaled income shocks such that mean is one
+gridy=zeros(2,1);
+gridy(1)=exp(1.0-epsil);
+gridy(2)=exp(1.0+epsil);
+gridy=2.0*gridy/(sum(gridy));
+
+% pini is Initial Distribution
+pini=0.5*ones(2,1);
+\end{lstlisting}
+\\
+Okay, so now that this is clear, let's try to explain the role of TT and Phi! Both these objects are defined and used in lines 402-434 in the code, which is why I inserted the corresponding section below:\\
+
+\begin{lstlisting}[frame=single]
+    function [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass)
+
+    global r nj nx ny pi gridy netw pens sr epsi pini frac totpop
+    
+    disp('aggregation and cross-sectional measure');
+    
+    % Compute Cross sectional distributions and aggregate variables
+    Phi = zeros(nj,ny,nx);          % distribution of assets conditional by age and shock
+    PhiAss = zeros(nx,1);             % distribution of assets
+    
+    % Distribution of newborns over cash at hand
+    for yc=1:ny
+        
+        % income (wages and pensions) in current period/age:
+        inc=epsi(1)*netw*gridy(yc)+(1-epsi(1))*pens;
+        
+        % initial cash-on-hand:
+        cahini=inc;
+        
+        [vals,inds]=basefun(gridx(1,yc,:),cahini,nx);
+        Phi(1,yc,inds(1))=vals(1)*pini(yc)*frac(1);
+        Phi(1,yc,inds(2))=vals(2)*pini(yc)*frac(1);
+    end;
+    
+    for jc=2:nj
+        TT = zeros(ny,nx,ny,nx);    % transfer function
+        
+        for xc=1:nx
+            for yc=1:ny
+                for ycc=1:ny
+                    
+                    % income (wages and pensions) in current period/age:
+                    inc=epsi(jc)*netw*gridy(ycc)+(1-epsi(jc))*pens;
+                    
+                    % cash on hand: x=a*(1+r)+y = s(-1)*(1+r)+y;
+                    cah=inc+(1.0+r)*gridsav(xc);
+                    
+                    [vals,inds]=basefun(gridx(jc,ycc,:),cah,nx);
+                    
+                    TT(ycc,inds(1),yc,xc)=vals(1)*pi(yc,ycc);
+                    TT(ycc,inds(2),yc,xc)=vals(2)*pi(yc,ycc);
+                end;    
+            end;    
+        end;    
+        
+        for xc=1:nx
+            for yc=1:ny
+                for xcc=1:nx
+                    for ycc=1:ny
+                        % transfer distribution:
+                        Phi(jc,ycc,xcc)=Phi(jc,ycc,xcc)+Phi(jc-1,yc,xc)*TT(ycc,xcc,yc,xc)*sr(jc-1);
+                    end;
+                end;
+            end;
+        end;
+        
+    end;    % end for jc
+    
+
+\end{lstlisting}
+
+
+
+First notice that Phi has three dimensions: It accounts for age, the current state of income shocks and the level of cah that individuals hold. In the first period of life we know how assets are distributed, as we assume that initial assets are generated with the same process ass income. Basically, everyone starts off with some assets that amount to the income realization people had in the past period, i.e. $t=0-1$. The initial distribution at age 1 is again state dependent; i.e. we could start of with any of these two states; which explains that there could be differences in the aggregate asset distribution over the entire life cycle due to the (randomly selected) state you start off in. \\
+
+Then, next TT is the transfer function that is defined for most periods in time, or - more precisely - for the nj-1 times that the people transition into the next age group. TT is build up in 4 layers. To explain them, I will denote them as follows $TT(ny,nx,ny,nx)=TT(ycc, xc\_new,yc,xc\_old))$.\\
+
+We need to define TT for all age groups, which is done by simply creating a new TT for all current ages. Given each age, one might be holding different levels of cah, which is what we do though the xc\_old index. In the last period, each person's income was dependent on a shock yc, which needs to be accounted for as the past shock will determine the probability of one's next shock (remember that these estimates are stored in pi(yc,ycc) which gives the transition probability from state yc to ycc). Given a past shock, we can compute the income for any of the new shocks ycc that might hit us.  That income times the interest rate plus the savings associated with the given level of cah xc\_old will determine the cah in the next period. In the transition matrix we will now store the expected probability of transitioning into state xc\_new in the coming period. \\
+
+Note: The last part is done by relying on the basefun and lookup functions. What they basically do here, is to estimate the cah level you will get in next period. As this will usually not be a precise gridpoint of gridx, we assign a positive probability to the gridpoint just above and just below the new cah estimate. :) \\
+
+In a final step for each age you fill out the new Phi distribution for all past states of shock realizations and cah holdings. The proability of dying early is also accounted for.\\
+
+\textbf{Compare this with the corresponding definitions in the lecture notes:} \\
+This is actually really hard to do, because our transition matrix in the Markov process is very simple. We can basically apply the same transition process at all ages, in the sense that multiplying it with the current shock distribution, will give us a matrix with the new distribution of income shock realizations. \\
+
+In terms of Phi, we do not really have an assumption about the initial state of assets in the lecture notes. Rather, it is suggested that we may run simulations and average over them. 
+
+\textbf{Code modification}
+The project instructions ask us to implement a more efficient way for looping over all the different states. I did so, as you can see in the attached matlab file named "Solution\_1.5" 
+\\
+The time elapsed now was: 
+\begin{lstlisting}
+    time elapsed: 9.3518
+\end{lstlisting}\\
+vs. the time before:
+\begin{lstlisting}
+    time elapsed: 11.5845
+\end{lstlisting}
+
+(It is to note however, that the milliseconds vary across different times. The above times are more or less a medium measure of how long each script takes. )
+
+\end{document}
+

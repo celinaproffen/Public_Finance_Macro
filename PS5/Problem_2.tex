@@ -1,0 +1,143 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor} % colors
+\usepackage{amsthm}
+\usepackage{xcolor}
+\usepackage{standalone}
+\usepackage{physics}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+\usepackage{csquotes}
+\usepackage{natbib}
+% Bibliography
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=MidnightBlue,
+		linkcolor=MidnightBlue,
+    pdfpagemode=FullScreen,
+    }
+
+\usepackage{natbib}
+\usepackage[noabbrev]{cleveref}
+\setcitestyle{authoryear,open={(},close={)}}
+\bibliographystyle{plainnat}
+\usepackage{subfiles}
+\setlength\parindent{0pt}
+\spacing{1.2}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\begin{document}
+\textbf{Problem 2}:\\
+1.From our regression on the cubic in age from project 4, the coefficients are estimated as:
+\begin{equation*}
+    ln\_yhh5\_hat=8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married   
+\end{equation*}
+\begin{equation*}
+    yhh5\_hat=exp(8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married)  
+\end{equation*}
+With this we can estimate the age income profile and replace the normalized age profile in the code with the corresponding estimates. Please refer $\texttt{towards\_olg.m}$ for the estimates of age profile. \\
+Interpretation:
+
+\\
+
+2.
+\begin{equation}\tag{1a}
+     \Tilde{y_t}&=z_t+\epsilon_t 
+\end{equation}
+\begin{equation}\tag{1b}
+    z_t&=\rho z_{t-1} +\nu_t
+\end{equation}
+Note that (1a) implies:
+\begin{equation*}
+    z_t=\Tilde{y_t}-\epsilon_t \hspace{5mm} \forall t
+\end{equation*}
+Therefore from (1b), we have:
+\begin{equation*}
+    z_{t}=\rho(\Tilde{y}_{t-1}-\epsilon_{t-1})+\nu_t
+\end{equation*}
+Plugging in (1a) and notice that $\epsilon_t$ and $\nu_t$ are i.i.d:
+\begin{equation}\label{one}
+    \Tilde{y_t}=\rho(\Tilde{y}_{t-1}-\epsilon_{t-1})+\nu_t+\epsilon_t
+\end{equation}
+Since the all shocks are orthogonal to each other and the process is weakly stationary, taking the variance yields:
+\begin{align*}
+    \sigma^2_{\Tilde{y}}&=\rho^2\sigma^2_{\Tilde{y}}+\sigma^2_{\nu}+(1-\rho^2)\sigma^2_{\epsilon}\\
+    &=\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon\\
+    &=\sigma^2_z+\sigma^2_\epsilon
+\end{align*}
+Dividing both sides by $\sigma^2_z$:
+\begin{equation*}
+    \frac{\sigma^2_{\Tilde{y}}}{\sigma^2_z}=1+\frac{\sigma^2_\epsilon}{\sigma^2_z}
+\end{equation*}
+Notice that, by i.i.d assumption of shocks from both processes: 
+\begin{align*}
+    cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,\rho z_{t-2} +\nu_{t-1}+\epsilon_{t-1})=\rho^2cov(z_{t-1},z_{t-2})\\
+    cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})
+\end{align*}
+Therefore:
+\LongRightarrow $cov(\Tilde{y_t},\Tilde{y}_{t-1})=cov(z_{t},z_{t-1})$(*)\\
+Furthermore, we have:
+\begin{align*}
+    \rho_{\Tilde{y}}&=\frac{cov(\Tilde{y_t},\Tilde{y}_{t-1})}{ \sigma^2_{\Tilde{y}}}\\
+    \rho&=\frac{cov(z_t,z_{t-1})}{ \sigma^2_z}\\
+\end{align*}
+Taking the ratio, and from (*), we have:
+\begin{equation*}
+  \frac{\rho_{\Tilde{y}}}{\rho}=\frac{\sigma^2_z}{\sigma^2_{\Tilde{y}}} =\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}
+\end{equation*}
+Thus: 
+\begin{equation*}
+\rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}(Q.E.D)
+\end{equation*} 
+\textbf{Intuition}: The larger the magnitude of transitory shock relevant to persistent shock, the less variation of $\Tilde{y}$ can be explained by the variation of persistent shock as implied by \eqref{one}, therefore if there were no transitory shock, autocorrelation of $\Tilde{y}$ is equal to that of z, which is $\rho$. Otherwise, $\rho$ should be scaled down by a factor inversely proportional to the ratio of transitory shock and persistent shock, which is $\frac{1}{1+\frac{\sigma^2_\epsilon}{\sigma^2_z}}$\\
+\begin{itemize}
+    \item \textbf{Calibration with estimates of gross income}\\
+
+      From estimates in project 4, $\epsilon$ can be calculated as:
+\begin{equation*}
+    \epsilon=\sigma_{\Tilde{y}}=\sigma_{ln \Tilde{y}}=\sqrt{\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon}\approx \sqrt{\frac{0.0861262}{1-0.9088825^2} +0.2144817}\approx 0.8424
+\end{equation*}
+The state vector $[-\epsilon,\epsilon]$ of the logs therefore is: [-0.8424,0.8424]\\
+Using the unnumbered equations for $\eta_-$, $\eta_+$ on p.42 of the lecture notes, the the logs can be transformed to levels as: 
+\begin{equation*}
+    \eta_-=\frac{2exp(1-\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1-0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx0.3129
+    \end{equation*}
+    \begin{equation*}
+       \eta_+=\frac{2exp(1+\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1+0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx 1.687 
+    \end{equation*}
+From previous calibration: $\rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}\approx0.9088825\bigg(1+\frac{0.2144817}{16.15252}\bigg)^{-1}\approx 0.897 $\\
+Using $\kappa=\frac{1+\rho_{\Tilde{y}}}{2}\approx 0.9485$, transition matrix of the Markov process can be calibrated as:\\
+\begin{center}
+$\Pi$ = \begin{bmatrix}
+0.9485 & 0.0515 \\
+0.0515 & 0.9485  
+\end{bmatrix}
+\end{center}\\
+
+Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg.m}$ for the implementation. 
+    
+    
+\end{itemize}
+
+
+    
+
+
+    
+
+
+
+\end{document}
+
+

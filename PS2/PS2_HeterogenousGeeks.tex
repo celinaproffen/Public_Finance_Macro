@@ -38,165 +38,105 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
 \begin{document}
-a) The concept of inter-temporal substitution $\psi(c)=-\frac{\partial\frac{c2}{c1}}{\frac{c2}{c1}}\bigg(\frac{\partial\frac{1}{1+r}}{\frac{1}{1+r}}\bigg)^{-1}$, measures by how much percent the relative demand changes between periods as a reaction to a percentage change in prices. Since we have to solve an inter-temporal portfolio choice model, the setting is no longer static and becomes dynamic, the need to measure inter-temporal shifts and describes consumer's willingness to substitute consumption over time arises as not only risk aversion, but also inter-temporal substitution elasticity determine consumption decisions. With CRRA utility function, the two measures are just reciprocal of each other, $\theta=\frac{1}{\psi}$ and can therefore not be controlled separately. However, it is reasonable to choose a recursive utility function such as Epstein-Zin-Weil preferences as it helps us in overcoming this property by breaking the link between the parameters $\theta$ and $\psi$.    \\
-
-b) 
-
-\textbf{Proof by backward induction}:
-
-Investor's wealth evolves:
+\textbf{Problem 2}:\\
+1.From our regression on the cubic in age from project 4, the coefficients are estimated as:
 \begin{equation*}
-    w_{t+1}=(w_t-c_t)R^{p}_{t+1}(\hat{\alpha_t})
+    ln\_yhh5\_hat=8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married   
 \end{equation*}
-Portfolio return is given by:
 \begin{equation*}
-  R^{p}_{t+1}(\hat{\alpha_t})=R^f+ \hat{\alpha_t}(R_{t+1}-R^f)
+    yhh5\_hat=exp(8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married)  
 \end{equation*}
-The optimization problem with Epstein-Zin-Weil utility function is given by:
-\begin{equation*}
-    U_t=\max\limits_{c_{t},\hat{\alpha}_{t},w_{t+1}}\bigg[ c_t^{1-\frac{1}{\psi}}+ \beta\bigg(\mathbb{E}_t\bigg[U^{1-\theta}_{t+1}\bigg]\bigg)^{\frac{1-\frac{1}{\psi}}{1-\theta}}\bigg]^{\frac{1}{1-\frac{1}{\psi}}}
-\end{equation*}
-Our guess is that the indirect utility function is given by $U_t=\gamma_t w_t$
-, $\gamma_t$ captures dependence on time and state variables.
-The indirect utility function is thus 
-\begin{equation*}
-   U_t(w_t) = \bigg[ c_t^{1-\frac{1}{\psi}}+\beta\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}w_{t+1}\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
-\end{equation*}
-Using the resource constraint, we get: 
-\begin{align*}
-     U_t(w_t)&=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}(w_t-c_t)R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
-     &=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta(w_t-c_t)^{1-\frac{1}{\psi}}\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
-     &=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta(w_t-c_t)^{1-\frac{1}{\psi}}g\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\frac{1}{\psi}}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
-     &=\bigg[ c_t^{1-\frac{1}{\psi}}+\beta(w_t-c_t)^{1-\frac{1}{\psi}}\Lambda_{t+1}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
-\end{align*}
+With this we can estimate the age income profile and replace the normalized age profile in the code with the corresponding estimates. Please refer $\texttt{towards\_olg.m}$ for the estimates of age profile. \\
+Interpretation:
 
-where g(.) is the certainty equivalent. From this we can rewrite the FOC for consumption as:
-\begin{equation*}
-    c_t^{-\frac{1}{\psi}}=\beta(w_t-c_t)^{-\frac{1}{\psi}}\Lambda_{t+1}
-\end{equation*}
-and thus: 
-\begin{equation*}
-    c_t=(w_t-c_t)(\beta\Lambda_{t+1})^{-\psi}
-\end{equation*}
-and therefore: 
-\begin{equation*}
-    c_t=m_t w_t
-\end{equation*}
-where:
-\begin{equation*}
-    m_t=\frac{1}{1+b_{t+1}},\hspace{2mm} \text{$for$} \hspace{2mm} b_{t+1}=(\beta\Lambda_{t+1})^\psi
-\end{equation*}
+\\
 
-Use this back in the objective to get: 
-\begin{align*}
-     U_t(w_t) &= \bigg[ (m_tw_t)^{1-\frac{1}{\psi}}+\beta\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}(1-m_t)w_tR^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}\\
-     &= \bigg[ (m_t)^{1-\frac{1}{\psi}}+\beta(1-m_t)^{1-\frac{1}{\psi}}\bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
-     &=\bigg[ (m_t)^{1-\frac{1}{\psi}}+\beta(1-m_t)^{1-\frac{1}{\psi}}\Lambda_{t+1}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
-     &=\bigg[ \bigg(\frac{1}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}+b_{t+1}^{\frac{1}{\psi}}\bigg(\frac{b_{t+1}}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
-     &=\bigg[ \bigg(\frac{1}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}+b_{t+1}\bigg(\frac{1}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
-     &=\bigg[ \bigg(\frac{1}{1+b_{t+1}}\bigg)^{1-\frac{1}{\psi}}(1+b_{t+1})\bigg]^\frac{1}{1-\frac{1}{\psi}}w_t\\
-     &=\bigg(m_t^{-\frac{1}{\psi}}\bigg)^{\frac{1}{1-\frac{1}{\psi}}}w_t\\
-     &= m_t^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}w_t.
-\end{align*}
-Hence the guess is verified, where $\gamma_t=m_t^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}$ and $m_t=\frac{c_t}{w_t}$
-
- Next, notice that: 
-\begin{equation*}
-    g(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t))=g(m_t^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}R^{p}_{t+1}(\hat{\alpha}_t))
-\end{equation*}
-
-which since $m_{t+1}=\frac{1}{1+b_{t+2}}$ we can rewrite by stochastic independence assumption as:
-\begin{equation*}
-     g\big((\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t))\big)=g(\gamma_{t+1})g\big(R^{p}_{t+1}(\hat{\alpha_t})\big)
-\end{equation*} 
-
-Consequently, the FOC w.r.t $\hat{\alpha}_t$ by the chain rule of differentiation can be rewritten to the partial derivative
-
-\begin{equation}\label{one}
-    \pdv{\mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big]}{\hat{\alpha_t}}=0
+2.
+\begin{equation}\tag{1a}
+     \Tilde{y_t}&=z_t+\epsilon_t 
 \end{equation}
- 
-Let $\hat{\alpha_t}^{*}$ be the solution to equation \eqref{one}. In order to solve for  $\hat{\alpha_t}^{*}$, we use the approximation of $\mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big]$ given in  \textit{PFChoiceAPNotes}, which under log-normality of return can be approximated as: 
+\begin{equation}\tag{1b}
+    z_t&=\rho z_{t-1} +\nu_t
+\end{equation}
+Note that (1a) implies:
 \begin{equation*}
-  \mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big] \approx  exp\bigg((1-\theta)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg) \bigg)
+    z_t=\Tilde{y_t}-\epsilon_t \hspace{5mm} \forall t
 \end{equation*}
-Furthermore, 
- $\mathbb{E}_t[ln(1+r^p_{t+1})]$ can be approximated as:
+Therefore from (1b), we have:
 \begin{equation*}
-    \mathbb{E}_t[ln(1+r^p_{t+1})]\approx \hat{\alpha_t}\mu_t +(1-\hat{\alpha_t})ln(1+r^f_{t+1})+\frac{1}{2}\hat{\alpha_t}(1-\hat{\alpha_t})\sigma_t^2.
+    z_{t}=\rho(\Tilde{y}_{t-1}-\epsilon_{t-1})+\nu_t
 \end{equation*}
-Plugging this into the previous equation gives: 
-\begin{equation*}
- \mathbb{E}\big[R_{t+1}^p(\hat{\alpha_t})^{1-\theta}\big]\approx exp\bigg((1-\theta)\bigg(\hat{\alpha_t}\mu_t +(1-\hat{\alpha_t})ln(1+r^f_{t+1})+\frac{1}{2}\hat{\alpha_t}(1-\hat{\alpha_t})\sigma_t^2+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg) \bigg)
-\end{equation*}
-where $\mu_t=\mathbb{E}_t[ln(1+r_{t+1})]$ is the conditional mean risky return. By this approximation, we can also approximate $(\sigma_t^p)^2$ as :
-\begin{equation*}
-    (\sigma_t^p)^2\approx\hat{\alpha}_t^2\sigma_t^2
-\end{equation*}
-
-Equation $\eqref{one}$ becomes: 
-\begin{equation*}
- \mu_t-ln(1+r^f_{t+1})+\frac{1}{2}(1-2\hat{\alpha}_t)\sigma^2+(1-\theta)\hat{\alpha}_t\sigma_t^2=0
-\end{equation*}
-Therefore, the approximation to household's investment decision, which is independent of time $t$, can be given as: 
-\begin{equation*}
-    \hat{\alpha_t}^{*}=\frac{\mu_t-ln(1+r^f_{t+1})+\frac{1}{2}\sigma_t^2}{\theta\sigma_t^2} 
-\end{equation*}
-
-
-
-
-
-Remember that: 
-\begin{equation*}
-    b_{t+1}=(\beta\Lambda_{t+1})^\psi
-\end{equation*}
-For implementation on computer, $b_{t+1}$ can be rewritten as:
+Plugging in (1a) and notice that $\epsilon_t$ and $\nu_t$ are i.i.d:
+\begin{equation}\label{one}
+    \Tilde{y_t}=\rho(\Tilde{y}_{t-1}-\epsilon_{t-1})+\nu_t+\epsilon_t
+\end{equation}
+Since the all shocks are orthogonal to each other and the process is weakly stationary, taking the variance yields:
 \begin{align*}
-    b_{t+1} &= (\beta\Lambda_{t+1})^\psi\\
-        &= \Bigg\{\beta \bigg(\mathbb{E}_t\bigg[\big(\gamma_{t+1}R^{p}_{t+1}(\hat{\alpha}_t^*)\big)^{1-\theta}\bigg]\bigg)^\frac{1-\frac{1}{\psi}}{1-\theta}\Bigg\}^\psi\\
-        &= \bigg[\beta g(\gamma_{t+1})^{1-\frac{1}{\psi}}g(R_{t+1}^p(\hat{\alpha}_t^*))^{1-\frac{1}{\psi}}\bigg]^\psi
+    \sigma^2_{\Tilde{y}}&=\rho^2\sigma^2_{\Tilde{y}}+\sigma^2_{\nu}+(1-\rho^2)\sigma^2_{\epsilon}\\
+    &=\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon\\
+    &=\sigma^2_z+\sigma^2_\epsilon
 \end{align*}
-where: 
+Dividing both sides by $\sigma^2_z$:
 \begin{equation*}
-  g(\gamma_{t+1})^{1-\frac{1}{\psi}}= \Bigg\{ \Bigg(\mathbb{E}_t\bigg[ \big(m_{t+1}^{-\frac{\frac{1}{\psi}}{1-\frac{1}{\psi}}}\big)^{1-\theta}\bigg]\Bigg)^{\frac{1}{1-\theta}}\Bigg\}^{1-\frac{1}{\psi}}=m_{t+1}^{-\frac{1}{\psi}}
+    \frac{\sigma^2_{\Tilde{y}}}{\sigma^2_z}=1+\frac{\sigma^2_\epsilon}{\sigma^2_z}
 \end{equation*}
-
+Notice that, by i.i.d assumption of shocks from both processes: 
 \begin{align*}
-  g(R_{t+1}^p(\hat{\alpha}_t^*))^{1-\frac{1}{\psi}}&= \Bigg\{ \Bigg(\mathbb{E}_t\bigg[ \big(  R_{t+1}^p(\hat{\alpha}_t^*)          \big)^{1-\theta}\bigg]\Bigg)^{\frac{1}{1-\theta}}\Bigg\}^{1-\frac{1}{\psi}}\\
-  &= \Bigg\{ \Bigg(  exp\bigg((1-\theta)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)      \Bigg)^{\frac{1}{1-\theta}}\Bigg\}^{1-\frac{1}{\psi}}\\
-  &= exp\bigg(\bigg(1-\frac{1}{\psi}\bigg)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)  
+    cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,\rho z_{t-2} +\nu_{t-1}+\epsilon_{t-1})=\rho^2cov(z_{t-1},z_{t-2})\\
+    cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})
 \end{align*}
-
-Putting all together yields: 
+Therefore:
+\LongRightarrow $cov(\Tilde{y_t},\Tilde{y}_{t-1})=cov(z_{t},z_{t-1})$(*)\\
+Furthermore, we have:
+\begin{align*}
+    \rho_{\Tilde{y}}&=\frac{cov(\Tilde{y_t},\Tilde{y}_{t-1})}{ \sigma^2_{\Tilde{y}}}\\
+    \rho&=\frac{cov(z_t,z_{t-1})}{ \sigma^2_z}\\
+\end{align*}
+Taking the ratio, and from (*), we have:
 \begin{equation*}
-    b_{t+1}=m_{t+1}^{-1}\bigg[\beta  exp\bigg(\bigg(1-\textcolor{red}{\frac{1}{\psi}}\bigg)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\bigg]^{\textcolor{red}{\psi}}
+  \frac{\rho_{\Tilde{y}}}{\rho}=\frac{\sigma^2_z}{\sigma^2_{\Tilde{y}}} =\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}
 \end{equation*}
-The term colored in red is the difference from standard term when solving with CRRA utility. 
+Thus: 
+\begin{equation*}
+\rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}(Q.E.D)
+\end{equation*} 
+\textbf{Intuition}: The larger the magnitude of transitory shock relevant to persistent shock, the less variation of $\Tilde{y}$ can be explained by the variation of persistent shock as implied by \eqref{one}, therefore if there were no transitory shock, autocorrelation of $\Tilde{y}$ is equal to that of z, which is $\rho$. Otherwise, $\rho$ should be scaled down by a factor inversely proportional to the ratio of transitory shock and persistent shock, which is $\frac{1}{1+\frac{\sigma^2_\epsilon}{\sigma^2_z}}$\\
+\begin{itemize}
+    \item \textbf{Calibration with estimates of gross income}\\
 
-At terminal date, we have: 
-\begin{align*}
-    c_T&=w_T\\
-    U_T&=c_T=w_T
-\end{align*}
-Given this, marginal propensity to consume at terminal date  \big($m_T=\frac{c_T}{w_T}$\big)  is 1. Having found optimal portfolio choice $ \hat{\alpha_t^*}$, we can simulate portfolio return for every period, and therefore can recursively solve for optimal $c_t$ and $w_t$ in every period $t$ using the expressions given previously: 
-\begin{align*}
-    b_{t+1}&=m_{t+1}^{-1}\bigg[\beta  exp\bigg(\bigg(1-\frac{1}{\psi}\bigg)\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\bigg]^{\psi}\\
-    m_{t}&=\frac{1}{1+b_{t+1}}\\
-    w_t^*&=\frac{w_{t+1}^*}{(1-m_t)R_{t+1}^p(\hat{\alpha}_t^*)}\\
-    c_t^*&=m_tw_t^*\\
-    \hat{\alpha_t}^{*}&=\frac{\mu_t-ln(1+r^f_{t+1})+\frac{1}{2}\sigma_t^2}{\theta\sigma_t^2} 
-\end{align*}
-c) Results are given in matlab file.\\
+      From estimates in project 4, $\epsilon$ can be calculated as:
+\begin{equation*}
+    \epsilon=\sigma_{\Tilde{y}}=\sigma_{ln \Tilde{y}}=\sqrt{\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon}\approx \sqrt{\frac{0.0861262}{1-0.9088825^2} +0.2144817}\approx 0.8424
+\end{equation*}
+The state vector $[-\epsilon,\epsilon]$ of the logs therefore is: [-0.8424,0.8424]\\
+Using the unnumbered equations for $\eta_-$, $\eta_+$ on p.42 of the lecture notes, the the logs can be transformed to levels as: 
+\begin{equation*}
+    \eta_-=\frac{2exp(1-\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1-0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx0.3129
+    \end{equation*}
+    \begin{equation*}
+       \eta_+=\frac{2exp(1+\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1+0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx 1.687 
+    \end{equation*}
+From previous calibration: $\rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}\approx0.9088825\bigg(1+\frac{0.2144817}{16.15252}\bigg)^{-1}\approx 0.897 $\\
+Using $\kappa=\frac{1+\rho_{\Tilde{y}}}{2}\approx 0.9485$, transition matrix of the Markov process can be calibrated as:\\
+\begin{center}
+$\Pi$ = \begin{bmatrix}
+0.9485 & 0.0515 \\
+0.0515 & 0.9485  
+\end{bmatrix}
+\end{center}\\
 
-d) when $\theta=\frac{1}{\psi}$, the red term in b) becomes the standard term when solving the model with CRRA utility function, therefore with the same terminal condition and other variables are the same, we get the same findings as yours.\\
+Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg.m}$ for the implementation. 
+    
+    
+\end{itemize}
 
-e) when we set $\theta$ to the values from previous exercise for CRRA utility but let $\psi=0.5$, we can see that instead of $\psi=\frac{1}{\theta}=\frac{1}{150}$, which is very small in the case of CRRA preferences, now we have $\psi=0.5$ with EZW Preferences. When we look at the solution to the problem with CRRA and EZW preferences, we have that:
-\begin{align*}
-    b_{t+1}^{CRRA}&=m_{t+1}^{-1}\beta^{\frac{1}{\theta}}  exp\bigg(\bigg  (1-\theta\bigg)\frac{1}{\theta}\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\\
-     b_{t+1}^{EZW}&=m_{t+1}^{-1}\beta^\psi exp\bigg(\bigg(1-\frac{1}{\psi}\bigg)\psi\bigg(\mathbb{E}_t[ln(1+r^p_{t+1})]+(1-\theta)\frac{(\sigma_t^p)^2}{2}\bigg)\bigg)\\
-\end{align*}
-For $\psi>\frac{1}{\theta}$(which is the case), the exponential term of $b_{t+1}^{EZW}$ will be larger than that of $b_{t+1}^{CRRA}$; however, $\beta^\psi$ is smaller than $\beta^\frac{1}{\theta}$ as $0<\beta<1$. Suppose that the effect of the exponential term dominates that of $\beta$ such that for the same $m_T$ in the last day of agent's life, we expect $b_t^{EZW}>b_t^{CRRA}$, which means $m_t^{EZW}<m_t^{CRRA}$ for all $t$. Further more the gap between $m_t^{EZW}$ and $m_t^{CRRA}$ becomes even larger when we come to initial periods of agent's life as $m_t$ depends on $m_{t+1},...,m_T$. This means that with EZW preference, when the agent's precautionary savings motive is so large that this even dominates the agent's preference for early consumption, he will consume less than in the case of CRRA preference in each period and shift his consumption towards subsequent periods in his life. (\textcolor{red}{U guys can help me add some intuition for why this is the case}) \\
+
+    
+
+
+    
+
+
 
 \end{document}
 

@@ -128,9 +128,8 @@ grdfac=40;      % scaling factor of saving grid
 netw=1.0;
 pens=0.4;
 epsi=ones(nj,1);
-inc=readmatrix('predicted_values.xlsx')
-epsi=inc(:,2)
-epsi_unmarried=inc(:,3)
+inc=readmatrix('predicted_values.xlsx') % we input income from predicted values file as a matrix in matlab.
+epsi=inc(:,2) % we replace the normalized vector of one with the vector of our estimates. 
 
 if (jr<nj),
     epsi(jr+1:nj)=0.0;

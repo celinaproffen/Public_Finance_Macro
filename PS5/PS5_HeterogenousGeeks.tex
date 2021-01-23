@@ -376,7 +376,7 @@ The income process we modelled now looks like this for pre-government income: \\
 If we used the calibration for post-government (i.e. gross income), we achieved the following pattern in labor income:\footnote{As explained below, we used the transition probabilities between labor income shocks as was estimated for yhh5.}\\
 \includegraphics[width=0.6\textwidth]{PS5/Graphs/labor income post gov.png}\\
 
-\textbf{Note:} The project instructions did not want us to calibrate a different income process for pension receivers (it is given as a fixed 0.4 income in the original towards\_old.m code). The resulting graph for labor income looks weird exactly because of this. The government seems to just take working people's money away but does not spend it to feed the elderly more than before. Hence, we thought it would be better to focus on the pre-government or net income (yhh5 was used for this calibration) in exercise 2.2. Of course, using the estimates from the table from project 4 (see above), we could arrange the code to calibrate the Markov process as it behaves when it is estimated for post-government-income. 
+\textbf{Note:} The project instructions did not want us to calibrate a different income process for pension receivers (it is given as a fixed 0.4 income in the original towards\_old.m code). The resulting graph for labor income looks weird exactly because of this. The government seems to just take working people's money away but does not spend it to feed the elderly more than before. 
 
 \\
 \textbf{Exercise 2.2}
@@ -437,7 +437,7 @@ Thus:
 \textbf{Calibration with estimates of gross income}\\
 \textcolor{red}{@thong: in your calibration I saw different estimates than those we used in project 4.. (I added the table we handed in in project 4 above. Do you see why we have differences there?\\
 
-Also, the project asks us to caloibrate everything for two different income processes yhh5 and yhh6 reliant.. I think it would suffice if we do 2.2 for yhh5 or yhh6 as I assume you did- but maybe you can have a thought about this as well..!)}
+Also, the project asks us to calibrate everything for two different income processes: yhh5 and yhh6 reliant.. I think we still need to do that for vivien to be able to compute exercise 3 - it should be relatively easy to do by just adding one extra option to the mchain function; i.e. mchain(rho, eta, income_type) and then make the returns of mchain vary according to this option.)}
 From estimates in project 4, $\epsilon$ can be calculated as:
 \begin{equation*}
     \epsilon=\sigma_{\Tilde{y}}=\sigma_{ln \Tilde{y}}=\sqrt{\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon}\approx \sqrt{\frac{0.0861262}{1-0.9088825^2} +0.2144817}\approx 0.8424

@@ -10,7 +10,7 @@ tic
 opt_det=false;          % 1=deterministic model
 opt_nosr=0;         % 1=no survival risk
 opt_ny = 2;             % 1=Markov chain with number of states, ny=5,
-% 2=Markov chain with ny=2 (Krüger-Ludwig
+% 2=Markov chain with ny=2 (KrÃ¼ger-Ludwig
 % calibration)
 
 % -------------------------------------------------------------------------
@@ -194,7 +194,7 @@ else
         
     else
         
-        % Alternative -- taken from Krüger and Ludwig (2007) using only two
+        % Alternative -- taken from KrÃ¼ger and Ludwig (2007) using only two
         % states
         ny = 2;
         

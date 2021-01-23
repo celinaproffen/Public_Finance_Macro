@@ -321,29 +321,66 @@ In the attached PDF (Comparison model outcomes) we plotted all required scenario
 
 \textbf{Variation 3} (we will come to Variation 2 next), uses the standard model but now changes besides having stochastic income allows for survival risk (i.e. people never know when they will exactly die). A 100 is however the moment, when one dies with absolute certainty. This survival risk is another source of risk, which can change the consumption pattern. As in the standard model, the asset distribution is rather wide, although a bit lower than in the standard case (people apparently don't want to save as much as before, as they never know whether this means having wasted consumption during the precious time alive ;) Accordingly savings are also a bit lower, and consumption a bit higher than in the standard case. In line with the logic described above, the shape of the consumption function over the life cycle decreases over age (and does not stay constant and high as in the standard model w/o survival risk). \\
 
-\textbf{Variation 2} combines survival risk and a deterministic income process: i.e. we have more risk of dying unpredictably, but save earnings. Again, like in variation 1, the distribution of assets is much more narrow, but this time focuses even more at an early age (when it is still pretty unlikely that one will die).  In comparison to Variation 1, which has no survival risk, we see that the consumption profile is hump-shaped, in line with the idea that one knows that it is ever more unlikely that one will survive and doe snot want to leave too many assets behind without consuming them. In contrast to Variation 3, where income is not deterministic, people only start saving more out of current income as they approach the retirement age. This is in line with the idea, that the labor income during working age (conditional on surviving) will come in in its full/ constant amount for sure.
+\textbf{Variation 2} combines survival risk and a deterministic income process: i.e. we have more risk of dying unpredictably, but save earnings. Again, like in variation 1, the distribution of assets is much more narrow, but this time focuses even more at an early age (when it is still pretty unlikely that one will die).  In comparison to Variation 1, which has no survival risk, we see that the consumption profile is hump-shaped, in line with the idea that one knows that it is ever more unlikely that one will survive and doe snot want to leave too many assets behind without consuming them. In contrast to Variation 3, where income is not deterministic, people only start saving more out of current income as they approach the retirement age. This is in line with the idea, that the labor income during working age (conditional on surviving) will come in in its full/ constant amount for sure.\\
 
 \textbf{Variation 4 and 5}. Looking at Variations 4 and 5, we can make some observations on how tetta, the coefficient of relative risk aversion, changes consumption/ savings behavior in a model of stochastic income but with no survival risk. A higher tetta implies that the RHS of the Euler equation will increase with uncertainty, and that we will want to save more. This is hard to see in the graphs, but there is indeed some differences over the assets accumulated over the life cycle, when one pays close attention to the savings and the assets graph. Also, and perhaps more clearly, the graph on the consumption function over the life cycle reveals that during the retirement age, people with a higher tetta are able to consume more (given their savings).\\
-Also note, that 1/tetta= IES, the intertemporal elasticity of substitution. The latter makes people more willing to adapt their consumption intertemporally when they see an important gain (e.g. in interest rates) from doing so. Here, the interest rate and the intertemporal discount factor equal each other out, but we can still see that people with low IES (high tetta) have a somewhat wider asset distribution over the life cycle, while the ones with low tetta (high IES) take advantage of the compounded interest effects, i.e. they focus the distribution of assets more on the younger ages to take more advantage of it later.
 
-\textbf{Variation 6 and 7} show how the patterns change when (given a constant tetta) the relationship between interest rates and discount factor change. Call $A = \frac{1+r}{1+\rho}$; a high $A$ should lead to more savings today (i.e. lower consumption, higher marginal utility from consumption today). Variation 6 entails a very low $A$ and indeed has relatively low savings when comparing it to the Standard case. This is exactly opposite in the Variation 7, where savings reach over 20 times the level of variation 6. Instead of the humped shaped consumption that follows for Variation 6, in 7 we observe a steady and almost exponential increase in consumption of the life cycle. From a highly negative value function in the early years, this rises to significantly higher levels than those observed in variation 6 at approx. the age of 30.
+Also note, that 1/tetta= IES, the intertemporal elasticity of substitution. The latter makes people more willing to adapt their consumption intertemporally when they see an important gain (e.g. in interest rates) from doing so. Here, the interest rate and the intertemporal discount factor equal each other out, but we can still see that people with low IES (high tetta) have a somewhat wider asset distribution over the life cycle, while the ones with low tetta (high IES) take advantage of the compounded interest effects, i.e. they focus the distribution of assets more on the younger ages to take more advantage of it later.\\
+
+\textbf{Variation 6 and 7} show how the patterns change when (given a constant tetta) the relationship between interest rates and discount factor change. Call $A = \frac{1+r}{1+\rho}$; a high $A$ should lead to more savings today (i.e. lower consumption, higher marginal utility from consumption today). Variation 6 entails a very low $A$ and indeed has relatively low savings when comparing it to the Standard case. This is exactly opposite in the Variation 7, where savings reach over 20 times the level of variation 6. Instead of the humped shaped consumption that follows for Variation 6, in 7 we observe a steady and almost exponential increase in consumption of the life cycle. From a highly negative value function in the early years, this rises to significantly higher levels than those observed in variation 6 at approx. the age of 30.\\
 
 \textcolor{red}{@someone: Please note that the labor income in Variation 7 looks really odd- maybe we chose parameters that are not consistent at some point. I still think we can use these graphs here, but I would recommend explaining/ understanding why this happened. }
 
 \section*{Problem 2: Calibration}
-1.From our regression on the cubic in age from project 4, the coefficients are estimated as:
+
+For this problem, we must keep in mind our results in PS 4. For the sake of completeness, we here reiterate the key findings of that problemset concerning parameters for pre and post government income.
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Variable} & \textbf{Pre government income} & \textbf{Post government income}  \\ \hline
+$\rho$                        &   .9652454 (.0546179)  &  .8501573  (.038411)         \\ \hline
+$\sigma^2_z$                  &   2.385936 (17.57936)  &  -1729.153 (3620.489)        \\ \hline
+$\sigma^2_\nu$                &   .0550472 (.1076207)  &   .2028518 (.0676536)        \\ \hline
+$\sigma^2_\epsilon$           &   .3610598  (.084534)  &   .1343607 (.0364851)        \\ \hline
+$\sigma^2_{\Tilde{y}}$        &   1.167006             &   .8660633                   \\ \hline
+\end{tabular}
+\caption{The estimates for all variables but $\sigma^2_{\Tilde{y}}$ stem from estimations in the stata do.file handed in together with this project instructions. The estimate of $\sigma^2_{\Tilde{y}}$ is computed using the formula given in the project instructions and also derived below.}
+\end{table}
+
+and from our regression on the cubic in age from project 4, the coefficients are estimated for pre-government (i.e. yhh5, net income) as:
+
 \begin{equation*}
     ln\_yhh5\_hat=8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married   
 \end{equation*}
 \begin{equation*}
     yhh5\_hat=exp(8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married)  
 \end{equation*}
-With this we can estimate the age income profile for a given age. For simplification, we choose $married=0$. Since we're only interested in the income from age 20 to 64, we keep the estimates for this age range and set income for all other ages equal 0. After that we can normalize the age profile by dividing income of every age by the average income of life cycle. Finally, we replace the normalized age profile in the code with the normalized estimates. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the estimates of age profile. \\
-Interpretation:
+
+and for post-government income (yhh6, gross income) as:
+
+\begin{equation*}
+    ln\_yhh6\_hat=+8.88529+0.0405944\cdot age+ 0.0002557\cdot age^2-0.0000102\cdot age^3+0.5084652\cdot married  
+\end{equation*}
+\begin{equation*}
+    yhh6\_hat=exp(+8.88529+0.0405944\cdot age+ 0.0002557\cdot age^2-0.0000102\cdot age^3+0.5084652\cdot married  )  
+\end{equation*}
+
+\textbf{Exercise 2.1}
+
+From our regression on the cubic in age from project 4, the coefficients are estimated as above. With this we can estimate the age income profile for a given age. (For simplification, we choose $married=0$, we also distinguish between pre-and post-government income.) Since we're only interested in the income from age 20 to 64, we keep the estimates for this age range and set income for all other ages equal 0. After that we can normalize the age profile by dividing income of every age by the average income of the "active earnings" life cycle (i.e. from 20-64 years old). Finally, we replace the age profile in the code with the normalized estimates. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the estimates of age profile. \\
+
+The income process we modelled now looks like this for pre-government income: \\
+\includegraphics[width=0.6\textwidth]{PS5/Graphs/labor income.png}
+\\
+If we used the calibration for post-government (i.e. gross income), we achieved the following pattern in labor income:\footnote{As explained below, we used the transition probabilities between labor income shocks as was estimated for yhh5.}\\
+\includegraphics[width=0.6\textwidth]{PS5/Graphs/labor income post gov.png}\\
+
+\textbf{Note:} The project instructions did not want us to calibrate a different income process for pension receivers (it is given as a fixed 0.4 income in the original towards\_old.m code). The resulting graph for labor income looks weird exactly because of this. The government seems to just take working people's money away but does not spend it to feed the elderly more than before. Hence, we thought it would be better to focus on the pre-government or net income (yhh5 was used for this calibration) in exercise 2.2. Of course, using the estimates from the table from project 4 (see above), we could arrange the code to calibrate the Markov process as it behaves when it is estimated for post-government-income. 
 
 \\
+\textbf{Exercise 2.2}
 
-2.
 \begin{equation}\tag{1a}
      \Tilde{y_t}&=z_t+\epsilon_t 
 \end{equation}
@@ -377,8 +414,10 @@ Notice that, by i.i.d assumption of shocks from both processes:
     cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,\rho z_{t-2} +\nu_{t-1}+\epsilon_{t-1})=\rho^2cov(z_{t-1},z_{t-2})\\
     cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})
 \end{align*}
-Therefore:
-\LongRightarrow $cov(\Tilde{y_t},\Tilde{y}_{t-1})=cov(z_{t},z_{t-1})$(*)\\
+Therefore: \LongRightarrow $cov(\Tilde{y_t},\Tilde{y}_{t-1})=cov(z_{t},z_{t-1})$(*)\\
+
+\textcolor{red}{CP: I don't get how $ cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})$ is true? }\\
+
 Furthermore, we have:
 \begin{align*}
     \rho_{\Tilde{y}}&=\frac{cov(\Tilde{y_t},\Tilde{y}_{t-1})}{ \sigma^2_{\Tilde{y}}}\\
@@ -393,10 +432,11 @@ Thus:
 \rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}(Q.E.D)
 \end{equation*} 
 \textbf{Intuition}: The larger the magnitude of transitory shock relevant to persistent shock, the less variation of $\Tilde{y}$ can be explained by the variation of persistent shock as implied by \eqref{one}, therefore if there were no transitory shock, autocorrelation of $\Tilde{y}$ is equal to that of z, which is $\rho$. Otherwise, $\rho$ should be scaled down by a factor inversely proportional to the ratio of transitory shock and persistent shock, which is $\frac{1}{1+\frac{\sigma^2_\epsilon}{\sigma^2_z}}$\\
-\begin{itemize}
-    \item \textbf{Calibration with estimates of gross income}\\
 
-      From estimates in project 4, $\epsilon$ can be calculated as:
+
+\textbf{Calibration with estimates of gross income}\\
+
+From estimates in project 4, $\epsilon$ can be calculated as:
 \begin{equation*}
     \epsilon=\sigma_{\Tilde{y}}=\sigma_{ln \Tilde{y}}=\sqrt{\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon}\approx \sqrt{\frac{0.0861262}{1-0.9088825^2} +0.2144817}\approx 0.8424
 \end{equation*}
@@ -419,8 +459,6 @@ $\Pi$ = \begin{bmatrix}
 
 Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the implementation. 
     
-    
-\end{itemize}
 
 
     

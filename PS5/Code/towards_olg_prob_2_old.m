@@ -10,7 +10,7 @@ tic
 opt_det=false;          % 1=deterministic model
 opt_nosr=0;         % 1=no survival risk
 opt_ny = 2;             % 1=Markov chain with number of states, ny=5,
-% 2=Markov chain with ny=2 (Kr??ger-Ludwig
+% 2=Markov chain with ny=2 (Krüger-Ludwig
 % calibration)
 
 % -------------------------------------------------------------------------
@@ -38,8 +38,6 @@ func_calibr(opt_det,opt_nosr,opt_ny);
 avec=[1,21,41,61];
 
 figure;
-
-subplot(5, 2, 1);
 pl=plot(squeeze(gridx(avec,fix((ny+1)/2),[1:10]))',squeeze(cfun(avec,fix((ny+1)/2),[1:10]))');
 legend('age 20','age 40','age 60','age 80');
 set(pl,'LineWidth',2);
@@ -48,7 +46,7 @@ print ('-depsc', ['conspol_', num2str(opt_det), '_', num2str(opt_nosr), '.eps'])
 
 % distribution by age and shock
 for age = avec,
-    subplot(5, 2, 2);
+    figure;
     pl=plot(gridsav,squeeze(Phi(age,:,:))');
     set(pl,'LineWidth',4);
     title(['distribution (assets tomorrow) at age ', num2str(age+20-1)]);
@@ -56,7 +54,7 @@ for age = avec,
 end;
 
 % asset distribution
-subplot(5, 2, 3);
+figure;
 pl=plot(gridsav,PhiAss);
 set(pl,'LineWidth',4);
 title('asset distribution (assets tomorrow)');
@@ -64,46 +62,42 @@ print ('-depsc', ['PhiAss_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
 % plots of average life-cycle profiles
 age=[20:nj+20-1];
-subplot(5, 2, 4);
+figure;
 pl=plot(age,labinclife); title('labor income'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['labinc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
-subplot(5, 2, 5);
+figure;
 pl=plot(age,inclife);  title('income'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['inc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
-subplot(5, 2, 6);
+figure;
 pl=plot(age,asslife); title('assets'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['ass_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
-subplot(5, 2, 7);
+figure;
 pl=plot(age,conslife); title('consumption'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['cons_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
 cgr = conslife(2:end)./conslife(1:end-1);
-subplot(5, 2, 8);
+figure;
 pl=plot(age(1:end-1),cgr); title('consumption growth'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['consgr_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
-subplot(5, 2, 9);
+figure;
 pl=plot(age,inclife-conslife); title('savings'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['sav_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
-subplot(5, 2, 10);
+figure;
 pl=plot(age,vallife); title('value'); xlabel('age');
 set(pl,'LineWidth',2);
 print ('-depsc', ['value_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 % -------------------------------------------------------------------------
-% -------------------------------------------------------------------------
-figure;pl=plot(age,labinclife); title('labor income'); xlabel('age');
-set(pl,'LineWidth',2);
-print ('-depsc', ['labinc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
 
 disp(['time elapsed: ', num2str(toc)]);
 
@@ -133,11 +127,9 @@ grdfac=40;      % scaling factor of saving grid
 % deterministic income component:
 netw=1.0;
 pens=0.4;
-pre_gov = 6 % indicates we are using yhh5
-post_gov = 9
 epsi=ones(nj,1);
 inc=readmatrix('predicted_values.xlsx') % we input income from predicted values file as a matrix in matlab.
-epsi=inc(:,pre_gov) % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
+epsi=inc(:,2) % we replace the normalized vector of one with the vector of our estimates. 
 
 if (jr<nj),
     epsi(jr+1:nj)=0.0;
@@ -201,7 +193,7 @@ else
         
     else
         
-        % Alternative -- taken from Kr??ger and Ludwig (2007) using only two
+        % Alternative -- taken from Krüger and Ludwig (2007) using only two
         % states
         ny = 2;
         

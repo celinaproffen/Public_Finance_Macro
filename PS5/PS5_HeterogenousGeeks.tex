@@ -173,11 +173,26 @@ The advantages of the exogenous grid method are twofold: first of all, it does n
 
 \subsection{}
 
-Please refer to {\fontfamily{ccr}\selectfont toward\_olg\_exogenous}
+Runtime for endogenous grid method:
+  \begin{lstlisting}
+      time elapsed: 6.4291
+  \end{lstlisting}
+
+  \begin{lstlisting}
+      time elapsed: 6.6519
+  \end{lstlisting}
+
+As expected, the exogenous grid point method is more computationally intensive compared to the exogenous grid point method.
+For details on the implementation please refer to \texttt{toward\_olg\_exogenous}.
 
 \subsection{}
 
-Please refer to {\fontfamily{ccr}\selectfont toward\_olg\_not\_first\_order}
+  \begin{lstlisting}
+      time elapsed: 22.3862
+  \end{lstlisting}
+
+As expected, using a constrained optimizer instead of a solving the firts order condition on the value function is significantly more time intensive compared to either first order approaches.
+For details on the implementation please refer to \texttt{toward\_olg\_optimizer}.
 
 \subsection{}
 
@@ -351,19 +366,19 @@ $\sigma^2_{\Tilde{y}}$        &   1.167006             &   .8660633             
 and from our regression on the cubic in age from project 4, the coefficients are estimated for pre-government (i.e. yhh5, net income) as:
 
 \begin{equation*}
-    ln\_yhh5\_hat=8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married   
+    ln\_yhh5\_hat=8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married
 \end{equation*}
 \begin{equation*}
-    yhh5\_hat=exp(8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married)  
+    yhh5\_hat=exp(8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married)
 \end{equation*}
 
 and for post-government income (yhh6, gross income) as:
 
 \begin{equation*}
-    ln\_yhh6\_hat=+8.88529+0.0405944\cdot age+ 0.0002557\cdot age^2-0.0000102\cdot age^3+0.5084652\cdot married  
+    ln\_yhh6\_hat=+8.88529+0.0405944\cdot age+ 0.0002557\cdot age^2-0.0000102\cdot age^3+0.5084652\cdot married
 \end{equation*}
 \begin{equation*}
-    yhh6\_hat=exp(+8.88529+0.0405944\cdot age+ 0.0002557\cdot age^2-0.0000102\cdot age^3+0.5084652\cdot married  )  
+    yhh6\_hat=exp(+8.88529+0.0405944\cdot age+ 0.0002557\cdot age^2-0.0000102\cdot age^3+0.5084652\cdot married  )
 \end{equation*}
 
 \textbf{Exercise 2.1}
@@ -376,13 +391,13 @@ The income process we modelled now looks like this for pre-government income: \\
 If we used the calibration for post-government (i.e. gross income), we achieved the following pattern in labor income:\footnote{As explained below, we used the transition probabilities between labor income shocks as was estimated for yhh5.}\\
 \includegraphics[width=0.6\textwidth]{PS5/Graphs/labor income post gov.png}\\
 
-\textbf{Note:} The project instructions did not want us to calibrate a different income process for pension receivers (it is given as a fixed 0.4 income in the original towards\_old.m code). The resulting graph for labor income looks weird exactly because of this. The government seems to just take working people's money away but does not spend it to feed the elderly more than before. 
+\textbf{Note:} The project instructions did not want us to calibrate a different income process for pension receivers (it is given as a fixed 0.4 income in the original towards\_old.m code). The resulting graph for labor income looks weird exactly because of this. The government seems to just take working people's money away but does not spend it to feed the elderly more than before.
 
 \\
 \textbf{Exercise 2.2}
 
 \begin{equation}\tag{1a}
-     \Tilde{y_t}&=z_t+\epsilon_t 
+     \Tilde{y_t}&=z_t+\epsilon_t
 \end{equation}
 \begin{equation}\tag{1b}
     z_t&=\rho z_{t-1} +\nu_t
@@ -409,7 +424,7 @@ Dividing both sides by $\sigma^2_z$:
 \begin{equation*}
     \frac{\sigma^2_{\Tilde{y}}}{\sigma^2_z}=1+\frac{\sigma^2_\epsilon}{\sigma^2_z}
 \end{equation*}
-Notice that, by i.i.d assumption of shocks from both processes: 
+Notice that, by i.i.d assumption of shocks from both processes:
 \begin{align*}
     cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,\rho z_{t-2} +\nu_{t-1}+\epsilon_{t-1})=\rho^2cov(z_{t-1},z_{t-2})\\
     cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})
@@ -427,10 +442,10 @@ Taking the ratio, and from (*), we have:
 \begin{equation*}
   \frac{\rho_{\Tilde{y}}}{\rho}=\frac{\sigma^2_z}{\sigma^2_{\Tilde{y}}} =\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}
 \end{equation*}
-Thus: 
+Thus:
 \begin{equation*}
 \rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}(Q.E.D)
-\end{equation*} 
+\end{equation*}
 \textbf{Intuition}: The larger the magnitude of transitory shock relevant to persistent shock, the less variation of $\Tilde{y}$ can be explained by the variation of persistent shock as implied by \eqref{one}, therefore if there were no transitory shock, autocorrelation of $\Tilde{y}$ is equal to that of z, which is $\rho$. Otherwise, $\rho$ should be scaled down by a factor inversely proportional to the ratio of transitory shock and persistent shock, which is $\frac{1}{1+\frac{\sigma^2_\epsilon}{\sigma^2_z}}$\\
 
 
@@ -439,31 +454,32 @@ Thus:
 
 Also, the project asks us to calibrate everything for two different income processes: yhh5 and yhh6 reliant.. I think we still need to do that for vivien to be able to compute exercise 3 - it should be relatively easy to do by just adding one extra option to the mchain function; i.e. mchain(rho, eta, income_type) and then make the returns of mchain vary according to this option.)}
 From estimates in project 4, $\epsilon$ can be calculated as:
+
 \begin{equation*}
     \epsilon=\sigma_{\Tilde{y}}=\sigma_{ln \Tilde{y}}=\sqrt{\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon}\approx \sqrt{\frac{0.0861262}{1-0.9088825^2} +0.2144817}\approx 0.8424
 \end{equation*}
 The state vector $[-\epsilon,\epsilon]$ of the logs therefore is: [-0.8424,0.8424]\\
-Using the unnumbered equations for $\eta_-$, $\eta_+$ on p.42 of the lecture notes, the the logs can be transformed to levels as: 
+Using the unnumbered equations for $\eta_-$, $\eta_+$ on p.42 of the lecture notes, the the logs can be transformed to levels as:
 \begin{equation*}
     \eta_-=\frac{2exp(1-\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1-0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx0.3129
     \end{equation*}
     \begin{equation*}
-       \eta_+=\frac{2exp(1+\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1+0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx 1.687 
+       \eta_+=\frac{2exp(1+\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1+0.8424)}{exp(1-0.8424)+exp(1+0.8424)}\approx 1.687
     \end{equation*}
 From previous calibration: $\rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}\approx0.9088825\bigg(1+\frac{0.2144817}{16.15252}\bigg)^{-1}\approx 0.897 $\\
 Using $\kappa=\frac{1+\rho_{\Tilde{y}}}{2}\approx 0.9485$, transition matrix of the Markov process can be calibrated as:\\
 \begin{center}
 $\Pi$ = \begin{bmatrix}
 0.9485 & 0.0515 \\
-0.0515 & 0.9485  
+0.0515 & 0.9485
 \end{bmatrix}
 \end{center}\\
 
-Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the implementation. 
-    
+Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the implementation.
 
 
-    
+
+
 \section*{Problem 3: Analysis}
 
 \section*{Problem 4: Summary of \cite{de2004wealth}}

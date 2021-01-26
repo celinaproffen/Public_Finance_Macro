@@ -46,7 +46,8 @@
 \begin{equation*}
     yhh5\_hat=exp(8.36501+0.0861011\cdot age-0.0006384 \cdot age^2-0.0000035\cdot age^3+0.4370217\cdot married)  
 \end{equation*}
-With this we can estimate the age income profile and replace the normalized age profile in the code with the corresponding estimates. Please refer to $\texttt{towards\_olg.m}$ for the estimates of age profile. \\
+With this we can estimate the age income profile for a given age, for simplification, we choose $married=0$. Since we're only interested in the income from age 20 to 64, we keep the estimates for this age range and set income for all other ages equal 0. After that we can normalize the age profile by dividing income of every age by the average income of life cycle. Finally, we replace the normalized age profile in the code with the normalized estimates. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the estimates of age profile. \\
+
 Interpretation for $j_r=45$ and $j_r=60$:
 
 \\
@@ -82,8 +83,8 @@ Dividing both sides by $\sigma^2_z$:
 \end{equation*}
 Notice that, by i.i.d assumption of shocks from both processes: 
 \begin{align*}
-    cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,\rho z_{t-2} +\nu_{t-1}+\epsilon_{t-1})=\rho^2cov(z_{t-1},z_{t-2})\\
-    cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})
+    cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,z_{t-1}+ \epsilon_{t-1})=cov(\rho z_{t-1},z_{t-1})=\rho Var(z_{t-1})=\rho\frac{\sigma^2_{\nu}}{1-\rho^2}\\
+    cov(z_t,z_{t-1})&=cov(\rho z_{t-1}+\nu_t,z_{t-1})=\rho Var(z_{t-1})=\rho\frac{\sigma^2_{\nu}}{1-\rho^2}
 \end{align*}
 Therefore:
 \LongRightarrow $cov(\Tilde{y_t},\Tilde{y}_{t-1})=cov(z_{t},z_{t-1})$(*)\\
@@ -125,7 +126,7 @@ $\Pi$ = \begin{bmatrix}
 \end{bmatrix}
 \end{center}\\
 
-Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg.m}$ for the implementation. 
+Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the implementation. 
     
     
 \end{itemize}

@@ -426,8 +426,8 @@ Dividing both sides by $\sigma^2_z$:
 \end{equation*}
 Notice that, by i.i.d assumption of shocks from both processes:
 \begin{align*}
-    cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,\rho z_{t-2} +\nu_{t-1}+\epsilon_{t-1})=\rho^2cov(z_{t-1},z_{t-2})\\
-    cov(z_t,z_{t-1})&=\rho^2cov(z_{t-1},z_{t-2})
+    cov(\Tilde{y_t},\Tilde{y}_{t-1})&=cov(\rho z_{t-1} +\nu_t+\epsilon_t,z_{t-1}+ \epsilon_{t-1})=cov(\rho z_{t-1},z_{t-1})=\rho Var(z_{t-1})=\rho\frac{\sigma^2_{\nu}}{1-\rho^2}\\
+    cov(z_t,z_{t-1})&=cov(\rho z_{t-1}+\nu_t,z_{t-1})=\rho Var(z_{t-1})=\rho\frac{\sigma^2_{\nu}}{1-\rho^2}
 \end{align*}
 Therefore: \LongRightarrow $cov(\Tilde{y_t},\Tilde{y}_{t-1})=cov(z_{t},z_{t-1})$(*)\\
 

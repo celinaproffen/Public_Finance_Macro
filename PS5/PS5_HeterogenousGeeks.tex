@@ -477,6 +477,29 @@ $\Pi$ = \begin{bmatrix}
 \end{bmatrix}
 \end{center}\\
 
+\textbf{Calibration with estimates of net income}\\
+
+      From estimates in project 4, $\epsilon$ can be calculated as:
+\begin{equation*}
+    \epsilon=\sigma_{\Tilde{y}}=\sigma_{ln \Tilde{y}}=\sqrt{\frac{\sigma^2_\nu}{1-\rho^2} +\sigma^2_\epsilon}\approx \sqrt{\frac{0.0644558}{1-0.9080964^2} +0.1489496}\approx 0.7187
+\end{equation*}
+The state vector $[-\epsilon,\epsilon]$ of the logs therefore is: [-0.7187,0.7187]\\
+Using the unnumbered equations for $\eta_-$, $\eta_+$ on p.42 of the lecture notes, the the logs can be transformed to levels as: 
+\begin{equation*}
+    \eta_-=\frac{2exp(1-\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1-0.7187)}{exp(1-0.7187)+exp(1+0.7187)}\approx0.384
+    \end{equation*}
+    \begin{equation*}
+       \eta_+=\frac{2exp(1+\sigma_{ln\Tilde{y}})}{exp(1-\sigma_{ln\Tilde{y}})+exp(1+\sigma_{ln\Tilde{y}})}\approx\frac{2exp(1+0.7187)}{exp(1-0.7187)+exp(1+0.7187)}\approx 1.616
+    \end{equation*}
+From previous calibration: $\rho_{\Tilde{y}}=\rho\bigg(1+\frac{\sigma^2_\epsilon}{\sigma^2_z}\bigg)^{-1}\approx0.9080964\bigg(1+\frac{0.1489496}{41.87742}\bigg)^{-1}\approx 0.9049 $\\
+Using $\kappa=\frac{1+\rho_{\Tilde{y}}}{2}\approx 0.9485$, transition matrix of the Markov process can be calibrated as:\\
+\begin{center}
+$\Pi$ = \begin{bmatrix}
+ 0.9049 & 0.0951 \\
+ 0.0951 &  0.9049  
+\end{bmatrix}
+\end{center}\\
+
 Using the estimated values, we can input into the mchain function to implement the model. Please refer to $\texttt{towards\_olg\_prob\_2.m}$ for the implementation.
 
 

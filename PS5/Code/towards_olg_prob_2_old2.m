@@ -114,7 +114,7 @@ end     % end function func_main
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function func_calibr(opt_det,opt_nosr,opt_ny)
 
-global betta tetta r nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop totpop grdfac netincome
+global betta tetta r nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop totpop grdfac
 
 close all
 
@@ -133,21 +133,11 @@ grdfac=40;      % scaling factor of saving grid
 % deterministic income component:
 netw=1.0;
 pens=0.4;
-
-% post_government (= yhh5 =net=1) vs. pre-government (=yhh6 =gross income=2)
-netincome = 2; % 1
-
-if (netincome == 1),
-    columnhelp = 9
-elseif (netincome==2),
-    columnhelp = 6
-end;
-    
+pre_gov = 6 % indicates we are using yhh5
+post_gov = 9
 epsi=ones(nj,1);
 inc=readmatrix('predicted_values.xlsx') % we input income from predicted values file as a matrix in matlab.
-epsi=inc(:,columnhelp) % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
-
-net = 1 % 1 will equal pre-government income (2 for post)
+epsi=inc(:,pre_gov) % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
 
 if (jr<nj),
     epsi(jr+1:nj)=0.0;
@@ -215,16 +205,12 @@ else
         % states
         ny = 2;
         
+        % transition probability and variance
+        rhoeta=0.9485 ; % We replace with our estimate of transition probability from problem 2 
         vary=0.08;    % taken from Storesletten, Telmer, Yaron
         
-        % transition probability and variance given pre- or post gov income
-        if (netincome==1),
-            rhoeta=0.9049 ; % We replace with our estimate of transition probability from problem 2 
-            epsil=0.7187; % shock for post-government income
-        elseif (netincome ==2),
-            rhoeta=0.9485; % We replace with our estimate of transition probability from problem 2 
-            epsil=0.8424; % shock for pre-government income
-        end;
+        % shock
+        epsil=0.8424; % We replace with our estimate of epsilon from problem 2 
         
         % Markov chain
         [pini,pi,gridy]=mchain(rhoeta,epsil);
@@ -587,7 +573,6 @@ gridy=zeros(2,1);
 gridy(1)=exp(1.0-epsil);
 gridy(2)=exp(1.0+epsil);
 gridy=2.0*gridy/(sum(gridy));
-   
 
 end  % end function mchain
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++

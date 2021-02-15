@@ -107,7 +107,7 @@ disp(['equilibrium contribution rate: ', num2str(tau)]);
 disp(['equilibrium capital output ratio: ', num2str(ass/Y)]);
 
 end
-% ------------------------------------------------------------------------
+
 
 % compute the size of each cohort given min, max and survival rate sr
 % ------------------------------------------------------------------------
@@ -124,7 +124,7 @@ L = N(1:retage);
 R = N(retage+1:maxage);
 
 end
-% ------------------------------------------------------------------------
+
 
 % OLG step in each iteration
 % ------------------------------------------------------------------------
@@ -168,7 +168,6 @@ retnew = mpk - delta;
 fval = ret - retnew;
 
 end
-% ------------------------------------------------------------------------
 
 % compute wages given mpk
 % ------------------------------------------------------------------------
@@ -180,7 +179,7 @@ k = (alpha/mpk)^(1/(1-alpha));
 wage = (1-alpha)*k^alpha;
 
 end
-% ------------------------------------------------------------------------
+
 
 % pension system conribution/taxation? PAYGO?
 % ------------------------------------------------------------------------
@@ -189,7 +188,7 @@ function tau = func_pens(L,R,replrate)
 tau = replrate*R ./ (L + replrate * R);
 
 end
-% ------------------------------------------------------------------------
+
 
 % compute (deterministic) income profile over time given wage and pension  
 % ------------------------------------------------------------------------
@@ -200,7 +199,7 @@ inc(1:retage)=wage*(1-tau);
 inc(retage+1:maxage)=replrate*wage*(1-tau);
 
 end
-% ------------------------------------------------------------------------
+
 
 % household optimization problem (deterministic)
 % ------------------------------------------------------------------------
@@ -258,7 +257,7 @@ if (abs(bc)>sqrt(eps))
 end;
 
 end
-% ------------------------------------------------------------------------
+
 
 % household optimization problem (Stochastic)
 % ------------------------------------------------------------------------
@@ -432,12 +431,15 @@ for jc = maxage-1:-1:1
 end
 end
 
+
+% Aggregation function
 % ------------------------------------------------------------------------
 function ass = func_aggr(sav_age,N_age)
 
 ass = sum(sav_age.*N_age);
 
 end
+
 
 % MPK function
 % ------------------------------------------------------------------------
@@ -450,6 +452,7 @@ ky = ass./Y;
 mpk = alpha * ky.^(-1);
 
 end
+
 
 % NEW - Markov chain income process
 % ------------------------------------------------------------------------
@@ -522,6 +525,7 @@ gridy(2)=exp(1.0+epsil);
 gridy=2.0*gridy/(sum(gridy));
 
 end 
+
 
 % NEW - Utility functions
 % ------------------------------------------------------------------------

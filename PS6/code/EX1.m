@@ -134,7 +134,7 @@ end
 % convergence => fval < eps
 function [fval,ass,Y] = func_olg(ret)
 
-global retage maxage L R N_age replrate tau sr  delta gridy pini pi
+global retage maxage L R replrate tau sr  delta gridy pini pi
 
 % MPK = MC_k = interest rate + discount (from firm f.o.c.)
 mpk = ret + delta;
@@ -150,7 +150,7 @@ det_inc = func_inc(wage,tau,replrate,retage,maxage);
 
 % compute gross saving from hh optimization problem
 % (by age, shocks, and cash at hand) 
-[gridx,gridsav,gridass,cfun,vfun] = func_hh_stoc(det_inc,ret,maxage,sr);
+[gridx,gridsav,gridass,cfun,vfun] = func_hh_stoc(det_inc,ret);
 
 % aggregation 
 [Phi,PhiAss,ass] = func_aggr_stoc(gridx, gridsav, cfun, det_inc);
@@ -257,9 +257,9 @@ end
 
 % NEW! household optimization problem (stochastic)
 % ------------------------------------------------------------------------
-function [gridx,gridsav,gridass,cfun,vfun]=func_hh_stoc(det_inc,ret,maxage,sr)
+function [gridx,gridsav,gridass,cfun,vfun]=func_hh_stoc(det_inc,ret)
 
-global betta tetta opt_det opt_ny nshock nx curv grdfac pi
+global betta tetta opt_det opt_ny nshock nx curv grdfac pi gridy pini maxage sr
 
 % Compute Markov Chain parameters
 [nshock, pini, gridy, pi]=stoch_inc_proc(opt_det, opt_ny);
@@ -522,10 +522,10 @@ for jc=2:maxage
         	for ycc=1:nshock
                 
             	% income (wages and pensions) in current period/age:
-                inc = det_inc(jc)*gridy(yc);
+                inc = det_inc(jc)*gridy(ycc);
                 
                 % cash on hand: x=a*(1+r)+y = s(-1)*(1+r)+y;
-                cah=inc+(1.0+ret)*gridsav(xc);
+                cah = inc+ (1.0+ret)*gridsav(xc);
                 
                 [vals,inds]=basefun(gridx(jc,ycc,:),cah,nx);
                 
@@ -593,25 +593,27 @@ end
         % MF function to lookup the current position
         % I think this gives you the closest level in grid_x to x (here
         % cah) in term of the index of grid_x where to find that cah-level
-        i=lookup(grid_x,x,0);
+        i = lookup(grid_x,x,0);
         
-        if ( (i+1)>nx),
-            inds(1)=nx;
-            inds(2)=nx;
-            vals(2)=0.0;
-            vals(1)=1.0;
-        elseif (i==0),
-            inds(1)=1;
-            inds(2)=1;
-            vals(1)=1.0;
-            vals(2)=0.0;
+        disp([i, nx, "end"])
+        
+        if ((i+1) > nx)
+            inds(1) = nx;
+            inds(2) = nx;
+            vals(2) = 0.0;
+            vals(1) = 1.0;
+        elseif (i == 0)
+            inds(1) = 1;
+            inds(2) = 1;
+            vals(1) = 1.0;
+            vals(2) = 0.0;
         else
-            inds(1)=i;
-            inds(2)=i+1;
+            inds(1) = i;
+            inds(2) = i+1;
             dist = grid_x(i+1)-grid_x(i);
-            vals(2)=( x-grid_x(i) )/dist;
-            vals(1)=( grid_x(i+1)-x )/dist;
-        end;
+            vals(2) = ( x-grid_x(i) )/dist;
+            vals(1) = ( grid_x(i+1)-x )/dist;
+        end
         
  end 
 

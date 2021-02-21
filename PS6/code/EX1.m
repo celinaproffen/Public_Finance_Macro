@@ -10,14 +10,15 @@ rho = 0.05;  % 0.01
 delta = 0.05;
 alpha = 0.33; % 0.33; % 0.1;
 ret = 0.07;
-tetta = 1.0;
+% tetta = 1.0;
+tetta=1.6, % this is our new tetta for comparison in problem 2
 betta = 1/(1+rho);
 lambda = 1.0;
 
 maxage = 80;        % corresponds to real age 100 == nj
 retage = 45;        % corresponds to actual age 65 == jr
-replrate = 0.0;     % ?????
-
+%replrate = 0.0;     % ?????
+replrate = 0.6;     % This is the new rr=0.6 as suggested in problem 2
 % iteration parameters
 tol = 1e-4;          % convergence criteria
 maxit = 100;         % max n. of iteration

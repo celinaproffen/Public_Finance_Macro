@@ -60,7 +60,7 @@ assvec = zeros(n,1);
 % for each interest rate point, compute assets (== capital) supplied
 for i = 1:n
     ret = retvec(i);
-    [fval, assvec(i)] = func_olg(ret);
+    [delta_ret, assvec(i)] = func_olg(ret);
 end
 
 % graph of K(r) = optimal demand (input choice):
@@ -81,22 +81,22 @@ print -depsc equil.eps
 % (re)set starting interest rate
 ret = retold;
 
-% iterate until r* s.t. => fval < tol 
+% iterate until r* s.t. => delta_ret < tol 
 for it=1:maxit
     
     % given ret, compute differene between demand and supply r
-    [fval, ass, Y] = func_olg(ret);
+    [delta_ret, ass, Y] = func_olg(ret);
     
-    % if fval(ret) < tol, STOP 
-    if (abs(fval)<tol)
+    % if delta_ret(ret) < tol, STOP 
+    if (abs(delta_ret)<tol)
         disp('convergence');
         break;
         
-    % fval(ret) > tol
+    % delta_ret(ret) > tol
     else
         
         % update ret using df as a smoothing parameter
-        ret = ret - df * fval;
+        ret = ret - df * delta_ret;
         disp(['iteration #', num2str(it)]);
         disp(['guess of rate of return: ', num2str(ret)]);
     end
@@ -132,9 +132,9 @@ end
 % OLG step in each iteration
 % ------------------------------------------------------------------------
 % given an interest rate "ret",
-% Print implied assets and output and fval = rel - implied interest rate
-% convergence => fval < eps
-function [fval,ass,Y] = func_olg(ret)
+% Print implied assets and output and delta_ret = rel - implied interest rate
+% convergence => delta_ret < eps
+function [delta_ret,ass,Y] = func_olg(ret)
 
 global retage maxage L R replrate tau sr  delta gridy pini pi
 
@@ -192,7 +192,7 @@ det_inc = func_inc(wage,tau,replrate,retage,maxage);
 retnew = mpk - delta; 
 
 % change in interest rate
-fval = ret - retnew;
+delta_ret = ret - retnew;
 
 end
 

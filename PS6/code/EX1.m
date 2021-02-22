@@ -14,7 +14,8 @@ ret = 0.07;
 tetta=1.6, % this is our new tetta for comparison in problem 2
 betta = 1/(1+rho);
 lambda = 1.0;
-
+opt_PAYG=0
+opt_ra=0
 maxage = 80;        % corresponds to real age 100 == nj
 retage = 45;        % corresponds to actual age 65 == jr
 %replrate = 0.0;     % ?????
@@ -144,8 +145,36 @@ mpk = ret + delta;
 wage = func_firm(mpk);
 
 % compute pension contribution
+%NEW! equivalent income variation analysis
 tau = func_pens(L,R,replrate); % == 0 w/ current calibration
+for opt_PAYG=0:1
+    if opt_PAYG==0
+        replrate=0.0
+        tau = func_pens(L,R,replrate);
+        det_inc = func_inc(wage,tau,replrate,retage,maxage);
+        [gridx,gridsav,gridass,cfun,vfun]= func_hh_stoc(det_inc,ret);
+        V=vfun(0,:,:)
+    else
+        replrate=0.6
+        tau = func_pens(L,R,replrate); 
+        det_inc = func_inc(wage,tau,replrate,retage,maxage);
+        [gridx,gridsav,gridass,cfun,vfun]= func_hh_stoc(det_inc,ret)
+        V_bar=vfun(0,:,:)
+    end
+end
+%Equivalent income variation   
+g=eqiv(V,V_bar,tetta)
 
+%NEW- variation across different values of tetta 
+for opt_ra=0:1
+    if opt_ra==0
+       tetta=1.6
+       g=eqiv(V,V_bar,tetta)
+    else 
+       tetta=1.2
+       g=eqiv(V,V_bar,tetta)
+    end
+end
 % compute deterministic component of income for each cohort
 det_inc = func_inc(wage,tau,replrate,retage,maxage);
 
@@ -731,6 +760,10 @@ global tetta
 % invert utility for c
 invut=marg.^(-1.0/tetta);
 end   
+% NEW - Equivalent variation
+function eqiv=EQIV(V,V_bar,tetta)
+eqiv=(V/V_bar)^(1/(1-tetta))-1
+end
 
 
 

@@ -5,10 +5,9 @@
 % - implement the labor income as calibrated in project 5, exercise 2 
 % --> done
 % - Understand function exercise; 
-% --> make the households problem loop over different guesses of r and wage
-% levels
-
-% IMPORTANT: Make income right!
+%
+%
+% !!! PROBLEM: R is also a part of the HHs optimization problem
 
 % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -112,13 +111,13 @@ opt_ny = 2;             % 1=Markov chain with number of states, ny=5, % 2=Markov
 % SOLUTION
 
 % calibration
-[det_income] = func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret);
+func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret);
 
 % solution of household model
-[gridx,gridsav,gridass,cfun,vfun] = func_hh(det_income);
+[gridx,gridsav,gridass,cfun,vfun] = func_hh;
 
 % aggregation
-[Phi,PhiAss,ass] = func_aggr(gridx,gridsav,cfun,gridass,det_income);
+[Phi,PhiAss,ass] = func_aggr(gridx,gridsav,cfun,gridass);
 
 % average life-cycle profiles
 [labinclife,inclife,asslife,conslife,vallife] = lcprofile(Phi,gridass,cfun,vfun);
@@ -216,9 +215,9 @@ end     % end function func_main
 
 
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function [det_income] = func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret)
+function func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret)
 
-global betta tetta nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop totpop grdfac r
+global betta tetta nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop totpop grdfac
 
 close all
 
@@ -231,9 +230,36 @@ tetta = 2;
 nj=80; % number of year a person lives
 jr=45; % after 45 year people retire
 
-nx=50;         % # of grid-points
+nx=30;         % # of grid-points
 curv=3.0;       % curvature of grid
-grdfac=100;      % scaling factor of saving grid (orig 40)
+grdfac=40;      % scaling factor of saving grid
+
+
+% deterministic income component:
+netw=1.0;
+pens=0.4; % originally = 0.4;
+
+% net = 1 --> post_government(yhh5) vs. netincome == 2 --> pre-government(yhh6)
+netincome = 2; % 1
+
+if (netincome == 1),
+    columnhelp = 9;
+elseif (netincome==2),
+    columnhelp = 6;
+end;
+    
+epsi=ones(nj,1);
+
+inc = readmatrix('predicted_values.xlsx'); % we input income from predicted values file as a matrix in matlab.
+epsi = inc(:,columnhelp); % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
+
+%%% NEW %%%
+epsi = epsi*wage_scaling_factor;
+%%% end NEW %%%
+
+if (jr<nj),
+    epsi(jr+1:nj)=0.0;
+end;
 
 % survival rates
 if opt_nosr,
@@ -255,45 +281,6 @@ totpop=sum(pop);
 pop=pop/totpop;
 totpop=1.0;
 frac=pop./totpop;
-
-
-
-% deterministic income component:
-netw=1.0;
-pens=0.4; % originally = 0.4;
-epsi=ones(nj,1);
-if (jr<nj),
-    epsi(jr+1:nj)=0.0;
-end;
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% We need a new variable: deteministic income 
-
-det_income = zeros(nj,1);
-
-% net = 1 --> post_government(yhh5) vs. netincome == 2 --> pre-government(yhh6)
-netincome = 2; % 1
-if (netincome == 1),
-    columnhelp = 9;
-elseif (netincome==2),
-    columnhelp = 6;
-end;
-    
-inc = readmatrix('predicted_values.xlsx'); % we input income from predicted values file as a matrix in matlab.
-det_income = inc(:,columnhelp); % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
-
-if (jr<nj),
-    det_income(jr+1:nj)=pens*wage_scaling_factor;
-end;
-
-% Government budget constraint needs to hold
-%retirees = pop(jr+1:nj);
-%sum(retirees)*1*wage_scaling_factor
-%expenditures = pop.*
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 % # of income states
 if (opt_det==1),
@@ -350,9 +337,9 @@ end     % end function func_calibr
 
 
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function [gridx,gridsav,gridass,cfun,vfun] = func_hh(det_income)
+function [gridx,gridsav,gridass,cfun,vfun] = func_hh
 
-global betta tetta r nj nx ny pi gridy netw pens sr epsi curv grdfac jr
+global betta tetta r nj nx ny pi gridy netw pens sr epsi curv grdfac
 
 disp('solution of household model');
 
@@ -364,7 +351,6 @@ cfun = zeros(nj,ny,nx); % policy function in all states and ages for different c
 vfun = zeros(nj,ny,nx); % value function in all states and ages for different cash-at-hand levels
 vpfun = zeros(nx,1); % first derivative of the value function (w.r.t.consumption) (? why is the formula 8.62 in the dynmaic macro notes different?)
 vptrans = zeros(nj,ny,nx); % transformed value function in all states and ages for different cash-at-hand levels
-det_income = det_income;
 
 % savings grid: hold it constant:
 maxsav=grdfac;
@@ -377,10 +363,7 @@ gridsav(1)=0.0;
 % functions, transformed value functions, etc.
 for yc=1:ny
     % cash-on-hand grid at nj; thus is an nj*1 vector.
-    %inc = epsi(nj)*netw*gridy(yc)+(1-epsi(nj))*pens;
-    
-    inc = det_income(nj);
-    
+    inc = epsi(nj)*netw*gridy(yc)+(1-epsi(nj))*pens;
     % when you are young nj<jr your receive income 1 multiplies by the
     % shock; we don't care about transition probabilities yet but will
     % implement them later!
@@ -412,11 +395,7 @@ for jc=nj-1:-1:1,
             
             for ycc=1:ny,
                 % income tomorrow:
-                %incp1=epsi(jc+1)*netw*gridy(ycc)+(1-epsi(jc+1))*pens;
-                incp1 = det_income(jc+1);
-                if (jc+1<jr+1),
-                    incp1 = det_income(jc+1)*gridy(ycc);
-                end;
+                incp1=epsi(jc+1)*netw*gridy(ycc)+(1-epsi(jc+1))*pens;
                 
                 % Maximum cash on hand tomorrow:
                 % in case of zero savings and no pension system assume some
@@ -460,11 +439,7 @@ for jc=nj-1:-1:1,
         end;
         
         % income (wages and pensions) in current period/age:
-        %inc=epsi(jc)*netw*gridy(yc)+(1-epsi(jc))*pens;
-        inc = det_income(jc);
-        if (jc<jr),
-            inc = det_income(jc)*gridy(ycc);
-        end;
+        inc=epsi(jc)*netw*gridy(yc)+(1-epsi(jc))*pens;
         
         % decision at minx
         % notice: correction required for welfare calculation
@@ -498,12 +473,7 @@ for jc=nj-1:-1:1,
             v=zeros(2,1);
             for ycc=1:ny,
                 % income tomorrow:
-                % incp1=epsi(jc+1)*netw*gridy(ycc)+(1-epsi(jc+1))*pens;
-                incp1 = det_income(jc+1);
-                if (jc+1<jr+1),
-                    incp1 = det_income(jc+1)*gridy(ycc);
-                end;
-                
+                incp1=epsi(jc+1)*netw*gridy(ycc)+(1-epsi(jc+1))*pens;
                 
                 % cah tomorrow
                 cah=max(sqrt(eps),incp1+(1.0+r)*gridsav(xc));
@@ -560,9 +530,9 @@ end     % end function func_hh
 
 
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass,det_income)
+function [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass)
 
-global r nj nx ny pi gridy netw pens sr epsi pini frac totpop jr nj
+global r nj nx ny pi gridy netw pens sr epsi pini frac totpop
 
 disp('aggregation and cross-sectional measure');
 
@@ -574,8 +544,7 @@ PhiAss = zeros(nx,1);             % distribution of assets
 for yc=1:ny
     
     % income (wages and pensions) in current period/age:
-    %inc=epsi(1)*netw*gridy(yc)+(1-epsi(1))*pens;
-    inc = det_income(1)*gridy(yc);
+    inc=epsi(1)*netw*gridy(yc)+(1-epsi(1))*pens;
     
     % initial cash-on-hand:
     cahini=inc;
@@ -593,13 +562,8 @@ for jc=2:nj
             for ycc=1:ny
                 
                 % income (wages and pensions) in current period/age:
-                %inc=epsi(jc)*netw*gridy(ycc)+(1-epsi(jc))*pens;
+                inc=epsi(jc)*netw*gridy(ycc)+(1-epsi(jc))*pens;
                 
-                inc=det_income(jc);
-                if (jc<jr),
-                    inc = det_income(jc)*gridy(ycc);
-                end;
-                                
                 % cash on hand: x=a*(1+r)+y = s(-1)*(1+r)+y;
                 cah=inc+(1.0+r)*gridsav(xc);
                 
@@ -699,7 +663,7 @@ end     % end function func_aggr
 
 
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function [labinclife,inclife,asslife,conslife,vallife] = lcprofile(Phi,gridass,cfun,vfun,det_income)
+function [labinclife,inclife,asslife,conslife,vallife] = lcprofile(Phi,gridass,cfun,vfun)
 
 global r nj nx ny gridy netw pens epsi frac
 
@@ -717,12 +681,7 @@ for jc=1:nj,
             asslife(jc)=asslife(jc)+Phi(jc,yc,xc)*gridass(jc,yc,xc)/frac(jc);
             conslife(jc)=conslife(jc)+Phi(jc,yc,xc)*cfun(jc,yc,xc)/frac(jc);
             
-            %inc=epsi(jc)*netw.*gridy(yc)+(1-epsi(jc))*pens;
-            inc = det_income(jc)
-            if(jc<jr),
-                inc = det_income(jc).*gridy(yc);
-            end;
-            
+            inc=epsi(jc)*netw.*gridy(yc)+(1-epsi(jc))*pens;
             labinclife(jc)=labinclife(jc)+Phi(jc,yc,xc)*inc/frac(jc);
             inclife(jc)=inclife(jc)+Phi(jc,yc,xc)*(r*gridass(jc,yc,xc)+inc)/frac(jc);
             

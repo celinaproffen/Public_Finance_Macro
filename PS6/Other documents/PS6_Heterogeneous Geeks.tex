@@ -90,6 +90,22 @@ Please refer to EX1.m.
 \subsubsection*{Exercise 1.2}
 An OLG economy might not be Pareto efficient in equilibrium if capital output elasticity ($\alpha$) is low enough. This lead the economy to accumulate more capital than indicated by the "golden rule" that is, the capital stock that maximizes per-capita consumption. The reduction of per-capita consumption level is given by the fact that the return of capital implied by the capital stock is lower than the growth of the economy. Then, if the economy has infinite horizon, it would be always possible to transfer resources from the future, resulting in a Pareto improvement (is this result equivalent to Hilbert's paradox?).  
 
+\subsection*{Exercise 2}
+This exercise is about evaluating welfare consequences of different policies for the newborns. In this case, we are
+comparing the wealth from government intervention to the wealth without for a prespecified income
+process. The differences in utility can not be interpreted since utility is a ordinal concept, therefore,
+we are calculating the consumption equivalent variation. It is defined as the consumption increase
+(in percent) that would compensate an individual for being in one instead of the other of the states.
+In the case of a CRRA utility function, it can be calculated as:
+\begin{equation*}
+    g_t=\bigg(\frac{V_t}{\Bar{V}_t}\bigg)^\frac{1}{1-\theta}-1
+\end{equation*}
+$V_t$ ($\Bar{V}_t$) in this case is the life-time utilities of someone of the newborns born in period t for the
+two states without(with) PAYG pension system. To calculate the consumption equivalent variation, we would need to calculate the two life-time utilities using the matlab file for exercise 1 and plug them - together with the value for theta. 
+- into the equation.\\
+%Analysis for welfare consequences(to be done)\\
+Since a general analysis of how $g_t$ varies across every possible values of theta is generally difficult analytically, we would need to base our analysis on the result of the matlab file for 1c).  
+We would expect $g_t$ to increases when theta increases. This is intuitive since the more risk-averse the agent is, the more he benefits from the insured future income with PAYG system, and this reduces his saving for the future periods more than the case with lower theta, and he thus shifts his savings towards current periods for consumption.  
 \subsection*{Exercise 4}
 The assigned paper "Education Policy and Intergenerational Transfers in Equilibrium“ develops a heterogenous agents OLG model to assess how financial aid policies act on education, labor and savings decisions of households. It also analyses the welfare effects of policies, concluding that it would be beneficial for society (in this case everything is calibrated to the United States) if more direct financial aid in form of ability-based grants would be handed out to students. 
 

@@ -1,65 +1,20 @@
 % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 % PROJECT 6
 
-% Exercise 2: 
-% Loop over the below code using a function that defines rr_orig and an alternative rr_altern 
-% This function should compare the equilibrium 
-% However, simultaneously, it needs to distinguish between whether a
-% general or partial equilibrium is desired
-% 
+% Exercise 1: 
+% - implement the labor income as calibrated in project 5, exercise 2 
+% --> done
+% - Understand function exercise; 
+%
+%
+% !!! PROBLEM: R is also a part of the HHs optimization problem
 
 % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 % I am just adding the function from the exercise matlab file
 
-function [EV_GE,EV_PE] = welfare_analysis
 
-close all
-
-global tetta rr_orig rr_altern
-
-% deterministic rate of return for partial EQ and initial guess for G
-ret_guess = 0.01; 
-
-% rr will determine how much of the average income a pensioneer receives
-% Average income in GE depends on wage_scaling_factor; in PE we can just
-% set wage_scaling_factor = 1 
-
-% Set the generosity of the PAYG pension system
-    rr_orig = 0.0; % set YYY = 1
-    rr_altern = 0.6; % set YYY = 2
-
-% Calculate Value function of newborns with given rr in partial eq
-
-% In partial eq:
-disp('Calculating rules under PARTIAL EQ')
-    [V_part_orig] = general_eq(ret_guess,0,1); % somehow include rr_orig too (basically we need to transmit this last index through all functions that are used; let's try this with YYY)
-    V_part_altern = general_eq(ret_guess,0,2); % somehow include rr_altern too
-    EV_PE = EQIV(V_part_altern,V_part_orig);
-        
-% In general eq:
-disp('Calculating rules under GENERAL EQ')
-    V_gen_orig = general_eq(ret_guess,1,1); % somehow include rr_orig too
-    V_gen_altern = general_eq(ret_guess,1,2); % somehow include rr_altern too
-    EV_GE = EQIV(V_gen_altern,V_gen_orig);
-    
-    disp(['Value PE of newborns, orig. pension rule: ', num2str(V_part_orig)]);
-    disp(['Value PE of newborns, altern. pension rule: ', num2str(V_part_altern)]);
-    disp(['Equivalent variation in PE: ', num2str(V_part_altern)]);
-    disp(['Value GE of newborns, orig. pension rule: ', num2str(V_gen_orig)]);
-    disp(['Value GE of newborns, altern. pension rule: ', num2str(V_gen_altern)]);
-    disp(['Equivalent variation in GE: ', num2str(V_gen_altern)]);
-end
-
-% NEW - Equivalent variation
-function eqiv=EQIV(V,V_bar,tetta)
-    global tetta
-    eqiv = (V/V_bar)^(1/(1-tetta))-1;
-end
-
-% making the exercise fct dependent on rate of return and whether we want
-% GE or not
-function [V_newborns] = general_eq(return_guess,GE,YYY)
+function exercise
 
 close all
 
@@ -70,53 +25,43 @@ global alpha delta
 %rho = 0.05;  % 0.01
 delta = 0.05; % orig = 0.05
 alpha = 0.33; % 0.33; % 0.1;
-%ret = 0.02; % initial guess
-ret = return_guess;
+ret = 0.02; % initial guess
 %lambda = 1.0; % ???
-YYY = YYY;
 
-% Define whether we are interested in GE or not
-% if GE = 1 we are interested in the GE effect
-    if (GE==1), 
+tol = 1e-4;
+maxit = 10;
+df = 0.1;
 
-        tol = 1e-4;
-        maxit = 5; % VIVIEN --> CHANGE ITERATIONS
-        df = 0.1;
+% graph of A(r) and K(r)
+retold = ret;
 
-            for it=1:maxit,
-                [fval, ass, Y, wage_scale,value_life] = func_olg(ret,YYY);
-                if (abs(fval)<tol),
-                    disp('convergence');
-                    break;
-                else,
-                    ret = ret - df * fval;
-                    disp(['iteration #', num2str(it)]);
-                    disp(['guess of rate of return: ', num2str(ret)]);
-                    disp(['wage scaling factor: ', num2str(wage_scale)]);
-                end;
-            end;
-            if (it>=maxit),
-                warning('no convergence');
-            end;
+% I am just not putting the graph here
 
-        disp(['equilibrium interest rate: ', num2str(ret)]);
-        disp(['equilibrium capital output ratio: ', num2str(ass/Y)]);
+% solution of OLG model:
+ret = retold;
+
+for it=1:maxit,
+    [fval, ass, Y, wage_scale] = func_olg(ret);
+    if (abs(fval)<tol),
+        disp('convergence');
+        break;
+    else,
+        ret = ret - df * fval;
+        disp(['iteration #', num2str(it)]);
+        disp(['guess of rate of return: ', num2str(ret)]);
         disp(['wage scaling factor: ', num2str(wage_scale)]);
-        % return value function with the final rate of interest
-        V_newborns = value_life(1); % Make V_newborns capture the lifetime utility of these individuals
-        disp(['value_life: ', num2str(V_newborns)]);
-
-% if GE = 0 we are interested in the PE effect
-    else,    
-        % run toward OLG code by itself
-        % return value function with the initial guess of R
-        [final_cap_supply,value_life] = towards_olg(1,return_guess,YYY);
-        V_newborns = value_life(1); % Make V_newborns capture the lifetime utility of these individuals
-    end;    
+    end;
+end;
+if (it>=maxit),
+    warning('no convergence');
+end;
+disp(['equilibrium interest rate: ', num2str(ret)]);
+%disp(['equilibrium contribution rate: ', num2str(tau)]);
+disp(['equilibrium capital output ratio: ', num2str(ass/Y)]);
 
 end
 
-function [fval,ass,Y, wage_scale,value_life] = func_olg(ret,YYY)
+function [fval,ass,Y, wage_scale] = func_olg(ret)
 
     %global retage maxage L R N_age replrate tau sr lambda delta 
     %%% NEW %%%
@@ -138,19 +83,19 @@ function [fval,ass,Y, wage_scale,value_life] = func_olg(ret,YYY)
     % sav_age = func_hh(inc,ret,maxage,sr,lambda); % savings decisions giving
     % rate of return (gross savings by age group)
     % ass = func_aggr(sav_age,N_age); % we get this from [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass)which is called in towards_olg
-    [ass,value_life] = towards_olg(wage_scale,ret,YYY);
+    ass = towards_olg(wage_scale,ret)
 
     %[mpk,Y] = func_mpk(ass, L); 
     [mpk,Y] = func_mpk_altern(ass); 
     %%% end NEW %%%
     
-    retnew = mpk - delta; 
+    retnew = mpk - delta 
     
     fval = ret - retnew; % Change in rate of return - diFference in Value?
 end
 
 
-function [aggregate_cap_supply,value_life] = towards_olg(wage_scaling_factor,ret,YYY)
+function [aggregate_cap_supply] = towards_olg(wage_scaling_factor,ret)
 
 %close all
 
@@ -162,13 +107,11 @@ opt_det=false;          % 1=deterministic model (1=true, 0=false in matlab)
 opt_nosr=1;             % 1=no survival risk (if we want survival risk later, set this to 0)
 opt_ny = 2;             % 1=Markov chain with number of states, ny=5, % 2=Markov chain with ny=2 (Krueger-Ludwig calibration)
 
-wage_scaling_factor = wage_scaling_factor;
-ret = ret;
 % -------------------------------------------------------------------------
 % SOLUTION
 
 % calibration
-func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret,YYY);
+func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret);
 
 % solution of household model
 [gridx,gridsav,gridass,cfun,vfun] = func_hh;
@@ -181,7 +124,6 @@ func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret,YYY);
 
 %%% NEW %%%
 aggregate_cap_supply = ass;
-value_life = vallife;
 %%% end NEW %%%
 
 % -------------------------------------------------------------------------
@@ -273,9 +215,9 @@ end     % end function func_main
 
 
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret,YYY)
+function func_calibr(opt_det,opt_nosr,opt_ny,wage_scaling_factor,ret)
 
-global betta tetta nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop totpop grdfac r rr_orig rr_altern
+global betta tetta nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop totpop grdfac r
 
 close all
 
@@ -288,12 +230,36 @@ tetta = 2;
 nj=80; % number of year a person lives
 jr=45; % after 45 year people retire
 
-nx=200;         % # of grid-points (orig 30)
+nx=30;         % # of grid-points
 curv=3.0;       % curvature of grid
 grdfac=40;      % scaling factor of saving grid
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% POPULATION DYNAMICS
+
+% deterministic income component:
+netw=1.0;
+pens=0.4; % originally = 0.4;
+
+% net = 1 --> post_government(yhh5) vs. netincome == 2 --> pre-government(yhh6)
+netincome = 2; % 1
+
+if (netincome == 1),
+    columnhelp = 9;
+elseif (netincome==2),
+    columnhelp = 6;
+end;
+    
+epsi=ones(nj,1);
+
+inc = readmatrix('predicted_values.xlsx'); % we input income from predicted values file as a matrix in matlab.
+epsi = inc(:,columnhelp); % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
+
+%%% NEW %%%
+epsi = epsi*wage_scaling_factor;
+%%% end NEW %%%
+
+if (jr<nj),
+    epsi(jr+1:nj)=0.0;
+end;
 
 % survival rates
 if opt_nosr,
@@ -316,53 +282,6 @@ pop=pop/totpop;
 totpop=1.0;
 frac=pop./totpop;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% INCOME DYNAMICS
-
-% deterministic income component: labor & pension income
-netw=1.0;
-%pens=0.4; % originally = 0.4;
-    if (YYY == 1),
-        pens = wage_scaling_factor*rr_orig;
-    elseif (YYY == 2),
-        pens = wage_scaling_factor*rr_altern;
-    else,
-        disp('Need to specify pension regime correctly!');
-    end;
-    
-epsi=ones(nj,1);
-if (jr<nj),
-    epsi(jr+1:nj)=0.0;
-end;
-
-% DEFINE NET VS. GROSS INCOME
-% net = 1 --> post_government(yhh5) vs. netincome == 2 --> pre-government(yhh6)
-netincome = 2; % 1
-if (netincome == 1),
-    columnhelp = 9;
-elseif (netincome==2),
-    columnhelp = 6;
-end;
-inc = readmatrix('predicted_values.xlsx'); % we input income from predicted values file as a matrix in matlab.
-epsi = inc(:,columnhelp); % we replace the normalized vector of one with the vector of our estimates (for pre or post gov repectively) 
-epsi = epsi*wage_scaling_factor;
-
-workforce_help = pop(1:jr);
-inc_workforce_help = epsi(1:jr);
-inc_workforce = inc_workforce_help'*workforce_help;
-retirees_help = pop(jr+1:nj);
-retirees = sum(retirees_help);
-
-%%% NEW - GOVERNMENT BUDGET
-% make government execute it's balanced budget given foreseen money for the old %%%
-% Note that pens already depends on YYY
-G_exp = retirees*pens;
-tau = G_exp/inc_workforce;
-epsi = (1-tau)*epsi;           
-%%% end NEW %%%
-
-
-% INCOME SHOCK PROCESS
 % # of income states
 if (opt_det==1),
     ny = 1;

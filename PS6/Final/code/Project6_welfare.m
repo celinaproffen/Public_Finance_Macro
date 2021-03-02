@@ -2,11 +2,9 @@
 % PROJECT 6
 
 % Exercise 2: 
-% Loop over the below code using a function that defines rr_orig and an alternative rr_altern 
-% This function should compare the equilibrium 
-% However, simultaneously, it needs to distinguish between whether a
-% general or partial equilibrium is desired
-% 
+% Welfare function compares the equilibria under both social security
+% system, as indicated by rr_orig and an alternative rr_altern
+% Simultaneously, the code distinguishes between general or partial eq.
 
 % +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -32,7 +30,7 @@ ret_guess = 0.01;
 
 % In partial eq:
 disp('Calculating rules under PARTIAL EQ')
-    [V_part_orig] = general_eq(ret_guess,0,1); % somehow include rr_orig too (basically we need to transmit this last index through all functions that are used; let's try this with YYY)
+    V_part_orig = general_eq(ret_guess,0,1); % somehow include rr_orig too (basically we need to transmit this last index through all functions that are used; let's try this with YYY)
     V_part_altern = general_eq(ret_guess,0,2); % somehow include rr_altern too
     EV_PE = EQIV(V_part_orig,V_part_altern);
         
@@ -52,7 +50,7 @@ disp('Calculating rules under GENERAL EQ')
 end
 
 % NEW - Equivalent variation
-function eqiv=EQIV(V,V_bar,tetta)
+function eqiv=EQIV(V,V_bar)
     global tetta
     eqiv = (V/V_bar)^(1/(1-tetta))-1;
 end
@@ -125,28 +123,19 @@ function [fval,ass,Y, wage_scale,value_life] = func_olg(ret,YYY)
 
     mpk = ret + delta; % marginal product of capital
     
-    %wage = func_firm(mpk); % marginal product of labor that depends on capital
     wage_scale = func_firm(mpk); % marginal product of labor that depends on capital
 
-    % idea: feed the wage into the towards_olg function (maybe as a scaling
-    % factor between zero and one that multiplies the wage level overall?)
-    % epsi in the calibration function is really the thing that needs to be
-    % changed upward or downwards by how much labor is required.. 
+    % idea: feed the wage level and current guess for rate of return
+    % into the towards_olg function 
 
-    % tau = func_pens(L,R,replrate); % ??? maybe the labor tax rate? depends on number of years at labor and retired
-    % inc = func_inc(wage,tau,replrate,retage,maxage); % labor income
-    % sav_age = func_hh(inc,ret,maxage,sr,lambda); % savings decisions giving
-    % rate of return (gross savings by age group)
-    % ass = func_aggr(sav_age,N_age); % we get this from [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass)which is called in towards_olg
     [ass,value_life] = towards_olg(wage_scale,ret,YYY);
 
-    %[mpk,Y] = func_mpk(ass, L); 
     [mpk,Y] = func_mpk_altern(ass); 
     %%% end NEW %%%
     
     retnew = mpk - delta; 
     
-    fval = ret - retnew; % Change in rate of return - diFference in Value?
+    fval = ret - retnew; % Change in rate of return
 end
 
 
@@ -185,88 +174,8 @@ value_life = vallife;
 %%% end NEW %%%
 
 % -------------------------------------------------------------------------
-
-% PLOTS
-
-% plot of consumption policy for seleted ages and grid points and
-% current shock state fix((ny+1)/2):
-% avec=[1,21,41,61];
-% 
-% % asset distribution
-% figure;
-% 
-% subplot(5, 2, 1);
-% pl=plot(squeeze(gridx(avec,fix((ny+1)/2),[1:10]))',squeeze(cfun(avec,fix((ny+1)/2),[1:10]))');
-% legend('age 20','age 40','age 60','age 80');
-% set(pl,'LineWidth',2);
-% title('consumption policy at different ages');
-% print ('-depsc', ['conspol_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% % distribution by age and shock
-% %for age = avec,
-% for age = 21,
-%     subplot(5, 2, 2);
-%     pl=plot(gridsav,squeeze(Phi(age,:,:))');
-%     set(pl,'LineWidth',4);
-%     title(['distribution (assets tomorrow) at age ', num2str(age+20-1)]);
-%     print ('-depsc', ['distr_age', num2str(age), '_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% end;
-% 
-% % asset distribution
-% subplot(5, 2, 3);
-% pl=plot(gridsav,PhiAss);
-% set(pl,'LineWidth',4);
-% title('asset distribution (assets tomorrow)');
-% print ('-depsc', ['PhiAss_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% % plots of average life-cycle profiles
-% age=[20:nj+20-1];
-% subplot(5, 2, 4);
-% pl=plot(age,labinclife); title('labor income'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['labinc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 5);
-% pl=plot(age,inclife);  title('income'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['inc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 6);
-% pl=plot(age,asslife); title('assets'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['ass_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 7);
-% pl=plot(age,conslife); title('consumption'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['cons_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% cgr = conslife(2:end)./conslife(1:end-1);
-% subplot(5, 2, 8);
-% pl=plot(age(1:end-1),cgr); title('consumption growth'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['consgr_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 9);
-% pl=plot(age,inclife-conslife); title('savings'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['sav_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 10);
-% pl=plot(age,vallife); title('value'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['value_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-
-% -------------------------------------------------------------------------
-% -------------------------------------------------------------------------
-
-% figure;pl=plot(age,labinclife); title('labor income'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['labinc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-
-% -------------------------------------------------------------------------
-
-%disp(['time elapsed: ', num2str(toc)]);
+% we disregarded the plots and the tic-toc as it was not needed in this
+% project
 
 end     % end function func_main
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -848,20 +757,9 @@ k = (alpha/mpk)^(1/(1-alpha));
 wage = (1-alpha)*k^alpha;
 
 end
+% ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 % -------------------------------------------
-
-% ----------------------------------------
-function [mpk,Y] = func_mpk(ass, L)
-
-global alpha
-
-Y = ass.^alpha * L.^(1-alpha);
-ky = ass./Y;
-mpk = alpha * ky.^(-1);
-
-end
-% ----------------------------------------
-
 function [mpk,Y] = func_mpk_altern(ass)
 
 global alpha jr pop

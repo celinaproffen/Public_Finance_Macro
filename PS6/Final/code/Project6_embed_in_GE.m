@@ -7,14 +7,10 @@ function exercise
 close all
 
 global alpha delta
-%global alpha betta tetta delta replrate tau lambda 
-%global retage maxage L R N_age sr 
 
-%rho = 0.05;  % 0.01
 delta = 0.05; % orig = 0.05
 alpha = 0.33; % 0.33; % 0.1;
 ret = 0.02; % initial guess
-%lambda = 1.0; 
 
 tol = 1e-4;
 maxit = 10;
@@ -49,38 +45,25 @@ disp(['equilibrium capital output ratio: ', num2str(ass/Y)]);
 end
 
 function [fval,ass,Y, wage_scale] = func_olg(ret)
-
-    %global retage maxage L R N_age replrate tau sr lambda delta 
    
     %%% NEW %%%
-    
-    %global wage_scale
     global alpha delta
 
     mpk = ret + delta; % marginal product of capital
-    
-    %wage = func_firm(mpk); % marginal product of labor that depends on capital
+
     wage_scale = func_firm(mpk); % marginal product of labor that depends on capital
 
-    % idea: feed the wage into the towards_olg function (maybe as a scaling
-    % factor between zero and one that multiplies the wage level overall?)
-    % epsi in the calibration function is really the thing that needs to be
-    % changed upward or downwards by how much labor is required.. 
+    % idea: feed the wage level and current guess for rate of return
+    % into the towards_olg function 
 
-    % tau = func_pens(L,R,replrate); % ??? maybe the labor tax rate? depends on number of years at labor and retired
-    % inc = func_inc(wage,tau,replrate,retage,maxage); % labor income
-    % sav_age = func_hh(inc,ret,maxage,sr,lambda); % savings decisions giving
-    % rate of return (gross savings by age group)
-    % ass = func_aggr(sav_age,N_age); % we get this from [Phi,PhiAss,ass]=func_aggr(gridx,gridsav,cfun,gridass)which is called in towards_olg
     ass = towards_olg(wage_scale,ret)
 
-    %[mpk,Y] = func_mpk(ass, L); 
     [mpk,Y] = func_mpk_altern(ass); 
     %%% end NEW %%%
     
     retnew = mpk - delta 
     
-    fval = ret - retnew; % Change in rate of return - diFference in Value?
+    fval = ret - retnew; % Change in rate of return 
 end
 
 
@@ -117,87 +100,8 @@ aggregate_cap_supply = ass;
 
 % -------------------------------------------------------------------------
 
-% PLOTS
-
-% plot of consumption policy for seleted ages and grid points and
-% current shock state fix((ny+1)/2):
-% avec=[1,21,41,61];
-% 
-% % asset distribution
-% figure;
-% 
-% subplot(5, 2, 1);
-% pl=plot(squeeze(gridx(avec,fix((ny+1)/2),[1:10]))',squeeze(cfun(avec,fix((ny+1)/2),[1:10]))');
-% legend('age 20','age 40','age 60','age 80');
-% set(pl,'LineWidth',2);
-% title('consumption policy at different ages');
-% print ('-depsc', ['conspol_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% % distribution by age and shock
-% %for age = avec,
-% for age = 21,
-%     subplot(5, 2, 2);
-%     pl=plot(gridsav,squeeze(Phi(age,:,:))');
-%     set(pl,'LineWidth',4);
-%     title(['distribution (assets tomorrow) at age ', num2str(age+20-1)]);
-%     print ('-depsc', ['distr_age', num2str(age), '_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% end;
-% 
-% % asset distribution
-% subplot(5, 2, 3);
-% pl=plot(gridsav,PhiAss);
-% set(pl,'LineWidth',4);
-% title('asset distribution (assets tomorrow)');
-% print ('-depsc', ['PhiAss_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% % plots of average life-cycle profiles
-% age=[20:nj+20-1];
-% subplot(5, 2, 4);
-% pl=plot(age,labinclife); title('labor income'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['labinc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 5);
-% pl=plot(age,inclife);  title('income'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['inc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 6);
-% pl=plot(age,asslife); title('assets'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['ass_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 7);
-% pl=plot(age,conslife); title('consumption'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['cons_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% cgr = conslife(2:end)./conslife(1:end-1);
-% subplot(5, 2, 8);
-% pl=plot(age(1:end-1),cgr); title('consumption growth'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['consgr_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 9);
-% pl=plot(age,inclife-conslife); title('savings'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['sav_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-% 
-% subplot(5, 2, 10);
-% pl=plot(age,vallife); title('value'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['value_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-
-% -------------------------------------------------------------------------
-% -------------------------------------------------------------------------
-
-% figure;pl=plot(age,labinclife); title('labor income'); xlabel('age');
-% set(pl,'LineWidth',2);
-% print ('-depsc', ['labinc_', num2str(opt_det), '_', num2str(opt_nosr), '.eps']);
-
-% -------------------------------------------------------------------------
-
-%disp(['time elapsed: ', num2str(toc)]);
+% We deleted the plots here as well as the tic-toc, as it was not needed
+% for the project.
 
 end     % end function func_main
 % ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -210,8 +114,9 @@ global betta tetta nj jr nx ny pi gridy netw pens sr epsi curv pini frac pop tot
 
 close all
 
-%r = 0.04;
-r = ret;
+%%% NEW %%%
+r = ret; % now this is determined endogenously
+%%% end NEW %%%
 rho = 0.04;
 betta = 1/(1+rho);
 tetta = 2;
@@ -756,20 +661,9 @@ k = (alpha/mpk)^(1/(1-alpha));
 wage = (1-alpha)*k^alpha;
 
 end
-% -------------------------------------------
+% ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 % ----------------------------------------
-function [mpk,Y] = func_mpk(ass, L)
-
-global alpha
-
-Y = ass.^alpha * L.^(1-alpha);
-ky = ass./Y;
-mpk = alpha * ky.^(-1);
-
-end
-% ----------------------------------------
-
 function [mpk,Y] = func_mpk_altern(ass)
 
 global alpha jr pop

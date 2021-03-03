@@ -133,12 +133,24 @@ We make two simplifying assumptions:
 
 \subsection{How do the welfare consequences depend on risk aversion, tetta?}
 
-$$ g_t = ( \frac{V_t}{\bar{V_t}})^\frac{1}{1-\theta}-1 $$
+This exercise is about evaluating welfare consequences of different policies for the newborns. In this case, we are
+comparing the wealth from government intervention to the wealth without for a prespecified income
+process. The differences in utility can not be interpreted since utility is a ordinal concept, therefore,
+we are calculating the consumption equivalent variation. It is defined as the consumption increase
+(in percent) that would compensate an individual for being in one instead of the other of the states.
+In the case of a CRRA utility function, it can be calculated as:
+\begin{equation*}
+    g_t=\bigg(\frac{V_t}{\Bar{V}_t}\bigg)^\frac{1}{1-\theta}-1
+\end{equation*}
+$V_t$ ($\Bar{V}_t$) in this case is the life-time utilities of someone of the newborns born in period t for the
+two states without (with) PAYG pension system. To calculate the consumption equivalent variation, we would need to calculate the two life-time utilities using the matlab file for exercise 1 and plug them - together with the value for theta - into the equation (already done in ex. 1).\\
+Since a general analysis of how $g_t$ varies across every possible value of theta is generally difficult analytically, we would need to base our analysis on the result of the matlab file for ex. 1c.  
+We would expect $g_t$ to decrease (increase in absolute sense) when theta increases. This is intuitive since the more risk-averse the agent is, the more he benefits from the insured future income with PAYG system, and this reduces his saving for the future periods more than the case with lower theta, and he thus shifts his savings towards current periods for consumption. If $\theta$ = 1, we have the special case of log utility (here: value). If $\theta > 1$, then the exponent becomes negative. This leads to stronger risk aversion . If $0 < \theta < 1$, then the exponent is positive. This leads to weaker risk aversion.
 
 \begin{center}
 \begin{tabular}{ |l|l| } 
 \hline
- & tetta = 2 \\ % tetta = 1  \\
+ & \theta = 2 \\ % tetta = 1  \\
 \hline
 Equivalent variation in PE : & -0.99984 \\ %& \inf  \\ 
 \hline
@@ -146,8 +158,6 @@ Equivalent variation in GE : &  -0.99975 \\ %& -1  \\
 \hline
 \end{tabular}
 \end{center}
-
-$\theta$ is the risk aversion parameter. It defines how strong an individual reacts to uncertainty. If $\theta$ = 1, we have the special case of log utility (here: value). If $\theta > 1$, then the exponent becomes negative. This leads to... . If $0 < \theta < 1$, then the exponent is positive. This leads to... .
 
 % tetta = 1
 %Value PE of newborns, orig. pension rule: -15.1924

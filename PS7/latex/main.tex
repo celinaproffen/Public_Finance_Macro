@@ -1,0 +1,186 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper, top = 2cm, bottom = 2cm, left = 1.5cm, right = 1.5cm]{geometry}
+\usepackage[dvipsnames]{xcolor} % Colors
+
+\usepackage{standalone}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+\usepackage{csquotes}
+\usepackage{natbib}
+\usepackage{accents}
+\usepackage{pdfpages}
+
+% Bibliography
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+citecolor=MidnightBlue,
+linkcolor=MidnightBlue,
+pdfpagemode=FullScreen}
+
+\usepackage{listings}
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{Red},
+  commentstyle=\color{MidnightBlue},
+  stringstyle=\color{Red},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\usepackage{natbib}
+\usepackage[noabbrev]{cleveref}
+\setcitestyle{authoryear,open={(},close={)}}
+\bibliographystyle{plainnat}
+
+\usepackage{subfiles}
+
+\usepackage{url}
+\urlstyle{same} % omit this command if you want monospaced-font look
+\newcommand\purl[1]{\protect\url{#1}} % "protected url"
+
+\setlength\parindent{0pt}
+\spacing{1.2}
+
+\begin{document}
+
+\begin{center}
+       \vspace*{4cm}
+       \huge\textbf{Project 7} \\
+       \vspace{0.4cm}
+       \large \textbf{Public Finance in Macroeconomics} \\
+       \vspace{0.5cm}
+        \large Handed in by the \textcolor{orange}{\textbf{Heterogeneous Geeks}} \\
+        \vspace{0.3cm}
+        a.k.a. Vivien Voigt, Thong Nguyen, \includegraphics[scale=0.06]{geek.png}\\Davide Difino \& Celina Proffen \\
+       \vspace{1.5cm}
+       \vfill
+
+
+
+        Project in the context of Prof. Ludwig's course: \\
+        \textbf{Public Finance in Macroeconomics: Heterogenous Agent Models}\\
+        at the Graduate School of Economics, Finance, and Management
+       \vspace{0.8cm}
+   \end{center}
+
+\newpage
+
+\section{Simple Variant of Krusell-Smith Algorithm}
+
+\subsection{Characterization of Equilibrium Dynamics}
+
+The proof of Proposition 3 uses a Guess and Verify.
+
+\begin{enumerate}
+
+  \item Guess that households will save a constant share $s$ of (disposable) wage,
+
+    \begin{equation}
+      a_{2,t+1} = s(1-\tau)w_t
+    \label{guess}
+    \end{equation}
+
+  Since the firm optimization problem
+
+    \[
+      \max \Pi = \zeta_t F(K_t, \Upsilon_t L) - (\bar{\delta} + r_t)\varrho_t^{-1} K_t - w_t L,
+    \]
+
+  where $\zeta_t$ and $\varrho_t$ are aggregate shocks, imply the f.o.c.
+
+    \[
+      w_{t} = (1-\alpha)\Upsilon_t k_t^\alpha \zeta_t
+    \]
+
+  where
+
+    \begin{equation}
+        k_t = \frac{K_t}{\Upsilon_t L},
+        \label{K_per_L}
+    \end{equation}
+
+  then \ref{guess} becomes
+
+    \begin{equation}
+        a_{2,t+1} = s(1-\tau)(1-\alpha)\Upsilon_t k_t^\alpha \zeta_t
+    \label{a_guess}
+    \end{equation}
+
+  Market clearing conditions $K_t = a_{2,t}$ and $L = 1 + \lambda$, growth rate of labor productivity $\Upsilon_{t+1} = (1+g)\Upsilon_{t}$  and \ref{K_per_L} imply that
+
+    \begin{equation}
+        k_{t+1} = \frac{s(1-\tau)(1-\alpha) k_t^\alpha \zeta_t}{(1 + g)(1 + \lambda)}
+        \label{K_guess}
+    \end{equation}
+
+  which is the equilibrium dynamics implied by our guess $s$.
+
+  \item We know that, given $s$, \ref{K_guess} solves the Firm´s problem and the market clering condition. Then to verify that our guess indeed an equilibrium solution we need to check for which value of $s$ the household problem is solved.
+
+  The agent budget constraints, substituting for $w_t$, $w_{t + 1}$ and $\alpha_{2, t+1}$ using \ref{a_guess} implies consumption levels
+
+    \begin{align*}
+      c_{1,t}& = (1 - s) w_t =(1 - s)(1 - \tau) \Upsilon_t k_t^\alpha \zeta_t  \\
+      c_{2,t+1} & = s(1 - \tau) (1 - \alpha)\zeta_{t} \Upsilon_t k_t^\alpha \alpha \zeta_{t+1} \varrho_{t+1} k_{t+1}^{\alpha - 1}   \\
+      & + (1 - \alpha) \Upsilon_{t+1}\zeta_{t+1} k_{t+1}^{\alpha} (\lambda \eta_{2, t+1} + \tau (1 + \lambda(1 - \eta_{2, t+1})))
+    \end{align*}
+
+  in the two periods lived by the agent, where the interest rate is provided by the second f.o.c of the firm,
+
+  \[
+    1 + r_t = \alpha k_t^{\alpha - 1} \zeta_{t} \varrho_{t}
+  \]
+
+  Substituting \ref{K_guess} yields
+
+    \begin{align*}
+     c_{2,t+1} & = (\alpha \varrho_{t+1} (1 + \lambda) + (1 + \alpha)(\lambda \eta_{2, t+1}  \\
+     & + \tau(1 + \lambda(1 - \eta_{2, t+1})))) \Upsilon_{t+1}\zeta_{t+1} k_{t+1}^{\alpha}.
+    \end{align*}
+
+  Substituting the consumption levels $c_{1,t}$ and $c_{2,t+1}$ into the consumer Euler Equation
+
+    \[
+      1 = \beta \mathbb{E}_t \left[ \frac{c_{1,t} (1+r_{t+1})}{c_{2,t+1}} \right]
+    \]
+
+  implies
+
+    \[
+    1 =  \frac{\beta(1 - s)}{s}\Phi(\tau)
+    \]
+
+  where $\Phi(\tau)$ is a function of pension system contribution $\tau$ as defined in Proposition 3. Therefore, optimal saving rate in general quilibrium is also a function of $\tau$:
+
+    \begin{equation}
+      s(\tau) = \frac{\beta \Phi(\tau)}{1 + \beta \Phi(\tau)}.
+      \label{opt_s}
+    \end{equation}
+
+  \item Due to convexity, the solution represented by \ref{K_guess} and \ref{opt_s} is unique.  Q.e.d.
+
+\end{enumerate}
+
+
+%\bibliography{project6.bib}
+
+\pagebreak
+
+\end{document}

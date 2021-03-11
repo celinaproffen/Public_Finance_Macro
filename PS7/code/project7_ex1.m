@@ -2,12 +2,12 @@
 % ------------------------------------------------------------------------
 
 global alpha beta tau lambda T N eta varrho zeta y
-alpha = 0.3;
-beta = 0.99^40;
-tau = 0;
+alpha  = 0.3;
+beta   = 0.99^40;
+tau    = 0;
 lambda = 0.5;
-T = 100;
-N = 1000; % number of simulations 
+T      = 100;
+N      = 1000; % number of simulations 
 
 % set seed
 rng(2)
@@ -16,10 +16,11 @@ rng(2)
 % ------------------------------------------------------------------------
 
 % define shocks (temp!!)
-eta = [0.26, 0.407, 0.554, 0.701, 0.848, 0.995, 1.142, 1.289, 1.436, 1.583, 1.73];
+eta    = [0.26, 0.407, 0.554, 0.701, 0.848, 0.995, ...
+            1.142, 1.289, 1.436, 1.583, 1.73];
 varrho = [0.54, 1.46];
-zeta = [0.87, 1.13];
-y = [10, 20];  % income outcome:[y_low, y_high]
+zeta   = [0.87, 1.13];
+y      = [10, 20];  % income outcome:[y_low, y_high]
 
 % simulation of capital accumulation
 % ------------------------------------------------------------------------
@@ -63,11 +64,13 @@ function sav = saving(shock, ssl)
 
     phi = zeros(ssl, 1);
     for n = 1:ssl
-        phi(n,1)=1/(1+(1-alpha)/(alpha*(1+lambda)*shock(n,2))*(lambda*shock(n,1))+tau*(1+lambda*(1-shock(n, 2))));
+        phi(n, 1) = 1 / (1 + (1 - alpha) / (alpha * (1 + lambda) * ... 
+            shock(n, 2)) * (lambda * shock(n, 1)) + ...
+            tau * (1 + lambda * (1 - shock(n, 2))));
     end
     
     Phi = sum(phi)/ssl;
-    sav = (beta*Phi)/(1+beta*Phi);
+    sav = (beta * Phi) / (1 + beta * Phi);
 end
 
 % create a random sequence of shocks
@@ -79,10 +82,9 @@ function [shockhistz, shockhisty] = shockhistfunc(zeta, y)
     shockhisty = zeros(T, 1);
 
     for i = 1:T
-        shockhistz(i) = zeta(randperm(length(zeta),1));
-        shockhisty(i) = y(randperm(length(y),1));
+        shockhistz(i) = zeta(randperm(length(zeta), 1));
+        shockhisty(i) = y(randperm(length(y), 1));
     end
-    
 end
 
 % compute capital accumulation history given starting values and shock hist. 
@@ -106,7 +108,7 @@ function khist = khistfunc(logk0, sav, shockhisty, shockhistz)
     function logk_1 = kapaccfunc(logk_0, sav_rate, y_1, zeta_1)
         global alpha lambda tau
 
-        logk_1 = log((1 - alpha)/(1 + lambda)) + log(sav_rate) + log(y_1 - tau) + log(zeta_1) + alpha * logk_0;
-    
+        logk_1 = log((1 - alpha)/(1 + lambda)) + log(sav_rate) + ...
+            log(y_1 - tau) + log(zeta_1) + alpha * logk_0;
     end
 end

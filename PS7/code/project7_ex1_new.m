@@ -50,7 +50,17 @@ khist = khistfunc(logk0, sav, shockhisty, shockhistz);
 % plot
 plot(khist)
 
-
+% Compute the theoretical values of psi(z)
+% psi = zeros(2, 1)
+% make it better
+K=[khist, khist - khist + 1, lagmatrix(khist,1)]
+psi = regress(K(:,1),K(:,2:3))
+% Creating capital 
+k_star= exp(logk0);
+k_min=0.5*k_star;            % minimum grid-value of capital
+k_max=1.5*k_star;            % maximum grid-value of capital
+ngridk=5;                % number of grid points
+gridx=linspace(k_min,k_max,ngridk)';
 
 % ---------------------------------------------------------------------- %
 %                             Functions                                  %

@@ -180,8 +180,9 @@ The proof of Proposition 3 uses a Guess and Verify approach:
 
 \end{enumerate}
 
+\newpage
 \subsection{Discretize shocks}
-
+\vspace{1cm}
 \begin{equation*}
     \zeta_-=\frac{2exp(1-\sigma_{ln\zeta})}{exp(1-\sigma_{ln\zeta})+exp(1+\sigma_{ln\zeta})}\approx\frac{2exp(1-0.13)}{exp(1-0.13)+exp(1+0.13)}\approx 0.87
     \end{equation*}
@@ -198,21 +199,23 @@ The proof of Proposition 3 uses a Guess and Verify approach:
     \end{equation*}
 
 \vspace{1cm}
+Using the hint that ln($\eta$) is normally distributed, we receive the following shock distribution.
+\begin{center}
+    \includegraphics[width=15cm]{eta_shocks.png}\\
+\end{center}
+Assuming -4 and 3 as the bounds of the distribution, we receive the following 11 nodes for $\eta$ using the Gaussian Quadratiture method: \\
 
-All nodes for $\eta$ assuming equal distances between nodes: \\
-$\eta_1 = 0.26 $ \\
-$\eta_2 = 0.407$ \\
-$\eta_3 = 0.554$ \\
-$\eta_4 = 0.701$ \\
-$\eta_5 = 0.848$ \\
-$\eta_6 = 0.995$ \\
-$\eta_7 = 1.142$ \\
-$\eta_8 = 1.289$ \\
-$\eta_9 = 1.436$ \\
-$\eta_{10} = 1.583$ \\
-$\eta_{11} = 1.73$ \\
-
-\textcolor{red}{add last normalized shock!}
+$\eta_1 = -4.0000  $ \\
+$\eta_2 = -3.2192 $ \\
+$\eta_3 = -2.6497 $ \\
+$\eta_4 = -1.8838 $ \\
+$\eta_5 = -0.9782 $ \\
+$\eta_6 = -0.4500 $ \\
+$\eta_7 = 0.9506 $ \\
+$\eta_8 = 1.8307 $ \\
+$\eta_9 = 2.5751 $ \\
+$\eta_{10} = 3.1285 $ \\
+$\eta_{11} = 3.0000 $ \\
 
 \subsection{Simulation of capital dynamics}
 Please refer to Matlab code.

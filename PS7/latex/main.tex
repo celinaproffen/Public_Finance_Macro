@@ -280,6 +280,24 @@ Final regressed value of PSI (after $\>$100 iterations and T = 50,000):
 Different $\tau$ and EV: Interpret the findings. 
 We adhered to the Krussel-Smith set-up with infinitely lived households.
 
+\section{Complex Variant of Krusell-Smith Algorithm}
+Unlike the first problem where the realizations of the technology shock are $\zeta=[0.87,1.13]'$, in this problem the technology shock $z_t$ follows Markov process and the realizations are different, $\zeta=[0.97,1.03]'$. As can be seen from the matlab code $\texttt{project7\_exe2.m}$, the only difference from the previous exercise is that we defined a function which creates Markov shocks, our code works, however as we increase the number of iterations the results for psi zero and psi one diverge from the theoretical values (for both an aggregate recession or boom). The fact that saving rate is greater than $90\%$(would only make sense if someone as rich as Mark Zuckerberg lived in this model!!!) is a weird result and we still unfortunately haven't come up with any plausible explanation for this. However, we would suggest that this either has something to do with whether we correctly generated the Markov shocks within the code or it could actually be the case due to a logical reason, i.e. that the savings processes change fundamentally when you have a Markov process.\\
+
+These are the final results for our PSI-array, in which the first line represents the constants and the later one the coefficient on the log of the lagged capital value.
+
+Initial theoretical value of PSI:
+\begin{pmatrix}
+   -2.0894 &  -2.0294 \\
+    0.3000  &  0.3000
+\end{pmatrix}
+
+Final regressed value of PSI (after $\>$100 iterations and T = 50,000):
+\begin{pmatrix}
+    -0.0130  & -0.0126  \\
+    0.9956  &  0.9956 
+\end{pmatrix}
+
+
 \section{Summary of McKay and Reis (2016)}
 
 McKay ad Reis (2016) presents a comprehensive analysis of the impact of automatics stabilizers on business cycle foundation. It has  been argued that automatic stabilizers - inherently counter-cyclical policies whose (main) objective is often not directly related to business cycle such as progressive taxation and transfers - represent a key component in mitigating macroeconomic fluctuations. In this paper, the authors constructed a Neo-Keynesian model with incomplete insurance markets - for a share of the population - capable of replicating the main feature of US business cycle while including all the automatic stabilizer present in the data and modelling all the four stabilization mechanism (disposable income, marginal incentives, redistribution, and social insurance). The latter are ensured by nominal rigidities, liquidity constrained consumers, incomplete insurance markets and precautionary saving, and strong intertemporal substitution. In particular, the automatic stabilizers analyzed in this paper are taxes (on personal income, property, sales, and corporate income), transfers (unemployment benefit and safety net payment), and government's budget deficit. Alongside idiosyncratic risk, the economy is affected by technological, monetary, and markup aggregate shocks. As the model cannot rely an a simple analysis of the aggregates - since distribution across agents matters - the authors used Reiter (2009) solution algorithm, preferred over Krusel and Smith´s. The calibration exercise with US data and a counterfactual study suggest that, in general, the effect of automatic stabilizer is weak. In particular, taxation appears to have a limited impact on volatility with an significant (and negative) impact on output and welfare. On the other hand, transfer to poor (liquidity constrained) and unemployed individuals were found to be rather impactful. Mechanism-wise, disposable-income is reported as being weak and the social insurance, despite being effective at stabilizing aggregate consumption, destabilizes aggregate output due to its interaction with changes in government deficit financing. However, the automatic stabilizer plays a useful role with sub-optimal monetary policy such at the zero-lower bound.

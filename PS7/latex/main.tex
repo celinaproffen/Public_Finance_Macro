@@ -4,7 +4,7 @@
 \usepackage[dvipsnames]{xcolor} % Colors
 
 \usepackage{standalone}
-
+\usepackage{amsmath} 
 \usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{amsfonts}
@@ -260,18 +260,30 @@ Inserting $k_{t+1}=\frac{s(1-\tau)w_t}{1+\lambda}=\frac{s(1-\tau)(1-\alpha)k_t^\
           log\left( (1-s)(1-\tau)(1-\alpha)k_t^\alpha\zeta_t \right)
 \end{align*}
 
-As can be seen from the matlab code exercise 1.3, our code works and as we increase the number of iterations the results for psi zero and psi one come closer and closer to the theoretical values (for both an aggregate recession or boom).
-Initial theoretical value of PSI:
-   -2.1982   -1.9367
-    0.3000    0.3000
+As can be seen from the matlab code exercise\_1\_3\_ABC.mat, our code works and as we increase the number of iterations the results for psi zero and psi one come closer and closer to the theoretical values (for both an aggregate recession or boom).
 
-Final regressed value of PSI:
-   -2.1244   -1.9413
-    0.3139    0.3105
+These are the final results for our PSI-array, in which the first line represents the constants and the later one the coefficient on the log of the lagged capital value.
+
+Initial theoretical value of PSI:
+\begin{pmatrix}
+   -2.1982 &  -1.9367 \\
+    0.3000  &  0.3000
+\end{pmatrix}
+
+Final regressed value of PSI (after $\>$100 iterations and T = 50,000):
+\begin{pmatrix}
+    -2.1244  & -1.9413 \\
+    0.3139  &  0.3105 
+\end{pmatrix}
+
+    
+\subsection{Section 1.4}
+Different $\tau$ and EV: Interpret the findings. 
+We adhered to the Krussel-Smith set-up with infinitely lived households.
 
 \section{Summary of McKay and Reis (2016)}
 
-McKay ad Reis (2016) presents a comprehensive analysis of the impact of automatics stabilizers on business cycle foundation. It has  been argued that automatic stabilizers - inherently countercyclical policies whose (main) objective is often not directly related to business cycle such as progressive taxation and transfers - represent a key component in mitigating macroeconomic fluctuations. In this paper, the authors constructed a Neo-Keynesian model with incomplete insurance markets - for a share of the population - capable of replicating the main feature of US business cycle while including all the automatic stabilizer present in the data and modelling all the four stabilization mechanism (disposable income, marginal incentives, redistribution, and social insurance). The latter are ensured by nominal rigidities, liquidity constrained consumers, incomplete insurance markets and precautionary saving, and strong intertemporal substitution. In particular, the automatic stabilizers analyzed in this paper are taxes (on personal income, property, sales, and corporate income), transfers (unemployment benefit and safety net payment), and government's budget deficit. Alongside idiosyncratic risk, the economy is affected by technological, monetary, and markup aggregate shocks. As the model cannot rely an a simple analysis of the aggregates - since distribution across agents matters - the authors used Reiter (2009) solution algorithm, preferred over Krusel and Smith´s. The calibration exercise with US data and a counterfactual study suggest that, in general, the effect of automatic stabilizer is weak. In particular, taxation appears to have a limited impact on volatility with an significant (and negative) impact on output and welfare. On the other hand, transfer to poor (liquidity constrained) and unemployed individuals were found to be rather impactful. Mechanism-wise, disposable-income is reported as being weak and the social insurance, despite being effective at stabilizing aggregate consumption, destabilizes aggregate output due to its interaction with changes in government deficit financing. However, the automatic stabilizer plays a useful role with sub-optimal monetary policy such at the zero-lower bound.
+McKay ad Reis (2016) presents a comprehensive analysis of the impact of automatics stabilizers on business cycle foundation. It has  been argued that automatic stabilizers - inherently counter-cyclical policies whose (main) objective is often not directly related to business cycle such as progressive taxation and transfers - represent a key component in mitigating macroeconomic fluctuations. In this paper, the authors constructed a Neo-Keynesian model with incomplete insurance markets - for a share of the population - capable of replicating the main feature of US business cycle while including all the automatic stabilizer present in the data and modelling all the four stabilization mechanism (disposable income, marginal incentives, redistribution, and social insurance). The latter are ensured by nominal rigidities, liquidity constrained consumers, incomplete insurance markets and precautionary saving, and strong intertemporal substitution. In particular, the automatic stabilizers analyzed in this paper are taxes (on personal income, property, sales, and corporate income), transfers (unemployment benefit and safety net payment), and government's budget deficit. Alongside idiosyncratic risk, the economy is affected by technological, monetary, and markup aggregate shocks. As the model cannot rely an a simple analysis of the aggregates - since distribution across agents matters - the authors used Reiter (2009) solution algorithm, preferred over Krusel and Smith´s. The calibration exercise with US data and a counterfactual study suggest that, in general, the effect of automatic stabilizer is weak. In particular, taxation appears to have a limited impact on volatility with an significant (and negative) impact on output and welfare. On the other hand, transfer to poor (liquidity constrained) and unemployed individuals were found to be rather impactful. Mechanism-wise, disposable-income is reported as being weak and the social insurance, despite being effective at stabilizing aggregate consumption, destabilizes aggregate output due to its interaction with changes in government deficit financing. However, the automatic stabilizer plays a useful role with sub-optimal monetary policy such at the zero-lower bound.
 
 %\bibliography{project6.bib}
 \pagebreak

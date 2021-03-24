@@ -15,8 +15,7 @@ ttau    = 0;
 llambda = 0.5;
 
 % define length of simulations
-T      = 100; % later 50,000
-N      = 1000; % number of agents
+T      = 100; % Alternatively change to 50,000 - should work fine! :)
 
 % set seed for iid shocks
 rng(2)
@@ -43,7 +42,7 @@ log_k_ss = (1/(1-allpha))*(log((1-allpha)/(1+llambda))+log(sav_ss)+log(1-ttau));
 k_ss = exp(log_k_ss);
 %close all
 
-[k_history, sav_history] = stoch_simulation(N, T)
+[k_history, sav_history] = stoch_simulation(T)
 
 %% Simulation of first order difference equation
 

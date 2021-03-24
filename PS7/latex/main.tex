@@ -179,7 +179,8 @@ The proof of Proposition 3 uses a Guess and Verify approach:
 \end{enumerate}
 
 \newpage
-\subsection{Discretize shocks}
+\subsection{Simulation of capital dynamics}
+\subsubsection{Discretize shocks}
 \vspace{1cm}
 \begin{equation*}
     \zeta_-=\frac{2exp(1-\sigma_{ln\zeta})}{exp(1-\sigma_{ln\zeta})+exp(1+\sigma_{ln\zeta})}\approx\frac{2exp(1-0.13)}{exp(1-0.13)+exp(1+0.13)}\approx 0.87
@@ -197,11 +198,13 @@ The proof of Proposition 3 uses a Guess and Verify approach:
     \end{equation*}
 
 \vspace{1cm}
-Using the hint that ln($\eta$) is normally distributed, we receive the following shock distribution.
+Using the hint that ln($\eta$) is approximately normally distributed, we receive the following shock distribution:
+
 \begin{center}
     \includegraphics[width=15cm]{eta_shocks.png}\\
 \end{center}
-Assuming -4 and 3 as the bounds of the distribution, we receive the following 11 nodes for $\eta$ using the Gaussian Quadratiture method: \\
+\newpage
+Assuming -4 and 3 as the bounds of the distribution (0.9999 of the density mass is in between), we receive the following 11 nodes for $\eta$ using the Gaussian Quadrature method:\\
 
 $\eta_1 = -4.0000  $ \\
 $\eta_2 = -3.2192 $ \\
@@ -215,11 +218,11 @@ $\eta_9 = 2.1251 $ \\
 $\eta_{10} = 2.6785 $ \\
 $\eta_{11} = 3.0000 $ \\
 
-\subsection{Simulation of capital dynamics}
-Please refer to Matlab code.
+\subsubsection{Simulation}
+Please refer to Matlab code project7\_exe1\_2.
 
 \subsection{Krusell-Smith Algorithm}
-Please also refer to the matlab code. I will outline the procedure for solving step 3.(b).i. here, i.e. solving for savings rates $s_t$ as a function of $\tau$,$k_t$ and $z$.
+Please also refer to the matlab code project7\_exe1\_3\_ABC and project7\_exe1\_3\_D. I will outline the procedure for solving step 3.(b).i. here, i.e. solving for savings rates $s_t$ as a function of $\tau$,$k_t$ and $z$.
 
 This basically relies again on the Euler equation:
 \begin{align*}
@@ -257,47 +260,70 @@ Inserting $k_{t+1}=\frac{s(1-\tau)w_t}{1+\lambda}=\frac{s(1-\tau)(1-\alpha)k_t^\
           log\left( (1-s)(1-\tau)(1-\alpha)k_t^\alpha\zeta_t \right)
 \end{align*}
 
-As can be seen from the matlab code exercise\_1\_3\_ABC.mat, our code works and as we increase the number of iterations the results for psi zero and psi one come closer and closer to the theoretical values (for both an aggregate recession or boom).
+As can be seen from the matlab code project7\_exe1\_3\_ABC, our code works and as we increase the number of iterations the results for psi zero and psi one come closer and closer to the theoretical values (for both an aggregate recession or boom).
 
 These are the final results for our PSI-array, in which the first line represents the constants and the later one the coefficient on the log of the lagged capital value.
 
-Initial theoretical value of PSI:
+Initial theoretical value of PSI:\\
+
 \begin{pmatrix}
    -2.1982 &  -1.9367 \\
     0.3000  &  0.3000
 \end{pmatrix}
 
-Final regressed value of PSI (after $\>$100 iterations and T = 50,000):
+Final regressed value of PSI (after $\>$100 iterations and T = 50,000):\\
+
 \begin{pmatrix}
     -2.1244  & -1.9413 \\
     0.3139  &  0.3105 
 \end{pmatrix}
 
-    
-\subsection{Section 1.4}
-Different $\tau$ and EV: Interpret the findings. 
-We adhered to the Krussel-Smith set-up with infinitely lived households.
+\newpage
+\subsection{Consumption equivalent variation}
+
+Again, we use the following formula and $\theta = 2$ as the risk aversion parameter to calculate the consumption EV: 
+
+$$ g_t = ( \frac{V\_orig}{V\_altern}})^\frac{1}{1-\theta}-1 $$
+
+
+
+\begin{center}
+\begin{tabular}{ |c|c| } 
+\hline
+ & \theta = 2 \\ 
+\hline
+V\_orig (\tau = 0): & -3.2549 \\ 
+\hline
+V\_altern (\tau=0.1): & -3.3570 \\ 
+\hline
+EV : &  0.0314 \\ 
+\hline
+\end{tabular}
+\end{center}
+
+Since the EV is positive, a change from the original regime with $\tau=0$ to the alternative regime with $\tau=0.1$ is associated with a consumption change of 0.0314.
 
 \section{Complex Variant of Krusell-Smith Algorithm}
 Unlike the first problem where the realizations of the technology shock are $\zeta=[0.87,1.13]'$, in this problem the technology shock $z_t$ follows Markov process and the realizations are different, $\zeta=[0.97,1.03]'$. As can be seen from the matlab code $\texttt{project7\_exe2.m}$, the only difference from the previous exercise is that we defined a function which creates Markov shocks, our code works, however as we increase the number of iterations the results for psi zero and psi one diverge from the theoretical values (for both an aggregate recession or boom). The fact that saving rate is greater than $90\%$(would only make sense if someone as rich as Mark Zuckerberg lived in this model!!!) is a weird result and we still unfortunately haven't come up with any plausible explanation for this. However, we would suggest that this either has something to do with whether we correctly generated the Markov shocks within the code or it could actually be the case due to a logical reason, i.e. that the savings processes change fundamentally when you have a Markov process.\\
 
 These are the final results for our PSI-array, in which the first line represents the constants and the later one the coefficient on the log of the lagged capital value.
 
-Initial theoretical value of PSI:
+Initial theoretical value of PSI:\\
+
 \begin{pmatrix}
    -2.0894 &  -2.0294 \\
     0.3000  &  0.3000
 \end{pmatrix}
 
-Final regressed value of PSI (after $\>$100 iterations and T = 50,000):
+Final regressed value of PSI (after $\>$100 iterations and T = 50,000):\\
+
 \begin{pmatrix}
     -0.0130  & -0.0126  \\
     0.9956  &  0.9956 
 \end{pmatrix}
 
-
+\newpage
 \section{Summary of McKay and Reis (2016)}
-
 McKay ad Reis (2016) presents a comprehensive analysis of the impact of automatics stabilizers on business cycle foundation. It has  been argued that automatic stabilizers - inherently counter-cyclical policies whose (main) objective is often not directly related to business cycle such as progressive taxation and transfers - represent a key component in mitigating macroeconomic fluctuations. In this paper, the authors constructed a Neo-Keynesian model with incomplete insurance markets - for a share of the population - capable of replicating the main feature of US business cycle while including all the automatic stabilizer present in the data and modelling all the four stabilization mechanism (disposable income, marginal incentives, redistribution, and social insurance). The latter are ensured by nominal rigidities, liquidity constrained consumers, incomplete insurance markets and precautionary saving, and strong intertemporal substitution. In particular, the automatic stabilizers analyzed in this paper are taxes (on personal income, property, sales, and corporate income), transfers (unemployment benefit and safety net payment), and government's budget deficit. Alongside idiosyncratic risk, the economy is affected by technological, monetary, and markup aggregate shocks. As the model cannot rely an a simple analysis of the aggregates - since distribution across agents matters - the authors used Reiter (2009) solution algorithm, preferred over Krusel and Smith´s. The calibration exercise with US data and a counterfactual study suggest that, in general, the effect of automatic stabilizer is weak. In particular, taxation appears to have a limited impact on volatility with an significant (and negative) impact on output and welfare. On the other hand, transfer to poor (liquidity constrained) and unemployed individuals were found to be rather impactful. Mechanism-wise, disposable-income is reported as being weak and the social insurance, despite being effective at stabilizing aggregate consumption, destabilizes aggregate output due to its interaction with changes in government deficit financing. However, the automatic stabilizer plays a useful role with sub-optimal monetary policy such at the zero-lower bound.
 
 %\bibliography{project6.bib}
